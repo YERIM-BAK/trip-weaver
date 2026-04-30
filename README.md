@@ -66,10 +66,50 @@ pnpm install
 pnpm dev
 ```
 
+## 📂 Project Structure
+
+```bash
 src/
-├── app/ # Next.js App Router
-├── features/ # 도메인 기반 구조 (course, pet, map 등)
-├── components/ # 공통 UI 컴포넌트
-├── store/ # Zustand 상태 관리
-├── hooks/ # 커스텀 훅
-├── lib/ # 외부 라이브러리 설정
+├── app/                  # Next.js App Router (페이지 및 라우팅)
+│   ├── layout.tsx
+│   ├── page.tsx          # 홈
+│   ├── explore/          # 코스 탐색 페이지
+│   │   └── page.tsx
+│   ├── course/
+│   │   └── [id]/page.tsx # 코스 상세
+│   └── api/              # Route Handler (서버 API)
+│
+├── features/             # 도메인(기능) 단위 모듈
+│   ├── course/           # 여행 코스 관련 기능
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/     # API 요청 및 비즈니스 로직
+│   │   └── types.ts
+│   │
+│   ├── pet/              # 반려동물 필터 기능
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── types.ts
+│   │
+│   └── map/              # 지도 관련 기능
+│       ├── components/
+│       └── hooks/
+│
+├── components/           # 공통 UI 컴포넌트 (재사용)
+│   ├── Button/
+│   ├── Card/
+│   ├── Modal/
+│   └── Chart/
+│
+├── store/                # Zustand (클라이언트 상태)
+│   ├── filterStore.ts
+│   ├── courseStore.ts
+│   └── mapStore.ts
+│
+├── hooks/                # 전역 커스텀 훅
+├── lib/                  # 외부 라이브러리 설정 (axios 등)
+├── styles/               # 전역 스타일
+├── constants/            # 상수 관리
+├── types/                # 공통 타입 정의
+└── utils/                # 유틸 함수
+```
