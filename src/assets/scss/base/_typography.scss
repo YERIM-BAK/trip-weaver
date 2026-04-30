@@ -1,0 +1,50 @@
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+$fw-bold: 700;
+
+$fs-h1: 24px;
+$fs-h2: 20px;
+$fs-h3: 18px;
+
+$fs-body: 16px;
+$fs-body-sm: 14px;
+
+$fs-caption: 12px;
+
+$lh-tight: 1.2;
+$lh-base: 1.5;
+
+@mixin text-base($size, $weight, $lh) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $lh;
+}
+
+// @mixin text-h1 {
+//   @include text-base($fs-h1, $fw-bold, $lh-tight);
+// }
+
+// @mixin text-h2 {
+//   @include text-base($fs-h2, $fw-semibold, $lh-tight);
+// }
+
+// @mixin text-h3 {
+//   @include text-base($fs-h3, $fw-semibold, $lh-base);
+// }
+
+// @mixin text-body {
+//   @include text-base($fs-body, $fw-regular, $lh-base);
+// }
+
+// @mixin text-body-sm {
+//   @include text-base($fs-body-sm, $fw-regular, $lh-base);
+// }
+
+// @mixin text-caption {
+//   @include text-base($fs-caption, $fw-regular, $lh-base);
+// }
+
+// @mixin text-emphasis {
+//   @include text-base($fs-body, $fw-semibold, $lh-base);
+// }
