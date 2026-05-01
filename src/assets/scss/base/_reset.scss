@@ -1,5 +1,3 @@
-@use "@/assets/scss/abstracts"as *;
-
 :root {
   --vh: 1vh;
 }
@@ -12,7 +10,7 @@ html {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  color: $color-text-01;
+  // color: var(--color-primary);
   word-break: break-all;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
