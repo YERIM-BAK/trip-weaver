@@ -1,0 +1,17 @@
+$spacing-1: 4px;
+$spacing-2: 8px;
+$spacing-3: 12px;
+$spacing-4: 16px;
+$spacing-5: 20px;
+$spacing-6: 24px;
+$spacing-7: 32px;
+
+:root {
+  --space-1: #{$spacing-1};
+  --space-2: #{$spacing-2};
+  --space-3: #{$spacing-3};
+  --space-4: #{$spacing-4};
+  --space-5: #{$spacing-5};
+  --space-6: #{$spacing-6};
+  --space-7: #{$spacing-7};
+}

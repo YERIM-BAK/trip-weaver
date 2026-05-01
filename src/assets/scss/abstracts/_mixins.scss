@@ -1,13 +1,42 @@
-@mixin flex-center {
-  display: flex;
+@mixin flex-center($display: flex) {
+  display: $display;
   align-items: center;
   justify-content: center;
 }
 
-@mixin flex-between {
-  display: flex;
+@mixin flex-between($display: flex) {
+  display: $display;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin flex($display: flex,
+  $justify: null,
+  $align: null,
+  $direction: null,
+  $gap: null,
+  $wrap: null) {
+  display: $display;
+
+  @if $justify !=null {
+    justify-content: $justify;
+  }
+
+  @if $align !=null {
+    align-items: $align;
+  }
+
+  @if $direction !=null {
+    flex-direction: $direction;
+  }
+
+  @if $gap !=null {
+    gap: $gap;
+  }
+
+  @if $wrap !=null {
+    flex-wrap: $wrap;
+  }
 }
 
 @mixin ellipsis {
@@ -25,26 +54,72 @@
   -webkit-box-orient: vertical;
 }
 
-@mixin safe-area-bottom($px: 0) {
-  @if $px ==0 {
-    padding-bottom: constant(safe-area-inset-bottom);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  @else {
-    padding-bottom: calc(constant(safe-area-inset-bottom) + #{$px}px);
-    padding-bottom: calc(env(safe-area-inset-bottom) + #{$px}px);
-  }
+@mixin visually-hidden {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-@mixin safe-area {
-  padding-bottom: 0;
 
-  @include safe-area-bottom;
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
+
+@mixin fixed-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 
 @mixin mobile {
-  @media (max-width: 768px) {
+  @media (max-width: 673px) {
     @content;
   }
 }
+
+@mixin tablet {
+  @media (min-width: 674px) and (max-width: 1023px) {
+    @content;
+  }
+}
+
+@mixin pc {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+
+//FONT
+@mixin font($type, $size, $weight: 400) {
+  font-size: var(--size-#{$type}-#{$size});
+  letter-spacing: var(--letterspace-#{$type}-#{$size});
+  line-height: var(--lineheight-#{$type}-#{$size});
+  font-weight: $weight;
+}
+
+// 추후 사용
+// @mixin safe-area-bottom($px: 0) {
+//   @if $px==0 {
+//     padding-bottom: constant(safe-area-inset-bottom);
+//     padding-bottom: env(safe-area-inset-bottom);
+//   }
+
+//   @else {
+//     padding-bottom: calc(constant(safe-area-inset-bottom) + #{$px}px);
+//     padding-bottom: calc(env(safe-area-inset-bottom) + #{$px}px);
+//   }
+// }
+
+// @mixin safe-area {
+//   padding-bottom: 0;
+
+//   @include safe-area-bottom;
+// }
