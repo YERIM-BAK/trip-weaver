@@ -1,0 +1,17 @@
+@use "base"as *;
+@use "abstracts"as *;
+
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 8px 16px;
+  background: #FF8B6A;
+  color: #fff;
+  font-weight: 700;
+  z-index: 9999;
+
+  &:focus {
+    top: 0;
+  }
+}

@@ -17,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" className={localFonts.className}>
-      <body>{children}</body>
+      <body>
+        <a href="#main-content" className="skip-nav">
+          본문 바로가기
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

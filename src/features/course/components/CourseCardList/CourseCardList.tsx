@@ -19,7 +19,7 @@ export default function CourseCardList({ courses }: { courses: Course[] }) {
   };
 
   return (
-    <ul role="listbox">
+    <ul>
       {courses.map((course) => {
         const selected = selectedId === course.id;
 
