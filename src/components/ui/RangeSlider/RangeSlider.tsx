@@ -10,12 +10,13 @@ function RangeSlider({
   formatLabel,
   ticks,
   ariaLabel,
+  disabled = false,
 }: RangeSliderProps) {
   const label = formatLabel ? formatLabel(value) : `${value}`;
   const percent = ((value - min) / (max - min)) * 100;
 
   return (
-    <div className={styles["wrap"]}>
+    <div className={styles["rangeSlider"]} aria-disabled={disabled}>
       <div className={styles["valueDisplay"]}>
         <span className={styles["valueLabel"]}>1인 기준</span>
         <span className={styles["valueBadge"]}>{label}</span>
@@ -29,15 +30,26 @@ function RangeSlider({
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
           className={styles["slider"]}
-          style={{ "--percent": `${percent}%` } as React.CSSProperties}
+          style={
+            {
+              "--percent": `${percent}%`,
+              opacity: disabled ? 0.4 : 1,
+            } as React.CSSProperties
+          }
           aria-label={ariaLabel}
           aria-valuetext={label}
+          disabled={disabled}
         />
       </div>
       {ticks && (
         <div className={styles["ticks"]}>
           {ticks.map((t) => (
-            <span key={t}>{t}</span>
+            <span
+              key={t.value}
+              style={{ left: `${((t.value - min) / (max - min)) * 100}%` }}
+            >
+              {t.label}
+            </span>
           ))}
         </div>
       )}

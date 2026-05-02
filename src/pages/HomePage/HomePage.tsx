@@ -162,9 +162,14 @@ function HomePage() {
           <RangeSlider
             value={budget}
             onChange={setBudget}
-            max={50}
-            formatLabel={(v) => (v >= 50 ? "제한 없음" : `${v}만원`)}
-            ticks={["0원", "10만원", "30만원", "제한 없음"]}
+            max={100}
+            step={1}
+            formatLabel={(v) => `${v}만원`}
+            ticks={[
+              { value: 0, label: "0원" },
+              { value: 50, label: "50만원" },
+              { value: 100, label: "100만원" },
+            ]}
             ariaLabel="예산 선택"
           />
         </section>

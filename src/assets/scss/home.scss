@@ -1,3 +1,5 @@
+@use "abstracts"as *;
+
 .homePage {
   padding: 24px 16px 120px;
 
@@ -8,6 +10,56 @@
     padding: 0;
     height: calc(100vh - 60px);
   }
+
+
+  // .checkBox {
+  //   display: inline-flex;
+  //   align-items: center;
+  //   gap: 6px;
+  //   font-size: 13px;
+  //   color: var(--color-text-secondary);
+  // }
+
+  // .checkBoxInput {
+  //   @include visually-hidden;
+  // }
+
+  // .checkBoxLabel {
+  //   display: inline-flex;
+  //   align-items: center;
+  //   gap: 6px;
+
+  //   &::before {
+  //     content: "";
+  //     width: 15px;
+  //     height: 15px;
+  //     border: 1px solid var(--color-border);
+  //     border-radius: 4px;
+  //     background: #fff;
+  //     box-sizing: border-box;
+  //   }
+  // }
+
+  // .checkBoxInput:checked+.checkBoxLabel {
+  //   color: var(--color-accent);
+  //   font-weight: 600;
+  // }
+
+  // .checkBoxInput:checked+.checkBoxLabel::before {
+  //   background: var(--color-accent);
+  //   border-color: var(--color-accent);
+  // }
+
+  // .checkBoxInput:checked+.checkBoxLabel::after {
+  //   content: "";
+  //   position: relative;
+  //   left: -19px;
+  //   width: 6px;
+  //   height: 10px;
+  //   border: solid #fff;
+  //   border-width: 0 2px 2px 0;
+  //   transform: rotate(45deg);
+  // }
 }
 
 .formWrap {
