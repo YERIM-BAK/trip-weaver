@@ -10,12 +10,11 @@ html {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.5;
-  // color: var(--color-primary);
+  color: var(--color-text-primary);
   word-break: break-all;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   -webkit-overflow-scrolling: touch;
-  overflow: hidden;
 }
 
 * {
