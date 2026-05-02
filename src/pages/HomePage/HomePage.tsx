@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DatePicker from "@/components/ui/DatePicker/DatePicker";
+import RangeSlider from "@/components/ui/RangeSlider/RangeSlider";
 
 const AREA_ITEMS = [
   { label: "서울", code: "1", emoji: "🏙️" },
@@ -37,14 +38,23 @@ const STYLE_ITEMS = [
   { label: "액티비티", emoji: "🎯" },
 ];
 
+const BUDGET_ITEMS = [
+  { label: "5만원 이하", emoji: "💰" },
+  { label: "5~15만원", emoji: "💰💰" },
+  { label: "15~30만원", emoji: "💰💰💰" },
+  { label: "30만원 이상", emoji: "💰💰💰💰" },
+];
+
 function HomePage() {
   const router = useRouter();
   const [areaCode, setAreaCode] = useState("");
   const [petType, setPetType] = useState("");
   const [travelStyle, setTravelStyle] = useState("");
+  const [budget, setBudget] = useState(0);
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
-  const isReady = areaCode && startDate && endDate && petType && travelStyle;
+  const isReady =
+    areaCode && startDate && endDate && petType && travelStyle && budget;
 
   const handleSubmit = () => {
     if (!isReady) return;
@@ -52,6 +62,9 @@ function HomePage() {
       areaCode,
       petType,
       style: travelStyle,
+      budget: String(budget),
+      startDate: startDate!.toISOString().split("T")[0],
+      endDate: endDate!.toISOString().split("T")[0],
     });
     router.push(`/plan?${params}`);
   };
@@ -139,6 +152,21 @@ function HomePage() {
               </button>
             ))}
           </div>
+        </section>
+
+        <section className="section">
+          <h2 className="sectionLabel">
+            <span className="dot" data-color="green" aria-hidden="true" />
+            1인 기준 예산은요?
+          </h2>
+          <RangeSlider
+            value={budget}
+            onChange={setBudget}
+            max={50}
+            formatLabel={(v) => (v >= 50 ? "제한 없음" : `${v}만원`)}
+            ticks={["0원", "10만원", "30만원", "제한 없음"]}
+            ariaLabel="예산 선택"
+          />
         </section>
 
         <button
