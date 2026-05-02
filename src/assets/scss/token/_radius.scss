@@ -2,7 +2,8 @@ $radius-xs: 4px;
 $radius-sm: 8px;
 $radius-md: 12px;
 $radius-lg: 16px;
-$radius-xl: 24px;
+$radius-xl: 20px;
+$radius-2xl: 24px;
 
 :root {
   --radius-xs: #{$radius-xs};
@@ -10,4 +11,5 @@ $radius-xl: 24px;
   --radius-md: #{$radius-md};
   --radius-lg: #{$radius-lg};
   --radius-xl: #{$radius-xl};
+  --radius-2xl: #{$radius-2xl};
 }
