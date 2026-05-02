@@ -1,5 +1,5 @@
-import Header from "@/components/Header/Header";
-import TabBar from "@/components/TabBar/TabBar";
+import Header from "@/components/layout/Header/Header";
+import TabBar from "@/components/layout/TabBar/TabBar";
 
 function WithNavLayout({ children }: { children: React.ReactNode }) {
   return (
