@@ -63,13 +63,6 @@ const STYLE_ITEMS = [
   { label: "액티비티", emoji: "🎯" },
 ];
 
-const BUDGET_ITEMS = [
-  { label: "5만원 이하", emoji: "💰" },
-  { label: "5~15만원", emoji: "💰💰" },
-  { label: "15~30만원", emoji: "💰💰💰" },
-  { label: "30만원 이상", emoji: "💰💰💰💰" },
-];
-
 function HomePage() {
   const router = useRouter();
   const [areaCode, setAreaCode] = useState("");
@@ -199,7 +192,7 @@ function HomePage() {
       <div className="formWrap">
         <section className="section">
           <h2 className="sectionLabel">
-            <span className="dot" data-color="teal" aria-hidden="true" />
+            <span className="dot" aria-hidden="true" />
             어디로 떠날까요?
           </h2>
           <ul className="areaGrid" role="list">
@@ -226,7 +219,7 @@ function HomePage() {
 
         <section className="section">
           <h2 className="sectionLabel">
-            <span className="dot" data-color="purple" aria-hidden="true" />
+            <span className="dot" aria-hidden="true" />
             언제 떠날까요?
           </h2>
           <div className="dateRow">
@@ -244,7 +237,7 @@ function HomePage() {
 
         <section className="section">
           <h2 className="sectionLabel">
-            <span className="dot" data-color="coral" aria-hidden="true" />
+            <span className="dot" aria-hidden="true" />
             어떤 친구와 함께하나요?
           </h2>
           <div className="chipRow" role="group" aria-label="반려동물 종류 선택">
@@ -265,7 +258,7 @@ function HomePage() {
 
         <section className="section">
           <h2 className="sectionLabel">
-            <span className="dot" data-color="amber" aria-hidden="true" />
+            <span className="dot" aria-hidden="true" />
             여행 스타일은요?
           </h2>
           <div className="chipRow" role="group" aria-label="여행 스타일 선택">
@@ -286,7 +279,7 @@ function HomePage() {
 
         <section className="section">
           <h2 className="sectionLabel">
-            <span className="dot" data-color="green" aria-hidden="true" />
+            <span className="dot" aria-hidden="true" />
             1인 기준 예산은요?
           </h2>
           <RangeSlider
@@ -310,7 +303,7 @@ function HomePage() {
           onClick={handleSubmit}
           disabled={!isReady || loading}
         >
-          {loading ? "코스 생성 중..." : "🗺️ 코스 만들기"}
+          {loading ? "코스 생성 중..." : "코스 만들기"}
         </button>
       </div>
 
