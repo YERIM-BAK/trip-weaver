@@ -1,0 +1,101 @@
+.spotCard {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  padding: 14px;
+  border-radius: 14px;
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+
+  transition: box-shadow 0.2s ease, transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.spotOrder {
+  flex-shrink: 0;
+
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.spotBody {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.spotHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.spotName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+
+  /* 길면 말줄임 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spotCategory {
+  flex-shrink: 0;
+
+  padding: 2px 8px;
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+}
+
+.spotDesc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.spotMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.spotAddress,
+.spotDuration {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
