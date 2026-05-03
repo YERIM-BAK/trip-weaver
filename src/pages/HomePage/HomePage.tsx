@@ -4,6 +4,11 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import DatePicker from "@/components/ui/DatePicker/DatePicker";
 import RangeSlider from "@/components/ui/RangeSlider/RangeSlider";
+import Map from "@/components/ui/Map/Map";
+import { LatLng, MapMarker } from "@/components/ui/Map/Map.types";
+import { DayCourse } from "@/features/course/course.types";
+import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
 
 const AREA_ITEMS = [
   { label: "서울", code: "1", emoji: "🏙️" },
@@ -24,6 +29,26 @@ const AREA_ITEMS = [
   { label: "전남", code: "38", emoji: "🍵" },
   { label: "제주", code: "39", emoji: "🍊" },
 ];
+
+const AREA_CENTER: Record<string, LatLng> = {
+  "1": { lat: 37.5665, lng: 126.978 }, // 서울
+  "2": { lat: 37.4563, lng: 126.7052 }, // 인천
+  "3": { lat: 36.3504, lng: 127.3845 }, // 대전
+  "4": { lat: 35.8714, lng: 128.6014 }, // 대구
+  "5": { lat: 35.1595, lng: 126.8526 }, // 광주
+  "6": { lat: 35.1796, lng: 129.0756 }, // 부산
+  "7": { lat: 35.5384, lng: 129.3114 }, // 울산
+  "8": { lat: 36.48, lng: 127.289 }, // 세종
+  "31": { lat: 37.4138, lng: 127.5183 }, // 경기
+  "32": { lat: 37.8228, lng: 128.1555 }, // 강원
+  "33": { lat: 36.6358, lng: 127.4915 }, // 충북
+  "34": { lat: 36.6588, lng: 126.6728 }, // 충남
+  "35": { lat: 36.4919, lng: 128.8889 }, // 경북
+  "36": { lat: 35.4606, lng: 128.2132 }, // 경남
+  "37": { lat: 35.7175, lng: 127.153 }, // 전북
+  "38": { lat: 34.8679, lng: 126.991 }, // 전남
+  "39": { lat: 33.4996, lng: 126.5312 }, // 제주
+};
 
 const PET_ITEMS = [
   { label: "강아지", emoji: "🐶" },
@@ -53,20 +78,120 @@ function HomePage() {
   const [budget, setBudget] = useState(0);
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
+  // const selectedArea = AREA_ITEMS.find((a) => a.code === areaCode);
+  // const isReady =
+  //   areaCode && startDate && endDate && petType && travelStyle && budget;
+
+  // const handleSubmit = () => {
+  //   if (!isReady) return;
+  //   const params = new URLSearchParams({
+  //     areaCode: selectedArea?.label ?? areaCode,
+  //     petType,
+  //     style: travelStyle,
+  //     budget: String(budget),
+  //     startDate: startDate!.toISOString().split("T")[0],
+  //     endDate: endDate!.toISOString().split("T")[0],
+  //   });
+  //   router.push(`/plan?${params}`);
+  // };
+  // 코스 결과 상태
+  const [courses, setCourses] = useState<DayCourse[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  // 지도 상태
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [markers, setMarkers] = useState<MapMarker[]>([]);
+  const [polyline, setPolyline] = useState<LatLng[]>([]);
+  const [mapCenter, setMapCenter] = useState<LatLng>(
+    AREA_CENTER[areaCode] ?? { lat: 36.5, lng: 127.5 },
+  );
+  const selectedArea = AREA_ITEMS.find((a) => a.code === areaCode);
   const isReady =
     areaCode && startDate && endDate && petType && travelStyle && budget;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!isReady) return;
+
+    setLoading(true);
+    setError("");
+    setCourses([]);
+    setSelectedDay(null);
+    setMarkers([]);
+    setPolyline([]);
+
+    try {
+      const res = await fetch("http://localhost:8000/api/courses/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          areaCode: selectedArea?.label ?? areaCode,
+          petType,
+          style: travelStyle,
+          budget: String(budget),
+          startDate: startDate!.toISOString().split("T")[0],
+          endDate: endDate!.toISOString().split("T")[0],
+        }),
+      });
+
+      if (!res.ok) throw new Error(`API 실패: ${res.status}`);
+
+      const json = await res.json();
+      const parsed = typeof json === "string" ? JSON.parse(json) : json;
+      const fetched: DayCourse[] = parsed.courses ?? [];
+      setCourses(fetched);
+
+      // 첫 번째 day 자동 선택
+      if (fetched.length > 0) {
+        applyDayToMap(fetched[0]);
+        setSelectedDay(fetched[0].day);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("코스를 생성하는 데 실패했어요. 다시 시도해주세요.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // day 선택 → 지도 업데이트
+  const applyDayToMap = (day: DayCourse) => {
+    const validSpots = day.spots.filter((s) => s.lat !== 0 && s.lng !== 0);
+
+    const nextMarkers: MapMarker[] = validSpots.map((spot, i) => ({
+      id: `${day.day}-${i}`,
+      position: { lat: spot.lat, lng: spot.lng },
+      label: spot.name,
+      active: i === 0,
+    }));
+
+    const nextPolyline: LatLng[] = validSpots.map((s) => ({
+      lat: s.lat,
+      lng: s.lng,
+    }));
+
+    setMarkers(nextMarkers);
+    setPolyline(nextPolyline);
+
+    if (validSpots.length > 0) {
+      setMapCenter({ lat: validSpots[0].lat, lng: validSpots[0].lng });
+    }
+  };
+
+  const handleDayClick = (day: DayCourse) => {
+    setSelectedDay(day.day);
+    applyDayToMap(day);
+  };
+
+  const handleDetailClick = (day: DayCourse) => {
     const params = new URLSearchParams({
-      areaCode,
+      areaCode: selectedArea?.label ?? areaCode,
       petType,
       style: travelStyle,
       budget: String(budget),
       startDate: startDate!.toISOString().split("T")[0],
       endDate: endDate!.toISOString().split("T")[0],
     });
-    router.push(`/plan?${params}`);
+    // router.push(`/plan?${params}`);
   };
 
   return (
@@ -84,7 +209,12 @@ function HomePage() {
                   type="button"
                   className="areaBtn"
                   aria-pressed={areaCode === area.code}
-                  onClick={() => setAreaCode(area.code)}
+                  onClick={() => {
+                    setAreaCode(area.code);
+                    setMapCenter(
+                      AREA_CENTER[area.code] ?? { lat: 36.5, lng: 127.5 },
+                    );
+                  }}
                 >
                   <span aria-hidden="true">{area.emoji}</span>
                   <span>{area.label}</span>
@@ -178,75 +308,90 @@ function HomePage() {
           type="button"
           className="submitBtn"
           onClick={handleSubmit}
-          disabled={!isReady}
-          aria-disabled={!isReady}
+          disabled={!isReady || loading}
         >
-          🗺️ 코스 만들기
+          {loading ? "코스 생성 중..." : "🗺️ 코스 만들기"}
         </button>
+      </div>
+
+      <div>
+        <div className="mapWrap">
+          <div className="mapContainer">
+            <Map
+              center={mapCenter}
+              markers={markers}
+              polyline={polyline}
+              zoom={13}
+            />
+          </div>
+        </div>
+
+        <div className="courseResult">
+          {loading && <LoadingOverlay message="AI가 코스를 생성하는 중" />}
+          {!loading && error && (
+            <div className="stateBox" role="alert">
+              <p>{error}</p>
+              <button type="button" className="retryBtn" onClick={handleSubmit}>
+                다시 시도
+              </button>
+            </div>
+          )}
+
+          {/* 코스 리스트 */}
+          {!loading && !error && courses.length > 0 && (
+            <section>
+              <p className="resultCount">
+                총 <strong>{courses.length}일</strong> 코스
+              </p>
+              <ol className="courseList">
+                {courses.map((day) => (
+                  <li key={day.day} className="dayItem">
+                    <button
+                      type="button"
+                      className="dayHeader"
+                      aria-pressed={selectedDay === day.day}
+                      onClick={() => handleDayClick(day)}
+                    >
+                      <span className="dayBadge" aria-label={`${day.day}일차`}>
+                        Day {day.day}
+                      </span>
+                      <time dateTime={day.date}>{day.date}</time>
+                      <span className="spotCount">
+                        {day.spots.length}개 장소
+                      </span>
+                    </button>
+
+                    {selectedDay === day.day && (
+                      <>
+                        <ol
+                          className="spotList"
+                          role="list"
+                          aria-label={`${day.day}일차 장소 목록`}
+                        >
+                          {day.spots.map((spot, i) => (
+                            <li key={i} className="spotItem">
+                              <SpotCard spot={spot} order={i + 1} />
+                            </li>
+                          ))}
+                        </ol>
+                        <button
+                          type="button"
+                          className="detailBtn"
+                          onClick={() => handleDetailClick(day)}
+                        >
+                          상세보기 →
+                        </button>
+                      </>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
 export default HomePage;
-
-// import CourseCardList from "@/features/course/components/CourseCardList/CourseCardList";
-
-// function HomePage() {
-//   const courses = [
-//     {
-//       id: 1,
-//       title: "한강 산책 코스",
-//       description: "여유롭게 걷기 좋은 코스",
-//       distance: "3.2km",
-//       time: "45분",
-//       petAllowed: true,
-//       image: "/images/photo.jpg",
-//     },
-//     {
-//       id: 2,
-//       title: "북한산 힐링 코스",
-//       description: "자연 속 산책",
-//       distance: "5.1km",
-//       time: "1시간 20분",
-//       petAllowed: false,
-//       image: "/images/photo.jpg",
-//     },
-//   ];
-//   return (
-//     <div>
-//       <select id="regionFilter" className="regionFilterSelect">
-//         <option value="">전체</option>
-//         <option value="1">서울</option>
-//         <option value="6">부산</option>
-//         <option value="4">대구</option>
-//         <option value="2">인천</option>
-//         <option value="5">광주</option>
-//         <option value="3">대전</option>
-//         <option value="7">울산</option>
-//         <option value="8">세종</option>
-//         <option value="31">경기</option>
-//         <option value="32">강원</option>
-//         <option value="33">충북</option>
-//         <option value="34">충남</option>
-//         <option value="35">경북</option>
-//         <option value="36">경남</option>
-//         <option value="37">전북</option>
-//         <option value="38">전남</option>
-//         <option value="39">제주</option>
-//       </select>
-//       <select id="hashtagFilter" className="hashtagFilterSelect">
-//         <option value="">전체</option>
-//         <option value="C0112">#가족코스</option>
-//         <option value="C0113">#나홀로코스</option>
-//         <option value="C0114">#힐링코스</option>
-//         <option value="C0115">#도보코스</option>
-//         <option value="C0116">#캠핑코스</option>
-//         <option value="C0117">#맛코스</option>
-//       </select>
-//       <CourseCardList courses={courses} />
-//     </div>
-//   );
-// }
-
-// export default HomePage;

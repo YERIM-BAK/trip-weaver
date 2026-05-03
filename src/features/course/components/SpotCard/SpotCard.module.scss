@@ -6,14 +6,14 @@
   padding: 14px;
   border-radius: 14px;
 
-  background: var(--color-surface);
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
 
   transition: box-shadow 0.2s ease, transform 0.15s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 6px 14px rgba(95, 95, 255, 0.1);
   }
 }
 
@@ -29,14 +29,15 @@
   justify-content: center;
 
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
 
-  background: var(--color-accent);
+  background: var(--color-primary);
   color: #fff;
 }
 
 .spotBody {
   flex: 1;
+  min-width: 0; // 말줄임 작동을 위해 필수
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -45,16 +46,17 @@
 .spotHeader {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
 }
 
 .spotName {
+  flex: 1;
+  min-width: 0;
+
   font-size: 15px;
   font-weight: 600;
   color: var(--color-text-primary);
 
-  /* 길면 말줄임 */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -69,14 +71,14 @@
   font-size: 11px;
   font-weight: 500;
 
-  background: var(--color-background);
+  background: var(--color-bg-muted);
   color: var(--color-text-secondary);
 }
 
 .spotDesc {
   font-size: 13px;
   color: var(--color-text-secondary);
-  line-height: 1.4;
+  line-height: 1.5;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -88,9 +90,10 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 2px;
 
   font-size: 12px;
-  color: var(--color-text-secondary);
+  color: var(--color-text-tertiary);
 }
 
 .spotAddress,
