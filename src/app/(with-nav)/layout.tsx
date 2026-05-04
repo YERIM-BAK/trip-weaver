@@ -10,7 +10,7 @@ function WithNavLayout({ children }: { children: React.ReactNode }) {
         strategy="afterInteractive"
       />
       <Header />
-      <main id="main-content" tabIndex={-1}>
+      <main id="main-content" className="mainContent" tabIndex={-1}>
         {children}
       </main>
       <TabBar />
