@@ -1,388 +1,180 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import DatePicker from "@/components/ui/DatePicker/DatePicker";
-import RangeSlider from "@/components/ui/RangeSlider/RangeSlider";
-import Map from "@/components/ui/Map/Map";
-import { LatLng, MapMarker } from "@/components/ui/Map/Map.types";
-import { DayCourse } from "@/features/course/course.types";
-import SpotCard from "@/features/course/components/SpotCard/SpotCard";
-import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { getLocationBased } from "@/lib/tourapi";
+import { useState, useRef } from "react";
 
-const AREA_ITEMS = [
-  { label: "서울", code: "1", emoji: "🏙️" },
-  { label: "인천", code: "2", emoji: "✈️" },
-  { label: "대전", code: "3", emoji: "🌿" },
-  { label: "대구", code: "4", emoji: "🍎" },
-  { label: "광주", code: "5", emoji: "🌸" },
-  { label: "부산", code: "6", emoji: "🌊" },
-  { label: "울산", code: "7", emoji: "🐋" },
-  { label: "세종", code: "8", emoji: "🏛️" },
-  { label: "경기", code: "31", emoji: "🌾" },
-  { label: "강원", code: "32", emoji: "⛰️" },
-  { label: "충북", code: "33", emoji: "🌲" },
-  { label: "충남", code: "34", emoji: "🦀" },
-  { label: "경북", code: "35", emoji: "🍇" },
-  { label: "경남", code: "36", emoji: "🐠" },
-  { label: "전북", code: "37", emoji: "🌻" },
-  { label: "전남", code: "38", emoji: "🍵" },
-  { label: "제주", code: "39", emoji: "🍊" },
-];
+const KAKAO_REST_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY ?? "";
 
-const AREA_CENTER: Record<string, LatLng> = {
-  "1": { lat: 37.5665, lng: 126.978 }, // 서울
-  "2": { lat: 37.4563, lng: 126.7052 }, // 인천
-  "3": { lat: 36.3504, lng: 127.3845 }, // 대전
-  "4": { lat: 35.8714, lng: 128.6014 }, // 대구
-  "5": { lat: 35.1595, lng: 126.8526 }, // 광주
-  "6": { lat: 35.1796, lng: 129.0756 }, // 부산
-  "7": { lat: 35.5384, lng: 129.3114 }, // 울산
-  "8": { lat: 36.48, lng: 127.289 }, // 세종
-  "31": { lat: 37.4138, lng: 127.5183 }, // 경기
-  "32": { lat: 37.8228, lng: 128.1555 }, // 강원
-  "33": { lat: 36.6358, lng: 127.4915 }, // 충북
-  "34": { lat: 36.6588, lng: 126.6728 }, // 충남
-  "35": { lat: 36.4919, lng: 128.8889 }, // 경북
-  "36": { lat: 35.4606, lng: 128.2132 }, // 경남
-  "37": { lat: 35.7175, lng: 127.153 }, // 전북
-  "38": { lat: 34.8679, lng: 126.991 }, // 전남
-  "39": { lat: 33.4996, lng: 126.5312 }, // 제주
-};
+interface KakaoPlace {
+  id: string;
+  place_name: string;
+  address_name: string;
+  road_address_name: string;
+  x: string; // lng
+  y: string; // lat
+}
 
-const PET_ITEMS = [
-  { label: "강아지", emoji: "🐶" },
-  { label: "고양이", emoji: "🐱" },
-  { label: "기타", emoji: "🐾" },
-];
-
-const STYLE_ITEMS = [
-  { label: "자연/힐링", emoji: "🌿" },
-  { label: "도심/문화", emoji: "🏛️" },
-  { label: "맛집탐방", emoji: "🍜" },
-  { label: "액티비티", emoji: "🎯" },
-];
+interface TourSpot {
+  contentid: string;
+  title: string;
+  addr1: string;
+  firstimage: string;
+  dist: string;
+  contenttypeid: string;
+  mapx: string;
+  mapy: string;
+}
 
 function HomePage() {
-  const router = useRouter();
-  const [areaCode, setAreaCode] = useState("");
-  const [petType, setPetType] = useState("");
-  const [travelStyle, setTravelStyle] = useState("");
-  const [budget, setBudget] = useState(0);
-  const [startDate, setStartDate] = useState<Date | undefined>();
-  const [endDate, setEndDate] = useState<Date | undefined>();
-  // const selectedArea = AREA_ITEMS.find((a) => a.code === areaCode);
-  // const isReady =
-  //   areaCode && startDate && endDate && petType && travelStyle && budget;
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [origin, setOrigin] = useState<KakaoPlace | null>(null);
+  const [nearbySpots, setNearbySpots] = useState<TourSpot[]>([]);
+  const [isFetchingNearby, setIsFetchingNearby] = useState(false);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  // const handleSubmit = () => {
-  //   if (!isReady) return;
-  //   const params = new URLSearchParams({
-  //     areaCode: selectedArea?.label ?? areaCode,
-  //     petType,
-  //     style: travelStyle,
-  //     budget: String(budget),
-  //     startDate: startDate!.toISOString().split("T")[0],
-  //     endDate: endDate!.toISOString().split("T")[0],
-  //   });
-  //   router.push(`/plan?${params}`);
-  // };
-  // 코스 결과 상태
-  const [courses, setCourses] = useState<DayCourse[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  // 지도 상태
-  const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [markers, setMarkers] = useState<MapMarker[]>([]);
-  const [polyline, setPolyline] = useState<LatLng[]>([]);
-  const [mapCenter, setMapCenter] = useState<LatLng>(
-    AREA_CENTER[areaCode] ?? { lat: 36.5, lng: 127.5 },
-  );
-  const selectedArea = AREA_ITEMS.find((a) => a.code === areaCode);
-  const isReady =
-    areaCode && startDate && endDate && petType && travelStyle && budget;
+  const handleSearch = async () => {
+    const q = searchQuery.trim();
+    if (!q) return;
 
-  const handleSubmit = async () => {
-    if (!isReady) return;
-
-    setLoading(true);
-    setError("");
-    setCourses([]);
-    setSelectedDay(null);
-    setMarkers([]);
-    setPolyline([]);
+    setIsSearching(true);
+    setSearchResults([]);
 
     try {
-      const res = await fetch("http://localhost:8000/api/courses/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          areaCode: selectedArea?.label ?? areaCode,
-          petType,
-          style: travelStyle,
-          budget: String(budget),
-          startDate: startDate!.toISOString().split("T")[0],
-          endDate: endDate!.toISOString().split("T")[0],
-        }),
-      });
-
-      if (!res.ok) throw new Error(`API 실패: ${res.status}`);
-
-      const json = await res.json();
-      const parsed = typeof json === "string" ? JSON.parse(json) : json;
-      const fetched: DayCourse[] = parsed.courses ?? [];
-      setCourses(fetched);
-
-      // 첫 번째 day 자동 선택
-      if (fetched.length > 0) {
-        applyDayToMap(fetched[0]);
-        setSelectedDay(fetched[0].day);
-      }
-    } catch (err) {
-      console.error(err);
-      setError("코스를 생성하는 데 실패했어요. 다시 시도해주세요.");
+      const res = await fetch(
+        `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(q)}&size=5`,
+        { headers: { Authorization: `KakaoAK ${KAKAO_REST_KEY}` } },
+      );
+      const data = await res.json();
+      setSearchResults(data.documents ?? []);
+    } catch (e) {
+      console.error("검색 실패", e);
     } finally {
-      setLoading(false);
+      setIsSearching(false);
     }
   };
 
-  // day 선택 → 지도 업데이트
-  const applyDayToMap = (day: DayCourse) => {
-    const validSpots = day.spots.filter((s) => s.lat !== 0 && s.lng !== 0);
+  const handleSelectOrigin = async (place: KakaoPlace) => {
+    setOrigin(place);
+    setSearchResults([]);
+    setSearchQuery(place.place_name);
+    setNearbySpots([]);
+    setIsFetchingNearby(true);
 
-    const nextMarkers: MapMarker[] = validSpots.map((spot, i) => ({
-      id: `${day.day}-${i}`,
-      position: { lat: spot.lat, lng: spot.lng },
-      label: spot.name,
-      active: i === 0,
-    }));
-
-    const nextPolyline: LatLng[] = validSpots.map((s) => ({
-      lat: s.lat,
-      lng: s.lng,
-    }));
-
-    setMarkers(nextMarkers);
-    setPolyline(nextPolyline);
-
-    if (validSpots.length > 0) {
-      setMapCenter({ lat: validSpots[0].lat, lng: validSpots[0].lng });
+    try {
+      const data = await getLocationBased(place.y, place.x);
+      setNearbySpots(data ?? []);
+    } catch (e) {
+      console.error("주변 검색 실패", e);
+    } finally {
+      setIsFetchingNearby(false);
     }
   };
 
-  const handleDayClick = (day: DayCourse) => {
-    setSelectedDay(day.day);
-    applyDayToMap(day);
-  };
-
-  const handleDetailClick = (day: DayCourse) => {
-    const params = new URLSearchParams({
-      areaCode: selectedArea?.label ?? areaCode,
-      petType,
-      style: travelStyle,
-      budget: String(budget),
-      startDate: startDate!.toISOString().split("T")[0],
-      endDate: endDate!.toISOString().split("T")[0],
-    });
-    // router.push(`/plan?${params}`);
+  const handleClear = () => {
+    setOrigin(null);
+    setSearchQuery("");
+    setSearchResults([]);
+    setNearbySpots([]);
+    searchRef.current?.focus();
   };
 
   return (
     <div className="homePage">
-      <div className="formWrap">
-        <section className="section">
-          <h2 className="sectionLabel">
-            <span className="dot" aria-hidden="true" />
-            어디로 떠날까요?
-          </h2>
-          <ul className="areaGrid" role="list">
-            {AREA_ITEMS.map((area) => (
-              <li key={area.code}>
+      <section className="section">
+        <h2 className="sectionLabel">
+          <span className="dot" aria-hidden="true" />
+          어디서 출발할까요?
+        </h2>
+
+        <div className="searchRow">
+          <input
+            ref={searchRef}
+            type="search"
+            className="searchInput"
+            placeholder="출발 장소를 검색하세요"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              if (origin) handleClear();
+            }}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+          <button
+            type="button"
+            className="searchBtn"
+            onClick={handleSearch}
+            disabled={isSearching}
+          >
+            {isSearching ? "검색 중..." : "검색"}
+          </button>
+        </div>
+
+        {/* 카카오 검색 결과 드롭다운 */}
+        {searchResults.length > 0 && (
+          <ul className="searchResultList" role="listbox" aria-label="검색 결과">
+            {searchResults.map((place) => (
+              <li key={place.id} role="option" aria-selected={false}>
                 <button
                   type="button"
-                  className="areaBtn"
-                  aria-pressed={areaCode === area.code}
-                  onClick={() => {
-                    setAreaCode(area.code);
-                    setMapCenter(
-                      AREA_CENTER[area.code] ?? { lat: 36.5, lng: 127.5 },
-                    );
-                  }}
+                  className="searchResultItem"
+                  onClick={() => handleSelectOrigin(place)}
                 >
-                  <span aria-hidden="true">{area.emoji}</span>
-                  <span>{area.label}</span>
+                  <span className="placeName">{place.place_name}</span>
+                  <span className="placeAddress">
+                    {place.road_address_name || place.address_name}
+                  </span>
                 </button>
               </li>
             ))}
           </ul>
-        </section>
+        )}
 
-        <section className="section">
-          <h2 className="sectionLabel">
-            <span className="dot" aria-hidden="true" />
-            언제 떠날까요?
-          </h2>
-          <div className="dateRow">
-            <DatePicker
-              mode="range"
-              value={{ startDate, endDate }}
-              onChange={({ startDate, endDate }) => {
-                setStartDate(startDate);
-                setEndDate(endDate);
-              }}
-              minDate={new Date()}
-            />
+        {/* 선택된 출발지 */}
+        {origin && (
+          <div className="originBadge">
+            <span>📍 {origin.place_name}</span>
+            <button
+              type="button"
+              className="clearBtn"
+              aria-label="출발지 초기화"
+              onClick={handleClear}
+            >
+              ✕
+            </button>
           </div>
-        </section>
+        )}
+      </section>
 
+      {/* 주변 여행지 리스트 */}
+      {isFetchingNearby && (
+        <p className="nearbyStatus" aria-live="polite">
+          주변 여행지를 불러오는 중...
+        </p>
+      )}
+
+      {!isFetchingNearby && nearbySpots.length > 0 && (
         <section className="section">
           <h2 className="sectionLabel">
             <span className="dot" aria-hidden="true" />
-            어떤 친구와 함께하나요?
+            주변 여행지
           </h2>
-          <div className="chipRow" role="group" aria-label="반려동물 종류 선택">
-            {PET_ITEMS.map((pet) => (
-              <button
-                key={pet.label}
-                type="button"
-                className="chip"
-                aria-pressed={petType === pet.label}
-                onClick={() => setPetType(pet.label)}
-              >
-                <span aria-hidden="true">{pet.emoji}</span>
-                {pet.label}
-              </button>
+          <ul className="nearbyList" role="list">
+            {nearbySpots.map((spot) => (
+              <li key={spot.contentid} className="nearbyItem">
+                <span className="nearbyName">{spot.title}</span>
+                <span className="nearbyAddress">{spot.addr1}</span>
+                <span className="nearbyDist">{Math.round(Number(spot.dist))}m</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
+      )}
 
-        <section className="section">
-          <h2 className="sectionLabel">
-            <span className="dot" aria-hidden="true" />
-            여행 스타일은요?
-          </h2>
-          <div className="chipRow" role="group" aria-label="여행 스타일 선택">
-            {STYLE_ITEMS.map((s) => (
-              <button
-                key={s.label}
-                type="button"
-                className="chip"
-                aria-pressed={travelStyle === s.label}
-                onClick={() => setTravelStyle(s.label)}
-              >
-                <span aria-hidden="true">{s.emoji}</span>
-                {s.label}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        <section className="section">
-          <h2 className="sectionLabel">
-            <span className="dot" aria-hidden="true" />
-            1인 기준 예산은요?
-          </h2>
-          <RangeSlider
-            value={budget}
-            onChange={setBudget}
-            max={100}
-            step={1}
-            formatLabel={(v) => `${v}만원`}
-            ticks={[
-              { value: 0, label: "0원" },
-              { value: 50, label: "50만원" },
-              { value: 100, label: "100만원" },
-            ]}
-            ariaLabel="예산 선택"
-          />
-        </section>
-
-        <button
-          type="button"
-          className="submitBtn"
-          onClick={handleSubmit}
-          disabled={!isReady || loading}
-        >
-          {loading ? "코스 생성 중..." : "코스 만들기"}
-        </button>
-      </div>
-
-      <div>
-        <div className="mapWrap">
-          <div className="mapContainer">
-            <Map
-              center={mapCenter}
-              markers={markers}
-              polyline={polyline}
-              zoom={13}
-            />
-          </div>
-        </div>
-
-        <div className="courseResult">
-          {loading && <LoadingOverlay message="AI가 코스를 생성하는 중" />}
-          {!loading && error && (
-            <div className="stateBox" role="alert">
-              <p>{error}</p>
-              <button type="button" className="retryBtn" onClick={handleSubmit}>
-                다시 시도
-              </button>
-            </div>
-          )}
-
-          {/* 코스 리스트 */}
-          {!loading && !error && courses.length > 0 && (
-            <section>
-              <p className="resultCount">
-                총 <strong>{courses.length}일</strong> 코스
-              </p>
-              <ol className="courseList">
-                {courses.map((day) => (
-                  <li key={day.day} className="dayItem">
-                    <button
-                      type="button"
-                      className="dayHeader"
-                      aria-pressed={selectedDay === day.day}
-                      onClick={() => handleDayClick(day)}
-                    >
-                      <span className="dayBadge" aria-label={`${day.day}일차`}>
-                        Day {day.day}
-                      </span>
-                      <time dateTime={day.date}>{day.date}</time>
-                      <span className="spotCount">
-                        {day.spots.length}개 장소
-                      </span>
-                    </button>
-
-                    {selectedDay === day.day && (
-                      <>
-                        <ol
-                          className="spotList"
-                          role="list"
-                          aria-label={`${day.day}일차 장소 목록`}
-                        >
-                          {day.spots.map((spot, i) => (
-                            <li key={i} className="spotItem">
-                              <SpotCard spot={spot} order={i + 1} />
-                            </li>
-                          ))}
-                        </ol>
-                        <button
-                          type="button"
-                          className="detailBtn"
-                          onClick={() => handleDetailClick(day)}
-                        >
-                          상세보기 →
-                        </button>
-                      </>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          )}
-        </div>
-      </div>
+      {!isFetchingNearby && origin && nearbySpots.length === 0 && (
+        <p className="nearbyStatus">주변 관광지를 찾지 못했어요.</p>
+      )}
     </div>
   );
 }
