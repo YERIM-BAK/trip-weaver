@@ -96,13 +96,11 @@
   }
 }
 
-
-//FONT
-@mixin font($type, $size, $weight: 400) {
-  font-size: var(--size-#{$type}-#{$size});
-  letter-spacing: var(--letterspace-#{$type}-#{$size});
-  line-height: var(--lineheight-#{$type}-#{$size});
-  font-weight: $weight;
+@mixin font($type, $size, $weight: regular) {
+  font-size: var(--font-#{$type}-#{$size}-size);
+  line-height: var(--font-#{$type}-#{$size}-line);
+  letter-spacing: var(--font-#{$type}-#{$size}-letter);
+  font-weight: var(--font-weight-#{$weight}, #{$weight});
 }
 
 // 추후 사용

@@ -45,13 +45,13 @@
 }
 
 .title {
-  @include font(body, L, 600);
+  @include font(body, lg, 600);
   color: var(--color-text-primary);
 }
 
 .desc {
   margin-top: var(--space-1);
-  @include font(body, M);
+  @include font(body, md);
   color: var(--color-text-secondary);
 
   @include eline-clamp(2);
@@ -64,7 +64,7 @@
   gap: var(--space-2);
 
   span {
-    @include font(body, S);
+    @include font(body, sm);
     color: var(--color-text-tertiary);
   }
 }
