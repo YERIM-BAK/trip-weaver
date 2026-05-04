@@ -426,19 +426,25 @@
 // 2026.05.04
 .homePage {
   padding: 20px;
+  .section {
+    + .section {
+      margin-top: 20px;
+    }
+  }
   @media (min-width: 768px) {
     display: flex;
     flex-direction: row;
+    .section {
+      &:first-of-type {
+        flex: 1;
+        margin-right: 20px;
+      }
+      &:last-of-type {
+        flex: 2;
+      }
+    }
   }
 
-  .section {
-    &:first-of-type {
-      flex: 1;
-    }
-    &:last-of-type {
-      flex: 2;
-    }
-  }
 }
 .spotCardList {
   li {
