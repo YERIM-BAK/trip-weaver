@@ -447,25 +447,29 @@
 
 
 .searchBox {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 14px;
+  padding: 12px 100px 12px 14px;
   border-radius: 14px;
   border: 1px solid #eee;
   background: #fff;
   .searchBox__input {
     flex: 1;
-    border: none;
-    outline: none;
+    height: 30px;
   }
   
   .searchBox__clear {
+    position: absolute;
+    right: 80px;
     font-size: 14px;
     color: #999;
   }
   
   .searchBox__action {
+    position: absolute;
+    right: 12px;
     background: #111;
     color: #fff;
     border-radius: 10px;

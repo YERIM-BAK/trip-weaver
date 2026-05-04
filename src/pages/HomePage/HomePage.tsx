@@ -131,8 +131,6 @@ function HomePage() {
         </div>
 
         <div className="searchBox">
-          <span className="searchBox__icon">📍</span>
-
           <input 
             className="searchBox__input"
             ref={searchRef}
@@ -163,7 +161,7 @@ function HomePage() {
             onClick={handleSearch}
             disabled={isSearching}
           >
-            {isSearching ? "검색 중..." : "검색🔍"}
+            검색
           </button>
         </div>
 
