@@ -95,10 +95,7 @@ function HomePage() {
             className="searchInput"
             placeholder="출발 장소를 검색하세요"
             value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              if (origin) handleClear();
-            }}
+            onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
           <button
