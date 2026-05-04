@@ -1,4 +1,5 @@
 import { Spot } from "../../course.types";
+import styles from "./SpotCard.module.scss"
 
 interface SpotCardProps {
   spot: Spot;
@@ -7,27 +8,26 @@ interface SpotCardProps {
 
 function SpotCard({ spot, order }: SpotCardProps) {
   return (
-    <article className="spotCard">
-      <div className="spotOrder" aria-hidden="true">
-        {order}
-      </div>
-      <div className="spotBody">
-        <header className="spotHeader">
-          <h3 className="spotName">{spot.name}</h3>
+    <article className={styles["spotCard"]}>
+      <div className={styles["spotOrder"]}>{order}</div>
+
+      <div className={styles["spotBody"]}>
+        <header className={styles["spotHeader"]}>
+          <h3 className={styles["spotName"]}>{spot.name}</h3>
           {spot.category && (
-            <span className="spotCategory">{spot.category}</span>
+            <span className={styles["spotCategory"]}>{spot.category}</span>
           )}
         </header>
-        <p className="spotDesc">{spot.description}</p>
-        <footer className="spotMeta">
-          <span className="spotAddress">
-            <span aria-hidden="true">📍</span>
-            {spot.address}
-          </span>
-          <span className="spotDuration">
-            <span aria-hidden="true">⏱</span>
-            {spot.duration}
-          </span>
+
+        {spot.description && (
+          <p className={styles["spotDesc"]}>{spot.description}</p>
+        )}
+
+        <footer className={styles["spotMeta"]}>
+          <span className={styles["spotAddress"]}>{spot.address}</span>
+          {spot.duration && (
+            <span className={styles["spotDuration"]}>⏱ {spot.duration}</span>
+          )}
         </footer>
       </div>
     </article>

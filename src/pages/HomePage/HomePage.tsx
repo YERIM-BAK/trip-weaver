@@ -1,5 +1,6 @@
 "use client";
 
+import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import { getLocationBased } from "@/lib/tourapi";
 import { useState, useRef } from "react";
 
@@ -80,15 +81,26 @@ function HomePage() {
     searchRef.current?.focus();
   };
 
+  const mapToSpot = (spot: TourSpot) => ({
+    id: spot.contentid,
+    name: spot.title,
+    address: spot.addr1,
+    description: "",
+    duration: `${Math.round(Number(spot.dist) / 70)}분`,
+    category: "",
+    lat: Number(spot.mapy),
+    lng: Number(spot.mapx),
+  });
+
   return (
     <div className="homePage">
       <section className="section">
-        <h2 className="sectionLabel">
+        <h2 className="sectionTitle">
           <span className="dot" aria-hidden="true" />
           어디서 출발할까요?
         </h2>
 
-        <div className="searchRow">
+        <div className="searchWrap">
           <input
             ref={searchRef}
             type="search"
@@ -108,11 +120,10 @@ function HomePage() {
           </button>
         </div>
 
-        {/* 카카오 검색 결과 드롭다운 */}
         {searchResults.length > 0 && (
-          <ul className="searchResultList" role="listbox" aria-label="검색 결과">
+          <ul className="searchResultList">
             {searchResults.map((place) => (
-              <li key={place.id} role="option" aria-selected={false}>
+              <li key={place.id}>
                 <button
                   type="button"
                   className="searchResultItem"
@@ -128,7 +139,6 @@ function HomePage() {
           </ul>
         )}
 
-        {/* 선택된 출발지 */}
         {origin && (
           <div className="originBadge">
             <span>📍 {origin.place_name}</span>
@@ -144,25 +154,22 @@ function HomePage() {
         )}
       </section>
 
-      {/* 주변 여행지 리스트 */}
       {isFetchingNearby && (
-        <p className="nearbyStatus" aria-live="polite">
+        <p className="nearbyStatus">
           주변 여행지를 불러오는 중...
         </p>
       )}
 
       {!isFetchingNearby && nearbySpots.length > 0 && (
         <section className="section">
-          <h2 className="sectionLabel">
+          <h2 className="sectionTitle">
             <span className="dot" aria-hidden="true" />
             주변 여행지
           </h2>
-          <ul className="nearbyList" role="list">
-            {nearbySpots.map((spot) => (
-              <li key={spot.contentid} className="nearbyItem">
-                <span className="nearbyName">{spot.title}</span>
-                <span className="nearbyAddress">{spot.addr1}</span>
-                <span className="nearbyDist">{Math.round(Number(spot.dist))}m</span>
+          <ul className="spotCardList">
+            {nearbySpots.map((spot, idx) => (
+              <li key={spot.contentid}>
+                <SpotCard  spot={mapToSpot(spot)} order={idx + 1} />
               </li>
             ))}
           </ul>

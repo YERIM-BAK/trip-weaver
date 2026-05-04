@@ -1,46 +1,37 @@
+@use "../../../../assets/scss/abstracts"as *;
+
 .spotCard {
   display: flex;
   gap: 12px;
-  align-items: flex-start;
-
-  padding: 14px;
-  border-radius: 14px;
-
+  padding: 16px;
+  border-radius: 16px;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   transition: box-shadow 0.2s ease, transform 0.15s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(95, 95, 255, 0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   }
 }
 
 .spotOrder {
+  @include flex-center;
+  position: relative;
   flex-shrink: 0;
-
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
   font-size: 13px;
-  font-weight: 700;
-
-  background: var(--color-primary);
-  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
 .spotBody {
   flex: 1;
-  min-width: 0; // 말줄임 작동을 위해 필수
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
 }
 
 .spotHeader {
@@ -50,55 +41,27 @@
 }
 
 .spotName {
-  flex: 1;
-  min-width: 0;
-
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
-  color: var(--color-text-primary);
-
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .spotCategory {
-  flex-shrink: 0;
-
+  font-size: 12px;
   padding: 2px 8px;
   border-radius: 999px;
-
-  font-size: 11px;
-  font-weight: 500;
-
   background: var(--color-bg-muted);
-  color: var(--color-text-secondary);
 }
 
 .spotDesc {
   font-size: 13px;
   color: var(--color-text-secondary);
-  line-height: 1.5;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  margin-top: 6px;
 }
 
 .spotMeta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 2px;
-
-  font-size: 12px;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 13px;
   color: var(--color-text-tertiary);
-}
-
-.spotAddress,
-.spotDuration {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 }
