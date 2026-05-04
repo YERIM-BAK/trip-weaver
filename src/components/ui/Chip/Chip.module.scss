@@ -1,0 +1,21 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f4f4f4;
+  border: 1px solid #e5e5e5;
+  font-size: 14px;
+  transition: 0.2s;
+
+  &:hover {
+    background: #ececec;
+  }
+}
+
+.chip__clear {
+  margin-left: 4px;
+  font-size: 12px;
+  color: #888;
+}
