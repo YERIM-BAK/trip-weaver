@@ -113,6 +113,22 @@ function HomePage() {
           어디서 출발할까요?
         </h2>
 
+        <div className="originBadgeBox">
+          <span className="originBadgeTitle">출발지</span>
+          {origin && (
+            <div className="originBadge">
+              <span>{origin.place_name}</span>
+              <button
+                type="button"
+                className="clearBtn"
+                aria-label="출발지 초기화"
+                onClick={handleClear}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+        </div>
 
         <div className="searchBox">
           <span className="searchBox__icon">📍</span>
@@ -170,10 +186,9 @@ function HomePage() {
         {searchResults.length > 0 && (
           <ul className="searchResultList">
             {searchResults.map((place) => (
-              <li key={place.id}>
+              <li key={place.id} className="searchResultItem">
                 <button
                   type="button"
-                  className="searchResultItem"
                   onClick={() => handleSelectOrigin(place)}
                 >
                   <span className="placeName">{place.place_name}</span>
@@ -185,24 +200,11 @@ function HomePage() {
             ))}
           </ul>
         )}
-
-        {origin && (
-          <div className="originBadge">
-            <span>{origin.place_name}</span>
-            <button
-              type="button"
-              className="clearBtn"
-              aria-label="출발지 초기화"
-              onClick={handleClear}
-            >
-              ✕
-            </button>
-          </div>
-        )}
       </section>
 
       {isFetchingNearby && (
-        <p className="nearbyStatus">
+        // 컴포넌트 만들어야함
+        <p className="completeMsg">
           주변 여행지를 불러오는 중...
         </p>
       )}
@@ -226,7 +228,7 @@ function HomePage() {
       </section>
 
       {!isFetchingNearby && origin && nearbySpots.length === 0 && (
-        <p className="nearbyStatus">주변 관광지를 찾지 못했어요.</p>
+        <p className="completeMsg">주변 관광지를 찾지 못했어요.</p>
       )}
     </div>
   );
