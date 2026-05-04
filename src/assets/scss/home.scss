@@ -3,9 +3,11 @@
 .section {
   display: flex;
   flex-direction: column;
+
   .originBadgeBox {
     margin-bottom: 12px;
   }
+
   .chipList {
     margin-top: 12px;
   }
@@ -426,19 +428,23 @@
 // 2026.05.04
 .homePage {
   padding: 20px;
+
   .section {
-    + .section {
+    +.section {
       margin-top: 20px;
     }
   }
+
   @media (min-width: 768px) {
     display: flex;
     flex-direction: row;
+
     .section {
       &:first-of-type {
         flex: 1;
         margin-right: 20px;
       }
+
       &:last-of-type {
         flex: 2;
       }
@@ -446,6 +452,7 @@
   }
 
 }
+
 .spotCardList {
   li {
     margin-top: 12px;
@@ -466,19 +473,20 @@
   border-radius: 14px;
   border: 1px solid #eee;
   background: #fff;
-  .searchBox__input {
+
+  .searchBoxInput {
     flex: 1;
     height: 30px;
   }
-  
-  .searchBox__clear {
+
+  .searchBoxClear {
     position: absolute;
     right: 80px;
     font-size: 14px;
     color: #999;
   }
-  
-  .searchBox__action {
+
+  .searchBoxAction {
     position: absolute;
     right: 12px;
     background: #111;
@@ -501,10 +509,12 @@
     color: #888;
     font-weight: 500;
   }
+
   .originBadge {
     margin-top: 8px;
   }
 }
+
 .originBadge {
   display: inline-flex;
   align-items: center;

@@ -24,12 +24,10 @@ function KakaoMap({
   const centerRef = useRef(center);
   const [mapReady, setMapReady] = useState(false);
 
-  // center 최신값 유지
   useEffect(() => {
     centerRef.current = center;
   }, [center]);
 
-  // 지도 초기화
   useEffect(() => {
     const initMap = () => {
       if (!containerRef.current) return;
@@ -50,7 +48,7 @@ function KakaoMap({
           options,
         );
 
-        setMapReady(true); // ✅ 초기화 완료 신호
+        setMapReady(true);
       });
     };
 
@@ -73,9 +71,8 @@ function KakaoMap({
     if (!mapRef.current) return;
     const latlng = new window.kakao.maps.LatLng(center.lat, center.lng);
     mapRef.current.setCenter(latlng);
-  }, [center.lat, center.lng, mapReady]); // ✅
+  }, [center.lat, center.lng, mapReady]);
 
-  // 마커 업데이트
   useEffect(() => {
     if (!mapRef.current) return;
 
@@ -116,9 +113,8 @@ function KakaoMap({
       );
       mapRef.current.setBounds(bounds);
     }
-  }, [markers, onMarkerClick, mapReady]); // ✅
+  }, [markers, onMarkerClick, mapReady]);
 
-  // 폴리라인 업데이트
   useEffect(() => {
     if (!mapRef.current) return;
 

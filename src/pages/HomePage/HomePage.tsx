@@ -55,7 +55,7 @@ function HomePage() {
 
     try {
       const res = await fetch(
-        `/api/places?query=${encodeURIComponent(q)}&size=5`
+        `/api/places?query=${encodeURIComponent(q)}&size=5`,
       );
       const data = await res.json();
       setSearchResults(data ?? []);
@@ -84,12 +84,12 @@ function HomePage() {
     setOrigin(place);
     setSearchResults([]);
     setSearchQuery(place.place_name);
- 
+
     setHistory((prev) => {
       const filtered = prev.filter((v) => v.id !== place.id);
       return [place, ...filtered].slice(0, 5);
     });
- 
+
     fetchNearbySpots(place);
   };
 
@@ -131,8 +131,8 @@ function HomePage() {
         </div>
 
         <div className="searchBox">
-          <input 
-            className="searchBox__input"
+          <input
+            className="searchBoxInput"
             ref={searchRef}
             type="search"
             placeholder="출발 장소를 검색하세요"
@@ -144,7 +144,7 @@ function HomePage() {
           {searchQuery && (
             <button
               type="button"
-              className="searchBox__clear"
+              className="searchBoxClear"
               aria-label="검색어 지우기"
               onClick={() => {
                 setSearchQuery("");
@@ -157,7 +157,7 @@ function HomePage() {
           )}
           <button
             type="button"
-            className="searchBox__action"
+            className="searchBoxAction"
             onClick={handleSearch}
             disabled={isSearching}
           >
@@ -180,15 +180,11 @@ function HomePage() {
           </ul>
         )}
 
-
         {searchResults.length > 0 && (
           <ul className="searchResultList">
             {searchResults.map((place) => (
               <li key={place.id} className="searchResultItem">
-                <button
-                  type="button"
-                  onClick={() => handleSelectOrigin(place)}
-                >
+                <button type="button" onClick={() => handleSelectOrigin(place)}>
                   <span className="placeName">{place.place_name}</span>
                   <span className="placeAddress">
                     {place.road_address_name || place.address_name}
@@ -202,9 +198,7 @@ function HomePage() {
 
       {isFetchingNearby && (
         // 컴포넌트 만들어야함
-        <p className="completeMsg">
-          주변 여행지를 불러오는 중...
-        </p>
+        <p className="completeMsg">주변 여행지를 불러오는 중...</p>
       )}
 
       <section className="section">
@@ -217,7 +211,7 @@ function HomePage() {
             <ul className="spotCardList">
               {nearbySpots.map((spot, idx) => (
                 <li key={spot.contentid}>
-                  <SpotCard  spot={mapToSpot(spot)} order={idx + 1} />
+                  <SpotCard spot={mapToSpot(spot)} order={idx + 1} />
                 </li>
               ))}
             </ul>
