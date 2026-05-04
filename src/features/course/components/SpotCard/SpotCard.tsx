@@ -1,5 +1,5 @@
 import { Spot } from "../../course.types";
-import styles from "./SpotCard.module.scss"
+import styles from "./SpotCard.module.scss";
 
 interface SpotCardProps {
   spot: Spot;
@@ -12,23 +12,23 @@ function SpotCard({ spot, order }: SpotCardProps) {
       <div className={styles["spotOrder"]}>{order}</div>
 
       <div className={styles["spotBody"]}>
-        <header className={styles["spotHeader"]}>
+        <div className={styles["spotHeader"]}>
           <h3 className={styles["spotName"]}>{spot.name}</h3>
           {spot.category && (
             <span className={styles["spotCategory"]}>{spot.category}</span>
           )}
-        </header>
+        </div>
 
         {spot.description && (
           <p className={styles["spotDesc"]}>{spot.description}</p>
         )}
 
-        <footer className={styles["spotMeta"]}>
+        <div className={styles["spotMeta"]}>
           <span className={styles["spotAddress"]}>{spot.address}</span>
           {spot.duration && (
             <span className={styles["spotDuration"]}>⏱ {spot.duration}</span>
           )}
-        </footer>
+        </div>
       </div>
     </article>
   );

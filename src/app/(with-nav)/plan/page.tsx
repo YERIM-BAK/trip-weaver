@@ -1,7 +1,10 @@
 "use client";
 
-import PlanPage from "@/pages/PlanPage/PlanPage";
+// import PlanPage from "@/pages/PlanPage/PlanPage";
 
 export default function Page() {
-  return <PlanPage />;
+  return (
+    // <PlanPage />;
+    <p>준비중</p>
+  );
 }
