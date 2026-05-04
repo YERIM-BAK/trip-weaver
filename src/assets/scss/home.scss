@@ -1,104 +1,5 @@
 @use "abstracts"as *;
 
-// .homePage {
-//   padding: 24px 16px 120px;
-
-//   @media (min-width: 768px) {
-//     display: grid;
-//     grid-template-columns: 400px 1fr;
-//     gap: 0;
-//     padding: 0;
-//     height: calc(100% - 60px);
-//   }
-
-//   .mapWrap {
-//     display: none;
-
-//     @media (min-width: 768px) {
-//       display: block;
-//       position: sticky;
-//       top: 60px;
-//       height: 100%;
-
-//       .mapContainer {
-//         height: 100%;
-//       }
-//     }
-//   }
-
-//   .formWrap {
-//     display: flex;
-//     flex-direction: column;
-//     // gap: 20px;
-
-//     @media (min-width: 768px) {
-//       padding: 28px 24px;
-//       overflow-y: auto;
-//       border-right: 1px solid var(--color-border);
-//       height: 100%;
-//     }
-
-//     .section {
-//       +.section {
-//         margin-top: 20px;
-//       }
-//     }
-
-//     .submitBtn {
-//       margin-top: 20px;
-//     }
-//   }
-
-//   // .checkBox {
-//   //   display: inline-flex;
-//   //   align-items: center;
-//   //   gap: 6px;
-//   //   font-size: 13px;
-//   //   color: var(--color-text-secondary);
-//   // }
-
-//   // .checkBoxInput {
-//   //   @include visually-hidden;
-//   // }
-
-//   // .checkBoxLabel {
-//   //   display: inline-flex;
-//   //   align-items: center;
-//   //   gap: 6px;
-
-//   //   &::before {
-//   //     content: "";
-//   //     width: 15px;
-//   //     height: 15px;
-//   //     border: 1px solid var(--color-border);
-//   //     border-radius: 4px;
-//   //     background: #fff;
-//   //     box-sizing: border-box;
-//   //   }
-//   // }
-
-//   // .checkBoxInput:checked+.checkBoxLabel {
-//   //   color: var(--color-accent);
-//   //   font-weight: 600;
-//   // }
-
-//   // .checkBoxInput:checked+.checkBoxLabel::before {
-//   //   background: var(--color-accent);
-//   //   border-color: var(--color-accent);
-//   // }
-
-//   // .checkBoxInput:checked+.checkBoxLabel::after {
-//   //   content: "";
-//   //   position: relative;
-//   //   left: -19px;
-//   //   width: 6px;
-//   //   height: 10px;
-//   //   border: solid #fff;
-//   //   border-width: 0 2px 2px 0;
-//   //   transform: rotate(45deg);
-//   // }
-// }
-
 .section {
   display: flex;
   flex-direction: column;
@@ -542,4 +443,49 @@
       margin-top: 0;
     }
   }
+}
+
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid #eee;
+  background: #fff;
+  .searchBox__input {
+    flex: 1;
+    border: none;
+    outline: none;
+  }
+  
+  .searchBox__clear {
+    font-size: 14px;
+    color: #999;
+  }
+  
+  .searchBox__action {
+    background: #111;
+    color: #fff;
+    border-radius: 10px;
+    padding: 6px 10px;
+  }
+}
+
+.chipList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+
+.selectedBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
 }

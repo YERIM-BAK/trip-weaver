@@ -1,10 +1,9 @@
 "use client";
 
+import Chip from "@/components/ui/Chip/Chip";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import { getLocationBased } from "@/lib/tourapi";
-import { useState, useRef } from "react";
-
-const KAKAO_REST_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY ?? "";
+import { useState, useRef, useCallback } from "react";
 
 interface KakaoPlace {
   id: string;
@@ -26,6 +25,17 @@ interface TourSpot {
   mapy: string;
 }
 
+const mapToSpot = (spot: TourSpot) => ({
+  id: spot.contentid,
+  name: spot.title,
+  address: spot.addr1,
+  description: "",
+  duration: `${Math.round(Number(spot.dist) / 70)}분`,
+  category: "",
+  lat: Number(spot.mapy),
+  lng: Number(spot.mapx),
+});
+
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
@@ -33,6 +43,7 @@ function HomePage() {
   const [origin, setOrigin] = useState<KakaoPlace | null>(null);
   const [nearbySpots, setNearbySpots] = useState<TourSpot[]>([]);
   const [isFetchingNearby, setIsFetchingNearby] = useState(false);
+  const [history, setHistory] = useState<KakaoPlace[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = async () => {
@@ -44,11 +55,10 @@ function HomePage() {
 
     try {
       const res = await fetch(
-        `https://dapi.kakao.com/v2/local/search/keyword.json?query=${encodeURIComponent(q)}&size=5`,
-        { headers: { Authorization: `KakaoAK ${KAKAO_REST_KEY}` } },
+        `/api/places?query=${encodeURIComponent(q)}&size=5`
       );
       const data = await res.json();
-      setSearchResults(data.documents ?? []);
+      setSearchResults(data ?? []);
     } catch (e) {
       console.error("검색 실패", e);
     } finally {
@@ -56,12 +66,9 @@ function HomePage() {
     }
   };
 
-  const handleSelectOrigin = async (place: KakaoPlace) => {
-    setOrigin(place);
-    setSearchResults([]);
-    setSearchQuery(place.place_name);
-    setNearbySpots([]);
+  const fetchNearbySpots = useCallback(async (place: KakaoPlace) => {
     setIsFetchingNearby(true);
+    setNearbySpots([]);
 
     try {
       const data = await getLocationBased(place.y, place.x);
@@ -71,6 +78,19 @@ function HomePage() {
     } finally {
       setIsFetchingNearby(false);
     }
+  }, []);
+
+  const handleSelectOrigin = (place: KakaoPlace) => {
+    setOrigin(place);
+    setSearchResults([]);
+    setSearchQuery(place.place_name);
+ 
+    setHistory((prev) => {
+      const filtered = prev.filter((v) => v.id !== place.id);
+      return [place, ...filtered].slice(0, 5);
+    });
+ 
+    fetchNearbySpots(place);
   };
 
   const handleClear = () => {
@@ -81,16 +101,9 @@ function HomePage() {
     searchRef.current?.focus();
   };
 
-  const mapToSpot = (spot: TourSpot) => ({
-    id: spot.contentid,
-    name: spot.title,
-    address: spot.addr1,
-    description: "",
-    duration: `${Math.round(Number(spot.dist) / 70)}분`,
-    category: "",
-    lat: Number(spot.mapy),
-    lng: Number(spot.mapx),
-  });
+  const handleRemoveHistory = (id: string) => {
+    setHistory((prev) => prev.filter((v) => v.id !== id));
+  };
 
   return (
     <div className="homePage">
@@ -100,25 +113,59 @@ function HomePage() {
           어디서 출발할까요?
         </h2>
 
-        <div className="searchWrap">
-          <input
+
+        <div className="searchBox">
+          <span className="searchBox__icon">📍</span>
+
+          <input 
+            className="searchBox__input"
             ref={searchRef}
             type="search"
-            className="searchInput"
             placeholder="출발 장소를 검색하세요"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
+
+          {searchQuery && (
+            <button
+              type="button"
+              className="searchBox__clear"
+              aria-label="검색어 지우기"
+              onClick={() => {
+                setSearchQuery("");
+                setSearchResults([]);
+                searchRef.current?.focus();
+              }}
+            >
+              ✕
+            </button>
+          )}
           <button
             type="button"
-            className="searchBtn"
+            className="searchBox__action"
             onClick={handleSearch}
             disabled={isSearching}
           >
-            {isSearching ? "검색 중..." : "검색"}
+            {isSearching ? "검색 중..." : "검색🔍"}
           </button>
         </div>
+
+        {history.length > 0 && (
+          <ul className="chipList">
+            {history.map((item) => (
+              <li key={item.id}>
+                <Chip
+                  id={item.id}
+                  label={item.place_name}
+                  onClick={() => handleSelectOrigin(item)}
+                  onClear={() => handleRemoveHistory(item.id)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+
 
         {searchResults.length > 0 && (
           <ul className="searchResultList">
@@ -141,7 +188,7 @@ function HomePage() {
 
         {origin && (
           <div className="originBadge">
-            <span>📍 {origin.place_name}</span>
+            <span>{origin.place_name}</span>
             <button
               type="button"
               className="clearBtn"
@@ -160,21 +207,23 @@ function HomePage() {
         </p>
       )}
 
-      {!isFetchingNearby && nearbySpots.length > 0 && (
-        <section className="section">
-          <h2 className="sectionTitle">
-            <span className="dot" aria-hidden="true" />
-            주변 여행지
-          </h2>
-          <ul className="spotCardList">
-            {nearbySpots.map((spot, idx) => (
-              <li key={spot.contentid}>
-                <SpotCard  spot={mapToSpot(spot)} order={idx + 1} />
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
+      <section className="section">
+        {!isFetchingNearby && nearbySpots.length > 0 && (
+          <div>
+            <h2 className="sectionTitle">
+              <span className="dot" aria-hidden="true" />
+              주변 여행지
+            </h2>
+            <ul className="spotCardList">
+              {nearbySpots.map((spot, idx) => (
+                <li key={spot.contentid}>
+                  <SpotCard  spot={mapToSpot(spot)} order={idx + 1} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </section>
 
       {!isFetchingNearby && origin && nearbySpots.length === 0 && (
         <p className="nearbyStatus">주변 관광지를 찾지 못했어요.</p>
