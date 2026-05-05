@@ -1,4 +1,4 @@
-import styles from "./Chip.module.scss"
+import styles from "./Chip.module.scss";
 
 export type ChipItem = {
   label: string;
@@ -10,11 +10,11 @@ export type ChipItem = {
 function Chip({ label, onClick, onClear }: ChipItem) {
   return (
     <button className={styles["chip"]} onClick={onClick}>
-      <span className={styles["chip__label"]}>{label}</span>
+      <span className={styles["chipText"]}>{label}</span>
 
       {onClear && (
         <span
-          className={styles["chip__clear"]}
+          className={styles["clearBtn"]}
           onClick={(e) => {
             e.stopPropagation();
             onClear();
