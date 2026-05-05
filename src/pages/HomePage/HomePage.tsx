@@ -2,6 +2,7 @@
 
 import Chip from "@/components/ui/Chip/Chip";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import SearchBox from "@/features/search/components/SearchBox";
 import { getLocationBased } from "@/lib/tourapi";
 import { useState, useRef, useCallback } from "react";
 
@@ -129,6 +130,8 @@ function HomePage() {
             </div>
           )}
         </div>
+
+        <SearchBox />
 
         <div className="searchBox">
           <input
