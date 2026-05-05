@@ -1,0 +1,58 @@
+@use "../../../assets/scss/abstracts"as *;
+
+.inputField {}
+
+.inputControl {
+  position: relative;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  border-radius: 6px;
+  padding: 12px 36px 12px 8px;
+
+  label {
+    display: inline-flex;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.71;
+    letter-spacing: normal;
+    margin-bottom: var(--spacing-2);
+  }
+
+  input {
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.4;
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px white inset;
+      box-shadow: 0 0 0 1000px white inset;
+    }
+
+    &::placeholder {
+      color: var(--color-text-tertiary);
+    }
+
+    &:disabled {
+      background-color: var(--color-disabled-bg);
+      color: var(--color-disabled-text);
+    }
+  }
+}
+
+
+.inputClearBtn {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+
+  &::before {
+    content: "";
+    display: block;
+    background-image: url("../../../assets/images/icons/ico_delete.svg");
+    background-size: 24px auto;
+    width: 24px;
+    height: 24px;
+  }
+}
