@@ -1,0 +1,27 @@
+.searchBox {
+  position: relative;
+
+  :global(.inputControl) {
+    padding-right: 70px;
+  }
+
+  :global(.inputClearBtn) {
+    right: 40px;
+  }
+}
+
+.searchBtn {
+  position: absolute;
+  top: 12px;
+  right: 8px;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 24px;
+    background-image: url("../../../assets/images/icons/ico_search_24.svg");
+    background-size: 24px auto;
+    background-repeat: no-repeat;
+  }
+}
