@@ -1,9 +1,12 @@
 "use client";
 
+import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
+import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import { TourSpot } from "@/features/course/course.types";
 import SearchBox from "@/features/search/components/SearchBox";
 import SearchResults from "@/features/search/components/SearchResults";
+import { useSearch } from "@/features/search/hooks/useSearch";
 import { KakaoPlace } from "@/features/search/search.types";
 import { getLocationBased } from "@/lib/tourapi";
 import { useState, useRef, useCallback } from "react";
@@ -20,31 +23,20 @@ const mapToSpot = (spot: TourSpot) => ({
 });
 
 function HomePage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+    const {
+    searchQuery,
+    setSearchQuery,
+    searchResults,
+    setSearchResults,
+    isSearching,
+    handleSearch,
+    clearSearch,
+  } = useSearch();
+
   const [origin, setOrigin] = useState<KakaoPlace | null>(null);
   const [nearbySpots, setNearbySpots] = useState<TourSpot[]>([]);
   const [isFetchingNearby, setIsFetchingNearby] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
-  
-
-  const handleSearch = useCallback(async () => {
-    const q = searchQuery.trim();
-    if (!q) {
-      setSearchResults([]);
-      return;
-    }
-
-    setIsSearching(true);
-    try {
-      const res = await fetch(`/api/places?query=${encodeURIComponent(q)}&size=5`);
-      const data = await res.json();
-      setSearchResults(data ?? []);
-    } finally {
-      setIsSearching(false);
-    }
-  }, [searchQuery]);
 
   const fetchNearbySpots = useCallback(async (place: KakaoPlace) => {
     setIsFetchingNearby(true);
@@ -68,8 +60,7 @@ function HomePage() {
 
   const handleClear = () => {
     setOrigin(null);
-    setSearchQuery("");
-    setSearchResults([]);
+    clearSearch(); 
     setNearbySpots([]);
     searchRef.current?.focus();
   };
@@ -117,8 +108,7 @@ function HomePage() {
       </section>
 
       {isFetchingNearby && (
-        // 컴포넌트 만들어야함
-        <p className="completeMsg">주변 여행지를 불러오는 중...</p>
+        <LoadingOverlay message="주변 여행지를 불러오는 중..." />
       )}
 
       <section className="section">
@@ -140,7 +130,10 @@ function HomePage() {
       </section>
 
       {!isFetchingNearby && origin && nearbySpots.length === 0 && (
-        <p className="completeMsg">주변 관광지를 찾지 못했어요.</p>
+        <FeedbackMessage
+          status="error"
+          title="주변 관광지를 찾지 못했어요."
+        />
       )}
     </div>
   );

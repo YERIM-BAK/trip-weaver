@@ -3,8 +3,6 @@ import styles from "./Search.module.scss";
 
 export default function SearchResults({ results, isSearching, onSelect, }: SearchResultsProps) {
   if (isSearching) return <div>검색중...</div>;
-  if (!results.length) return <div>결과 없음</div>;
-
   return (
     <div className={styles["searchResults"]}>
       <ul className={styles["searchResultList"]}>
