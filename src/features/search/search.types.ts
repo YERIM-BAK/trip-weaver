@@ -16,8 +16,6 @@ export type KakaoPlace = {
   y: string; // lat
 }
 
-export type PlaceItem = KakaoPlace;
-
 export interface SearchResultsProps {
   results: KakaoPlace[];
   isSearching: boolean;
