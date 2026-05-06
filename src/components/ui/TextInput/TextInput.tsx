@@ -1,18 +1,19 @@
 "use client";
 
-import { forwardRef, useState } from "react";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import styles from "./TextInput.module.scss";
 import { InputProps } from "./TextInput.types";
 import clsx from "clsx";
 
 const TextInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, id, type = "text", helperText, className, ...props }, ref) => {
-    const [text, setText] = useState("");
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setText(e.target.value);
-    };
+  ({ label, id, type = "text", helperText, onChange, value, className, ...props }, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
+
     const onReset = () => {
-      setText("");
+      onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+      inputRef.current?.focus();
     };
     return (
       <div className={clsx(styles["inputField"], "inputField", className)}>
@@ -24,15 +25,15 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             id={id}
-            ref={ref}
+            ref={inputRef}
             type={type}
-            onChange={handleInputChange}
-            value={text}
+            onChange={onChange}
+            value={value ?? ""}
             className={clsx(styles["input"], "input")}
             {...props}
           />
 
-          {text && (
+          {value && (
             <button
               type="button"
               className={clsx(styles["inputClearBtn"], "inputClearBtn")}
