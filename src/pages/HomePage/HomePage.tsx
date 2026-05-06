@@ -1,19 +1,11 @@
 "use client";
 
-import Chip from "@/components/ui/Chip/Chip";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import SearchBox from "@/features/search/components/SearchBox";
+import SearchResults from "@/features/search/components/SearchResults";
+import { KakaoPlace } from "@/features/search/search.types";
 import { getLocationBased } from "@/lib/tourapi";
-import { useState, useRef, useCallback } from "react";
-
-interface KakaoPlace {
-  id: string;
-  place_name: string;
-  address_name: string;
-  road_address_name: string;
-  x: string; // lng
-  y: string; // lat
-}
+import { useState, useRef, useCallback, useEffect } from "react";
 
 interface TourSpot {
   contentid: string;
@@ -44,33 +36,28 @@ function HomePage() {
   const [origin, setOrigin] = useState<KakaoPlace | null>(null);
   const [nearbySpots, setNearbySpots] = useState<TourSpot[]>([]);
   const [isFetchingNearby, setIsFetchingNearby] = useState(false);
-  const [history, setHistory] = useState<KakaoPlace[]>([]);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     const q = searchQuery.trim();
-    if (!q) return;
+    if (!q) {
+      setSearchResults([]);
+      return;
+    }
 
     setIsSearching(true);
-    setSearchResults([]);
-
     try {
-      const res = await fetch(
-        `/api/places?query=${encodeURIComponent(q)}&size=5`,
-      );
+      const res = await fetch(`/api/places?query=${encodeURIComponent(q)}&size=5`);
       const data = await res.json();
       setSearchResults(data ?? []);
-    } catch (e) {
-      console.error("검색 실패", e);
     } finally {
       setIsSearching(false);
     }
-  };
+  }, [searchQuery]);
 
   const fetchNearbySpots = useCallback(async (place: KakaoPlace) => {
     setIsFetchingNearby(true);
     setNearbySpots([]);
-
     try {
       const data = await getLocationBased(place.y, place.x);
       setNearbySpots(data ?? []);
@@ -85,12 +72,6 @@ function HomePage() {
     setOrigin(place);
     setSearchResults([]);
     setSearchQuery(place.place_name);
-
-    setHistory((prev) => {
-      const filtered = prev.filter((v) => v.id !== place.id);
-      return [place, ...filtered].slice(0, 5);
-    });
-
     fetchNearbySpots(place);
   };
 
@@ -100,10 +81,6 @@ function HomePage() {
     setSearchResults([]);
     setNearbySpots([]);
     searchRef.current?.focus();
-  };
-
-  const handleRemoveHistory = (id: string) => {
-    setHistory((prev) => prev.filter((v) => v.id !== id));
   };
 
   return (
@@ -131,71 +108,20 @@ function HomePage() {
           )}
         </div>
 
-        <SearchBox />
-
-        <div className="searchBox">
-          <input
-            className="searchBoxInput"
-            ref={searchRef}
-            type="search"
-            placeholder="출발 장소를 검색하세요"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          />
-
-          {searchQuery && (
-            <button
-              type="button"
-              className="searchBoxClear"
-              aria-label="검색어 지우기"
-              onClick={() => {
-                setSearchQuery("");
-                setSearchResults([]);
-                searchRef.current?.focus();
-              }}
-            >
-              ✕
-            </button>
-          )}
-          <button
-            type="button"
-            className="searchBoxAction"
-            onClick={handleSearch}
-            disabled={isSearching}
-          >
-            검색
-          </button>
-        </div>
-
-        {history.length > 0 && (
-          <ul className="chipList">
-            {history.map((item) => (
-              <li key={item.id}>
-                <Chip
-                  id={item.id}
-                  label={item.place_name}
-                  onClick={() => handleSelectOrigin(item)}
-                  onClear={() => handleRemoveHistory(item.id)}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+        <SearchBox
+          value={searchQuery}
+          placeholder="출발 장소를 검색하세요"
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onSearch={handleSearch}
+          isSearching={isSearching}
+        />
 
         {searchResults.length > 0 && (
-          <ul className="searchResultList">
-            {searchResults.map((place) => (
-              <li key={place.id} className="searchResultItem">
-                <button type="button" onClick={() => handleSelectOrigin(place)}>
-                  <span className="placeName">{place.place_name}</span>
-                  <span className="placeAddress">
-                    {place.road_address_name || place.address_name}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ul>
+          <SearchResults
+            results={searchResults}
+            isSearching={isSearching}
+            onSelect={handleSelectOrigin}
+          />
         )}
       </section>
 
