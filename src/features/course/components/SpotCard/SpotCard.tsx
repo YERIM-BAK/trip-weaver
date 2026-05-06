@@ -1,10 +1,5 @@
-import { Spot } from "../../course.types";
+import { SpotCardProps } from "../../course.types";
 import styles from "./SpotCard.module.scss";
-
-interface SpotCardProps {
-  spot: Spot;
-  order: number;
-}
 
 function SpotCard({ spot, order }: SpotCardProps) {
   return (

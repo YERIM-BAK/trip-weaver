@@ -23,3 +23,20 @@ export type DayCourse = {
   date: string;
   spots: Spot[];
 };
+
+export type TourSpot = {
+  contentid: string;
+  title: string;
+  addr1: string;
+  firstimage: string;
+  dist: string;
+  contenttypeid: string;
+  mapx: string;
+  mapy: string;
+}
+
+export type SpotCardProps = {
+  spot: Spot;
+  order: number;
+}
+

@@ -1,22 +1,12 @@
 "use client";
 
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import { TourSpot } from "@/features/course/course.types";
 import SearchBox from "@/features/search/components/SearchBox";
 import SearchResults from "@/features/search/components/SearchResults";
 import { KakaoPlace } from "@/features/search/search.types";
 import { getLocationBased } from "@/lib/tourapi";
-import { useState, useRef, useCallback, useEffect } from "react";
-
-interface TourSpot {
-  contentid: string;
-  title: string;
-  addr1: string;
-  firstimage: string;
-  dist: string;
-  contenttypeid: string;
-  mapx: string;
-  mapy: string;
-}
+import { useState, useRef, useCallback } from "react";
 
 const mapToSpot = (spot: TourSpot) => ({
   id: spot.contentid,
@@ -37,6 +27,7 @@ function HomePage() {
   const [nearbySpots, setNearbySpots] = useState<TourSpot[]>([]);
   const [isFetchingNearby, setIsFetchingNearby] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  
 
   const handleSearch = useCallback(async () => {
     const q = searchQuery.trim();
