@@ -1,4 +1,4 @@
-@use "abstracts"as *;
+@use "../abstracts"as *;
 
 .font-headline-lg-regular {
   @include font(headline, lg, regular);
