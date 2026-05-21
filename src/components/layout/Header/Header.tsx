@@ -24,11 +24,10 @@ function Header() {
           className={styles["logo"]}
           aria-label="TripWeaver 홈으로 이동"
         >
-          <span aria-hidden="true">🐾</span>
           <span className={styles["logoText"]}>TripWeaver</span>
         </Link>
 
-        <nav className={styles["nav"]}>
+        {/* <nav className={styles["nav"]}>
           <ul className={styles["navList"]}>
             {NAV_ITEMS.map((item) => {
               const isActive = pathname === item.href;
@@ -45,7 +44,7 @@ function Header() {
               );
             })}
           </ul>
-        </nav>
+        </nav> */}
       </div>
     </header>
   );
