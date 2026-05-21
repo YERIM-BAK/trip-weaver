@@ -15,8 +15,9 @@ html {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   -webkit-overflow-scrolling: touch;
-  overflow: hidden;
 }
+
+
 
 * {
   -moz-box-sizing: border-box;
@@ -117,6 +118,14 @@ video {
   background: transparent;
   border: 0;
   outline: 0;
+}
+
+body {
+  overflow: hidden;
+
+  background: linear-gradient(180deg,
+      #f5f8ff 0%,
+      #eef4ff 100%);
 }
 
 a {

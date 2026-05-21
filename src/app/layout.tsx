@@ -18,10 +18,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className={localFonts.className}>
       <body>
-        <a href="#main-content" className="skip-nav">
-          본문 바로가기
-        </a>
-        {children}
+        <div className="app">
+          <a href="#main-content" className="skip-nav">
+            본문 바로가기
+          </a>
+          <div className="app-screen">{children}</div>
+        </div>
       </body>
     </html>
   );

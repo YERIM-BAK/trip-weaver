@@ -17,7 +17,29 @@
 }
 
 .mainContent {
-  overflow: hidden auto;
-  height: 100%;
+  height: calc(100% - 156px);
+  padding: 20px;
+  overflow-y: auto;
 }
 
+.app {
+  width: 100%;
+  height: 100dvh;
+
+  position: relative;
+
+  .app-screen {
+    width: 100%;
+    max-width: 480px;
+
+    height: 100%;
+
+    margin: 0 auto;
+
+    overflow: hidden;
+
+    background: #fff;
+
+    position: relative;
+  }
+}
