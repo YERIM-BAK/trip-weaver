@@ -6,13 +6,27 @@ import { InputProps } from "./TextInput.types";
 import clsx from "clsx";
 
 const TextInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, id, type = "text", helperText, onChange, value, className, ...props }, ref) => {
+  (
+    {
+      label,
+      id,
+      type = "text",
+      helperText,
+      onChange,
+      value,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
     const inputRef = useRef<HTMLInputElement>(null);
 
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
     const onReset = () => {
-      onChange?.({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+      onChange?.({
+        target: { value: "" },
+      } as React.ChangeEvent<HTMLInputElement>);
       inputRef.current?.focus();
     };
     return (
@@ -42,7 +56,7 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(
             ></button>
           )}
         </div>
-        {helperText && <p className={styles["helperText"]}>메세지</p>}
+        {helperText && <p className={styles["helperText"]}>{helperText}</p>}
       </div>
     );
   },

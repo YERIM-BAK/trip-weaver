@@ -1,1 +1,85 @@
-//
+@use "../abstracts"as *;
+
+.font-headline-lg-regular {
+  @include font(headline, lg, regular);
+}
+
+.font-headline-lg-medium {
+  @include font(headline, lg, medium);
+}
+
+.font-headline-lg-bold {
+  @include font(headline, lg, bold);
+}
+
+.font-headline-md-regular {
+  @include font(headline, md, regular);
+}
+
+.font-headline-md-medium {
+  @include font(headline, md, medium);
+}
+
+.font-headline-md-bold {
+  @include font(headline, md, bold);
+}
+
+.font-title-lg-regular {
+  @include font(title, lg, regular);
+}
+
+.font-title-lg-medium {
+  @include font(title, lg, medium);
+}
+
+.font-title-lg-bold {
+  @include font(title, lg, bold);
+}
+
+.font-title-md-regular {
+  @include font(title, md, regular);
+}
+
+.font-title-md-medium {
+  @include font(title, md, medium);
+}
+
+.font-title-md-bold {
+  @include font(title, md, bold);
+}
+
+.font-body-lg-regular {
+  @include font(body, lg, regular);
+}
+
+.font-body-lg-medium {
+  @include font(body, lg, medium);
+}
+
+.font-body-lg-bold {
+  @include font(body, lg, bold);
+}
+
+.font-body-md-regular {
+  @include font(body, md, regular);
+}
+
+.font-body-md-medium {
+  @include font(body, md, medium);
+}
+
+.font-body-md-bold {
+  @include font(body, md, bold);
+}
+
+.font-detail-sm-regular {
+  @include font(detail, sm, regular);
+}
+
+.font-detail-sm-medium {
+  @include font(detail, sm, medium);
+}
+
+.font-detail-sm-bold {
+  @include font(detail, sm, bold);
+}
