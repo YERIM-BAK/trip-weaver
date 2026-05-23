@@ -8,22 +8,35 @@ import SearchBox from "@/features/search/components/SearchBox";
 import SearchResults from "@/features/search/components/SearchResults";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import { KakaoPlace } from "@/features/search/search.types";
-import { getLocationBased } from "@/lib/tourapi";
+import { PetSpot } from "@/lib/petTour/petTour.types";
+import { getPetFriendlyNearby } from "@/lib/petTour/petTourApi";
+
 import { useState, useRef, useCallback } from "react";
 
-const mapToSpot = (spot: TourSpot) => ({
+const CONTENT_TYPE_MAP: Record<string, string> = {
+  "12": "관광지",
+  "14": "문화시설",
+  "15": "축제/행사",
+  "28": "레포츠",
+  "32": "숙박",
+  "38": "쇼핑",
+  "39": "음식점",
+};
+
+const mapToSpot = (spot: PetSpot) => ({
   id: spot.contentid,
   name: spot.title,
   address: spot.addr1,
-  description: "",
+  description: spot.petInfo ?? "", // 반려동물 정보 활용
   duration: `${Math.round(Number(spot.dist) / 70)}분`,
-  category: "",
+  category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
+  image: spot.firstimage ?? spot.firstimage2 ?? null,
   lat: Number(spot.mapy),
   lng: Number(spot.mapx),
 });
 
 function HomePage() {
-    const {
+  const {
     searchQuery,
     setSearchQuery,
     searchResults,
@@ -31,18 +44,21 @@ function HomePage() {
     isSearching,
     handleSearch,
     clearSearch,
+    isSearchOpen,
+    handleFocus,
+    handleBlur,
   } = useSearch();
 
   const [origin, setOrigin] = useState<KakaoPlace | null>(null);
-  const [nearbySpots, setNearbySpots] = useState<TourSpot[]>([]);
+  const [nearbySpots, setNearbySpots] = useState<PetSpot[]>([]);
   const [isFetchingNearby, setIsFetchingNearby] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
-  const fetchNearbySpots = useCallback(async (place: KakaoPlace) => {
+  const fetchNearbyPetSpots = useCallback(async (place: KakaoPlace) => {
     setIsFetchingNearby(true);
     setNearbySpots([]);
     try {
-      const data = await getLocationBased(place.y, place.x);
+      const data = await getPetFriendlyNearby(Number(place.y), Number(place.x));
       setNearbySpots(data ?? []);
     } catch (e) {
       console.error("주변 검색 실패", e);
@@ -55,12 +71,12 @@ function HomePage() {
     setOrigin(place);
     setSearchResults([]);
     setSearchQuery(place.place_name);
-    fetchNearbySpots(place);
+    fetchNearbyPetSpots(place);
   };
 
   const handleClear = () => {
     setOrigin(null);
-    clearSearch(); 
+    clearSearch();
     setNearbySpots([]);
     searchRef.current?.focus();
   };
@@ -90,21 +106,25 @@ function HomePage() {
           )}
         </div>
 
-        <SearchBox
-          value={searchQuery}
-          placeholder="출발 장소를 검색하세요"
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onSearch={handleSearch}
-          isSearching={isSearching}
-        />
-
-        {searchResults.length > 0 && (
-          <SearchResults
-            results={searchResults}
+        <div className="search-wrap">
+          <SearchBox
+            value={searchQuery}
+            placeholder="출발 장소를 검색하세요"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onSearch={handleSearch}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             isSearching={isSearching}
-            onSelect={handleSelectOrigin}
           />
-        )}
+
+          {(isSearchOpen || searchResults.length > 0) && (
+            <SearchResults
+              results={searchResults}
+              isSearching={isSearching}
+              onSelect={handleSelectOrigin}
+            />
+          )}
+        </div>
       </section>
 
       {isFetchingNearby && (
@@ -132,7 +152,7 @@ function HomePage() {
       {!isFetchingNearby && origin && nearbySpots.length === 0 && (
         <FeedbackMessage
           status="error"
-          title="주변 관광지를 찾지 못했어요."
+          title="주변에 반려동물 동반 가능한 여행지가 없어요."
         />
       )}
     </div>

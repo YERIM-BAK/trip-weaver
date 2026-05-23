@@ -9,6 +9,7 @@ export type Course = {
 };
 
 export type Spot = {
+  id: string;
   name: string;
   category: string;
   description: string;
@@ -16,6 +17,7 @@ export type Spot = {
   duration: string;
   lat: number;
   lng: number;
+  image: string | null;
 };
 
 export type DayCourse = {
@@ -33,10 +35,9 @@ export type TourSpot = {
   contenttypeid: string;
   mapx: string;
   mapy: string;
-}
+};
 
 export type SpotCardProps = {
   spot: Spot;
   order: number;
-}
-
+};
