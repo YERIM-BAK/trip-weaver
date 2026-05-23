@@ -53,6 +53,13 @@ function HomePage() {
   const [nearbySpots, setNearbySpots] = useState<PetSpot[]>([]);
   const [isFetchingNearby, setIsFetchingNearby] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+  const [courseSpotIds, setCourseSpotIds] = useState<string[]>([]);
+
+  const handleAddToCourse = (id: string) => {
+    setCourseSpotIds((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id],
+    );
+  };
 
   const fetchNearbyPetSpots = useCallback(async (place: KakaoPlace) => {
     setIsFetchingNearby(true);
@@ -141,7 +148,12 @@ function HomePage() {
             <ul className="spotCardList">
               {nearbySpots.map((spot, idx) => (
                 <li key={spot.contentid}>
-                  <SpotCard spot={mapToSpot(spot)} order={idx + 1} />
+                  <SpotCard
+                    spot={mapToSpot(spot)}
+                    order={idx + 1}
+                    isAdded={courseSpotIds.includes(spot.contentid)}
+                    onAddToCourse={() => handleAddToCourse(spot.contentid)}
+                  />
                 </li>
               ))}
             </ul>

@@ -17,7 +17,6 @@ export async function getPetFriendlyNearby(
     mapX: String(lng),
     mapY: String(lat),
     radius: String(radius),
-    arrange: "S",
     numOfRows: "20",
     pageNo: "1",
   });

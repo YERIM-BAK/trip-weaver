@@ -40,4 +40,6 @@ export type TourSpot = {
 export type SpotCardProps = {
   spot: Spot;
   order: number;
+  onAddToCourse?: () => void;
+  isAdded?: boolean;
 };
