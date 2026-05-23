@@ -3,11 +3,14 @@
 import Image from "next/image";
 import { FeedbackMessageProps, FeedbackStatus } from "./FeedbackMessage.types";
 import styles from "./FeedbackMessage.module.scss";
+import successIcon from "@/assets/images/icons/icon_comm_confirm_72.svg";
+import errorIcon from "@/assets/images/icons/ico_comm_error_72.svg";
+import warningIcon from "@/assets/images/icons/icon_comm_confirm_72.svg";
 
 const iconMap: Record<FeedbackStatus, string> = {
-  success: "/icons/feedback-success.svg",
-  error: "/icons/feedback-error.svg",
-  warning: "/assets/images/icons/icon_comm_confirm_72.svg",
+  success: successIcon,
+  error: errorIcon,
+  warning: warningIcon,
 };
 
 const altMap: Record<FeedbackStatus, string> = {
