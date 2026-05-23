@@ -4,14 +4,16 @@ import styles from "./SpotCard.module.scss";
 function SpotCard({ spot, order }: SpotCardProps) {
   return (
     <article className={styles["spotCard"]}>
-      <div className={styles["spotOrder"]}>{order}</div>
+      {/* <span className={styles["spotOrder"]}>{order}</span> */}
 
       <div className={styles["spotBody"]}>
         <div className={styles["spotHeader"]}>
-          <h3 className={styles["spotName"]}>{spot.name}</h3>
-          {spot.category && (
-            <span className={styles["spotCategory"]}>{spot.category}</span>
-          )}
+          <p className={styles["spotName"]}>
+            {spot.name}{" "}
+            {spot.category && (
+              <span className={styles["spotCategory"]}>{spot.category}</span>
+            )}
+          </p>
         </div>
 
         {spot.description && (
@@ -25,6 +27,12 @@ function SpotCard({ spot, order }: SpotCardProps) {
           )}
         </div>
       </div>
+
+      {spot.image && (
+        <div className={styles["spotImage"]}>
+          <img src={spot.image} alt={spot.name} />
+        </div>
+      )}
     </article>
   );
 }
