@@ -5,6 +5,7 @@ export function useSearch() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<KakaoPlace[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const handleSearch = useCallback(async () => {
     const q = searchQuery.trim();
@@ -15,7 +16,9 @@ export function useSearch() {
 
     setIsSearching(true);
     try {
-      const res = await fetch(`/api/places?query=${encodeURIComponent(q)}&size=5`);
+      const res = await fetch(
+        `/api/places?query=${encodeURIComponent(q)}&size=5`,
+      );
       const data = await res.json();
       setSearchResults(data ?? []);
     } finally {
@@ -28,6 +31,14 @@ export function useSearch() {
     setSearchResults([]);
   }, []);
 
+  const handleFocus = useCallback(() => {
+    setIsSearchOpen(true);
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    setTimeout(() => setIsSearchOpen(false), 150);
+  }, []);
+
   return {
     searchQuery,
     setSearchQuery,
@@ -36,5 +47,8 @@ export function useSearch() {
     isSearching,
     handleSearch,
     clearSearch,
+    isSearchOpen,
+    handleFocus,
+    handleBlur,
   };
 }

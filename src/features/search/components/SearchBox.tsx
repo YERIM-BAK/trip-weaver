@@ -3,7 +3,15 @@ import { SearchBoxProps } from "../search.types";
 import styles from "./Search.module.scss";
 import { useRef } from "react";
 
-export default function SearchBox({ placeholder, value, onChange, onSearch, isSearching }: SearchBoxProps) {
+export default function SearchBox({
+  placeholder,
+  value,
+  onChange,
+  onSearch,
+  onFocus,
+  onBlur,
+  isSearching,
+}: SearchBoxProps) {
   const searchRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -13,6 +21,8 @@ export default function SearchBox({ placeholder, value, onChange, onSearch, isSe
         value={value}
         onChange={onChange}
         onKeyDown={(e) => e.key === "Enter" && onSearch?.()}
+        onFocus={onFocus}
+        onBlur={onBlur}
         placeholder={placeholder}
         ref={searchRef}
       />
