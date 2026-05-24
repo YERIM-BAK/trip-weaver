@@ -1,5 +1,7 @@
 // "use client";
 
+import { useEffect } from "react";
+
 // import { useEffect, useState } from "react";
 // import { useSearchParams } from "next/navigation";
 // import SpotCard from "@/features/course/components/SpotCard/SpotCard";
@@ -146,3 +148,15 @@
 // }
 
 // export default PlanPage;
+
+type PlanPageProps = {};
+export default function PlanPage({}: PlanPageProps) {
+  useEffect(() => {
+    fetch("/api/pet-tour")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
+      });
+  }, []);
+  return <div className="container">dd</div>;
+}
