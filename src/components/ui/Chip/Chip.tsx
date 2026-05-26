@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import styles from "./Chip.module.scss";
 
 export type ChipItem = {
@@ -5,11 +6,15 @@ export type ChipItem = {
   onClick?: () => void;
   onClear?: () => void;
   id: string;
+  isActive?: boolean;
 };
 
-function Chip({ label, onClick, onClear }: ChipItem) {
+function Chip({ label, onClick, onClear, isActive }: ChipItem) {
   return (
-    <button className={styles["chip"]} onClick={onClick}>
+    <button
+      className={clsx(styles["chip"], "chip", isActive && styles["is-active"])}
+      onClick={onClick}
+    >
       <span className={styles["chipText"]}>{label}</span>
 
       {onClear && (

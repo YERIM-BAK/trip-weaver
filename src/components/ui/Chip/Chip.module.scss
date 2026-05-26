@@ -7,15 +7,43 @@
   background: #f4f4f4;
   border: 1px solid #e5e5e5;
   font-size: 14px;
-  transition: 0.2s;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
 
   &:hover {
-    background: #ececec;
+    background: #ebebeb;
+    border-color: #d0d0d0;
+    color: #333;
+  }
+
+  &.is-active {
+    background: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      background: #333;
+      border-color: #333;
+    }
   }
 }
 
+.chipText {
+  line-height: 1;
+}
+
 .clearBtn {
-  margin-left: 4px;
-  font-size: 12px;
-  color: #888;
+  margin-left: 2px;
+  font-size: 11px;
+  color: #aaa;
+  line-height: 1;
+  transition: color 0.15s;
+
+  &:hover {
+    color: #555;
+  }
 }
