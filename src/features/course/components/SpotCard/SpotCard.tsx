@@ -1,14 +1,21 @@
+import clsx from "clsx";
 import { SpotCardProps } from "../../course.types";
 import styles from "./SpotCard.module.scss";
 
-function SpotCard({ spot, order, isAdded, onAddToCourse }: SpotCardProps) {
+function SpotCard({
+  spot,
+  order,
+  isAdded,
+  onAddToCourse,
+  className,
+}: SpotCardProps) {
   return (
-    <article className={styles["spotCard"]}>
+    <article className={clsx(styles["spotCard"], "spotCard", className)}>
       {/* <span className={styles["spotOrder"]}>{order}</span> */}
 
-      <div className={styles["spotContent"]}>
-        <div className={styles["spotInfo"]}>
-          <p className={styles["spotName"]}>
+      <div className={clsx(styles["spotContent"], "spotContent")}>
+        <div className={clsx(styles["spotInfo"], "spotInfo")}>
+          <p className={clsx(styles["spotName"], "spotName")}>
             {spot.name}{" "}
             {spot.category && (
               <span className={styles["spotCategory"]}>{spot.category}</span>
@@ -26,7 +33,7 @@ function SpotCard({ spot, order, isAdded, onAddToCourse }: SpotCardProps) {
         </div>
 
         {spot.image && (
-          <div className={styles["spotImage"]}>
+          <div className={clsx(styles["spotImage"], "spotImage")}>
             <img src={spot.image} alt={spot.name} />
           </div>
         )}
