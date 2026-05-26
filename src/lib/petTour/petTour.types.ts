@@ -23,3 +23,16 @@ export interface PetTourInfo {
 }
 
 export interface PetSpot extends LocationBasedItem, PetTourInfo {}
+
+// 인기 관광지 (조회수/추천수 기준)
+export interface FetchPopularSpotsOptions {
+  areaCode?: string;
+  numOfRows?: number;
+  pageNo?: number;
+  contentTypeId?: string;
+}
+
+export interface FetchPopularSpotsResult {
+  spots: PetSpot[];
+  totalCount: number;
+}

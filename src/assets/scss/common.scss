@@ -48,3 +48,25 @@
 .search-wrap {
   position: relative;
 }
+
+.spot-list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+
+  .chip {
+    margin: 4px;
+  }
+}

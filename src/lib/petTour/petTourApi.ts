@@ -1,4 +1,8 @@
-import { PetSpot } from "./petTour.types";
+import {
+  FetchPopularSpotsOptions,
+  FetchPopularSpotsResult,
+  PetSpot,
+} from "./petTour.types";
 
 async function fetchPetTour(endpoint: string, params: Record<string, string>) {
   const query = new URLSearchParams({ endpoint, ...params });
@@ -27,4 +31,27 @@ export async function getPetFriendlyNearby(
 // 반려동물 동반 여행 정보 (전용 API!) - 상세에서 사용 예정
 export async function getPetTourInfo(contentId: string) {
   return fetchPetTour("detailPetTour2", { contentId });
+}
+
+export async function fetchPopularPetSpots({
+  areaCode = "",
+  numOfRows = 10,
+  pageNo = 1,
+  contentTypeId = "12",
+}: FetchPopularSpotsOptions = {}): Promise<FetchPopularSpotsResult> {
+  const params: Record<string, string> = {
+    numOfRows: String(numOfRows),
+    pageNo: String(pageNo),
+    arrange: "P", // P = 인기순 (조회수+추천수)
+    contentTypeId,
+  };
+
+  if (areaCode) params.areaCode = areaCode;
+
+  const response = await fetchPetTour("areaBasedList2", params);
+  const spots: PetSpot[] = Array.isArray(response)
+    ? response
+    : (response?.items ?? []);
+
+  return { spots, totalCount: response?.totalCount ?? spots.length };
 }

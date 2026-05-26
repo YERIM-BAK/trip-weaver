@@ -14,9 +14,9 @@ export type Spot = {
   category: string;
   description: string;
   address: string;
-  duration: string;
-  lat: number;
-  lng: number;
+  duration?: string;
+  lat?: number;
+  lng?: number;
   image: string | null;
 };
 
@@ -42,4 +42,5 @@ export type SpotCardProps = {
   order: number;
   onAddToCourse?: () => void;
   isAdded?: boolean;
+  className?: string;
 };

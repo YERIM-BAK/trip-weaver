@@ -459,8 +459,41 @@
       margin-top: 0;
     }
   }
+
+  // &.type-row {
+  //   display: flex;
+  //   flex-direction: row;
+
+  //   li {
+  //     margin-top: 0;
+  //   }
+
+  //   .spotCard {
+  //     min-width: 200px;
+  //     height: 100%;
+  //   }
+
+  //   .spotContent {
+  //     flex-direction: column;
+  //     height: 100%;
+  //   }
+
+  //   .spotInfo {
+  //     margin-bottom: auto;
+  //   }
+
+  //   .spotImage {
+  //     margin-left: 0;
+  //     margin-top: 12px;
+  //     width: 100%;
+  //   }
+  // }
 }
 
+
+.cardSwiperList {
+  margin-top: 20px;
+}
 
 .searchBox {
   position: relative;
