@@ -80,7 +80,7 @@ function HomePage({ initialSpots }: Props) {
       <section className="section">
         <div className="titleWrap">
           <h2 className="sectionTitle">반려동물과 함께 가기 좋은 곳</h2>
-          <Link href="" className="link-btn">
+          <Link href="/spots" className="link-btn">
             <span className="link-btn-text">더보기</span>
           </Link>
         </div>

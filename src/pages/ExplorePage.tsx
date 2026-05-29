@@ -52,6 +52,9 @@ export default function ExplorePage() {
 
   return (
     <section className="section">
+      <h2 className="sectionTitle">
+        {name ? `${name} 주변 여행지` : "주변 여행지"}
+      </h2>
       {isPending && (
         <div className="skeletonWrap">
           <Skeleton height={200} rounded="lg" />
@@ -62,10 +65,6 @@ export default function ExplorePage() {
 
       {!isPending && nearbySpots.length > 0 && (
         <div>
-          <h2 className="sectionTitle">
-            <span className="dot" aria-hidden="true" />
-            {name ? `${name} 주변 여행지` : "주변 여행지"}
-          </h2>
           <ul className="spotCardList">
             {nearbySpots.map((spot, idx) => (
               <li key={spot.contentid}>

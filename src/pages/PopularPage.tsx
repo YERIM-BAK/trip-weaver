@@ -29,7 +29,7 @@ export default function PopularPage({}) {
         인기 반려동물 관광지
       </h2>
 
-      <div className="chip-list">
+      <div className="chipList">
         {AREA_CODES.map((area) => (
           <Chip
             key={area.code}
