@@ -36,6 +36,8 @@ export async function getPetTourInfo(contentId: string) {
 export async function fetchPetSpotsByArea({
   areaCode = "",
   contentTypeId = "",
+  cat1 = "",
+  cat2 = "",
   cat3 = "",
   numOfRows = 20,
   pageNo = 1,
@@ -43,6 +45,8 @@ export async function fetchPetSpotsByArea({
 }: {
   areaCode?: string;
   contentTypeId?: string;
+  cat1?: string;
+  cat2?: string;
   cat3?: string;
   numOfRows?: number;
   pageNo?: number;
@@ -56,6 +60,8 @@ export async function fetchPetSpotsByArea({
 
   if (areaCode) params.areaCode = areaCode;
   if (contentTypeId) params.contentTypeId = contentTypeId;
+  if (cat1) params.cat1 = cat1;
+  if (cat2) params.cat2 = cat2;
   if (cat3) params.cat3 = cat3;
 
   const response = await fetchPetTour("areaBasedList2", params);
