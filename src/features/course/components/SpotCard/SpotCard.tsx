@@ -1,6 +1,16 @@
 import clsx from "clsx";
 import { SpotCardProps } from "../../course.types";
 import styles from "./SpotCard.module.scss";
+import Tag from "@/components/ui/Tag/Tag";
+import { TagColor } from "@/components/ui/Tag/Tag.types";
+
+const tagColorMap: Record<string, TagColor> = {
+  관광지: "sky",
+  음식점: "peach",
+  카페: "yellow",
+  숙소: "purple",
+  산책로: "green",
+};
 
 function SpotCard({
   spot,
@@ -11,16 +21,14 @@ function SpotCard({
 }: SpotCardProps) {
   return (
     <article className={clsx(styles["spotCard"], "spotCard", className)}>
-      {/* <span className={styles["spotOrder"]}>{order}</span> */}
-
       <div className={clsx(styles["spotContent"], "spotContent")}>
+        {spot.image && (
+          <div className={clsx(styles["spotImage"], "spotImage")}>
+            <img src={spot.image} alt={spot.name} />
+          </div>
+        )}
         <div className={clsx(styles["spotInfo"], "spotInfo")}>
-          <p className={clsx(styles["spotName"], "spotName")}>
-            {spot.name}{" "}
-            {spot.category && (
-              <span className={styles["spotCategory"]}>{spot.category}</span>
-            )}
-          </p>
+          <p className={clsx(styles["spotName"], "spotName")}>{spot.name}</p>
           {spot.description && (
             <p className={styles["spotDesc"]}>{spot.description}</p>
           )}
@@ -30,15 +38,18 @@ function SpotCard({
               <span className={styles["spotDuration"]}>⏱ {spot.duration}</span>
             )}
           </div>
+          {spot.category && (
+            <Tag
+              size="sm"
+              color={tagColorMap[spot.category] ?? "gray"}
+              className={styles["spotTag"]}
+            >
+              {spot.category}
+            </Tag>
+          )}
         </div>
-
-        {spot.image && (
-          <div className={clsx(styles["spotImage"], "spotImage")}>
-            <img src={spot.image} alt={spot.name} />
-          </div>
-        )}
       </div>
-      <div className={styles["spotFooter"]}>
+      {/* <div className={styles["spotFooter"]}>
         <button
           type="button"
           className={styles[isAdded ? "addedBtn" : "addBtn"]}
@@ -46,7 +57,7 @@ function SpotCard({
         >
           {isAdded ? "✓ 추가됨" : "+ 코스에 추가"}
         </button>
-      </div>
+      </div> */}
     </article>
   );
 }
