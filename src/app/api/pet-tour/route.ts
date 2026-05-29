@@ -25,19 +25,16 @@ export async function GET(req: NextRequest) {
     if (key !== "endpoint") params.set(key, value);
   });
 
-  const res = await fetch(`${BASE_URL}/${endpoint}?${params}`);
-  const json = await res.json();
+  try {
+    const res = await fetch(`${BASE_URL}/${endpoint}?${params}`);
+    const json = await res.json();
 
-  console.log("raw item:", json.response.body.items?.item);
-  console.log(
-    "type:",
-    Array.isArray(json.response.body.items?.item)
-      ? "배열"
-      : typeof json.response.body.items?.item,
-  );
+    const rawItem = json.response?.body?.items?.item;
+    const items = !rawItem ? [] : Array.isArray(rawItem) ? rawItem : [rawItem];
 
-  const item = json.response.body.items?.item;
-  const items = !item ? [] : Array.isArray(item) ? item : [item];
-
-  return NextResponse.json(items);
+    return NextResponse.json(items);
+  } catch (e) {
+    console.error("공공 API 오류:", e);
+    return NextResponse.json([], { status: 200 });
+  }
 }
