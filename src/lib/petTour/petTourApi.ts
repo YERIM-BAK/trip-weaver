@@ -55,3 +55,43 @@ export async function fetchPopularPetSpots({
 
   return { spots, totalCount: response?.totalCount ?? spots.length };
 }
+
+// 지역 기반 반려동물 동반 가능 시설 (petTourYN=Y 필터)
+export async function fetchPetFriendlyByArea({
+  areaCode,
+  contentTypeId = "12",
+  numOfRows = 30,
+  pageNo = 1,
+}: {
+  areaCode: string;
+  contentTypeId?: string;
+  numOfRows?: number;
+  pageNo?: number;
+}): Promise<FetchPopularSpotsResult> {
+  const response = await fetchPetTour("areaBasedList2", {
+    areaCode,
+    contentTypeId,
+    numOfRows: String(numOfRows),
+    pageNo: String(pageNo),
+    arrange: "A",
+    petTourYN: "Y", // 핵심 필터
+  });
+
+  const spots: PetSpot[] = Array.isArray(response)
+    ? response
+    : (response?.items ?? []);
+
+  return { spots, totalCount: response?.totalCount ?? spots.length };
+}
+
+// 공통 상세 정보 (이미지, 운영시간, 전화번호 등)
+export async function getSpotCommonDetail(contentId: string) {
+  return fetchPetTour("detailCommon2", {
+    contentId,
+    defaultYN: "Y",
+    firstImageYN: "Y",
+    addrinfoYN: "Y",
+    mapinfoYN: "Y",
+    overviewYN: "Y",
+  });
+}
