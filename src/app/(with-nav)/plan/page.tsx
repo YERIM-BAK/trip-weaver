@@ -1,7 +1,7 @@
 "use client";
 
-import PlanPage from "@/pages/PlanPage/PlanPage";
+import { CoursePage } from "@/pages/CoursePage/CoursePage";
 
 export default function Page() {
-  return <PlanPage />;
+  return <CoursePage />;
 }
