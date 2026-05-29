@@ -9,23 +9,22 @@ import { useSpots } from "@/features/course/hooks/useSpots";
 import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 import { useState } from "react";
 
-const foodCategories = [
-  { id: "all", label: "전체", cat3: "" },
-  { id: "korean", label: "한식", cat3: "A05020100" },
-  { id: "western", label: "양식", cat3: "A05020200" },
-  { id: "cafe", label: "카페", cat3: "A05020900" },
+const hotelCategories = [
+  { id: "all", label: "전체", cat2: "" },
+  { id: "hotel", label: "호텔", cat2: "B0201" },
+  { id: "condo", label: "콘도", cat2: "B0202" },
+  { id: "pension", label: "펜션", cat2: "B0204" },
+  { id: "guesthouse", label: "게스트하우스", cat2: "B0207" },
 ];
 
-export default function FoodPage() {
+export default function HotelPage() {
   const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedCat3, setSelectedCat3] = useState("");
+  // const [selectedCat2, setSelectedCat2] = useState("");
 
   const { spots, isPending } = useSpots({
     areaCode: selectedRegion,
-    contentTypeId: "39",
-    cat1: "A05",
-    cat2: "A0502",
-    cat3: selectedCat3,
+    contentTypeId: "32",
+    cat1: "B02",
   });
 
   const regionOptions = AREA_CODES.map((r) => ({
@@ -35,7 +34,7 @@ export default function FoodPage() {
 
   return (
     <section className="section">
-      <h2 className="sectionTitle">반려동물 동반 음식점</h2>
+      <h2 className="sectionTitle">반려동물 동반 숙소</h2>
 
       <Dropdown
         options={regionOptions}
@@ -44,17 +43,17 @@ export default function FoodPage() {
         placeholder="지역 선택"
       />
 
-      <div className="chipList">
-        {foodCategories.map((food) => (
+      {/* <div className="chipList">
+        {hotelCategories.map((hotel) => (
           <Chip
-            key={food.id}
-            id={food.id}
-            label={food.label}
-            isActive={selectedCat3 === food.cat3}
-            onClick={() => setSelectedCat3(food.cat3)}
+            key={hotel.id}
+            id={hotel.id}
+            label={hotel.label}
+            isActive={selectedCat2 === hotel.cat2}
+            onClick={() => setSelectedCat2(hotel.cat2)}
           />
         ))}
-      </div>
+      </div> */}
 
       {isPending ? (
         <div className="skeletonWrap">
