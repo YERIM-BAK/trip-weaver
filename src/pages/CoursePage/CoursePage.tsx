@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 // import clsx from "clsx";
 
@@ -65,3 +65,7 @@
 //     </div>
 //   );
 // }
+
+export function CoursePage() {
+  return <div>작업중</div>;
+}
