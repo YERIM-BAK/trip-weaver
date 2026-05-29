@@ -149,8 +149,7 @@ import { useEffect } from "react";
 
 // export default PlanPage;
 
-type PlanPageProps = {};
-export default function PlanPage({}: PlanPageProps) {
+export default function PlanPage() {
   useEffect(() => {
     fetch("/api/pet-tour")
       .then((res) => res.json())
