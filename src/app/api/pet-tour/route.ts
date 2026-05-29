@@ -1,13 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BASE_URL = "https://apis.data.go.kr/B551011/KorPetTourService2";
+const TOUR_API_BASE = "https://apis.data.go.kr/B551011/KorService1";
+const PET_API_BASE = "https://apis.data.go.kr/B551011/KorPetTourService2";
 const API_KEY = process.env.TOUR_API_KEY!;
 
+// KorService1 전용 엔드포인트
+const TOUR_ENDPOINTS = ["detailCommon2", "areaBasedList1"];
+
 export async function GET(req: NextRequest) {
-  console.log("API_KEY:", API_KEY);
-  console.log("API_KEY length:", API_KEY?.length);
   const { searchParams } = new URL(req.url);
   const endpoint = searchParams.get("endpoint") ?? "areaBasedList2";
+
+  const BASE_URL = TOUR_ENDPOINTS.includes(endpoint)
+    ? TOUR_API_BASE
+    : PET_API_BASE;
 
   const params = new URLSearchParams();
   params.set("serviceKey", API_KEY);
