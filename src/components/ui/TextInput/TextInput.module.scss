@@ -4,10 +4,10 @@
 
 .inputControl {
   position: relative;
-  background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-primary);
-  border-radius: 6px;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+  border-radius: var(--radius-sm);
   padding: 12px 36px 12px 8px;
 
   label {
@@ -18,29 +18,34 @@
     line-height: 1.71;
     letter-spacing: normal;
     margin-bottom: var(--spacing-2);
+    color: var(--text-primary);
   }
 
   input {
     width: 100%;
     font-size: 14px;
     line-height: 1.4;
+    color: var(--text-primary);
 
     &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 1000px white inset;
-      box-shadow: 0 0 0 1000px white inset;
+      -webkit-box-shadow:
+        0 0 0 1000px var(--color-white) inset;
+      box-shadow:
+        0 0 0 1000px var(--color-white) inset;
+
+      -webkit-text-fill-color: var(--text-primary);
     }
 
     &::placeholder {
-      color: var(--color-text-tertiary);
+      color: var(--text-tertiary);
     }
 
     &:disabled {
-      background-color: var(--color-disabled-bg);
-      color: var(--color-disabled-text);
+      background-color: var(--bg-secondary);
+      color: var(--text-disabled);
     }
   }
 }
-
 
 .inputClearBtn {
   position: absolute;
@@ -50,9 +55,10 @@
   &::before {
     content: "";
     display: block;
-    background-image: url("../../../assets/images/icons/ico_delete.svg");
-    background-size: 24px auto;
     width: 24px;
     height: 24px;
+    opacity: 0.5;
+    background-image: url("../../../assets/images/icons/ico_delete.svg");
+    background-size: 24px auto;
   }
 }
