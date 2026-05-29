@@ -1,6 +1,7 @@
 "use client";
 
 import CategoryMenu from "@/components/ui/CategoryMenu/CategoryMenu";
+import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import SearchBox from "@/features/search/components/SearchBox";
@@ -8,6 +9,7 @@ import SearchResults from "@/features/search/components/SearchResults";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import { KakaoPlace } from "@/features/search/search.types";
 import { PetSpot } from "@/lib/petTour/petTour.types";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -56,7 +58,7 @@ function HomePage({ initialSpots }: Props) {
             value={searchQuery}
             placeholder="어디로 떠날지 검색해보세요"
             onChange={(e) => setSearchQuery(e.target.value)}
-            onSearch={handleSearch}
+            onSearch={() => handleSearch(searchQuery)}
             onFocus={handleFocus}
             onBlur={handleBlur}
             isSearching={isSearching}
@@ -76,14 +78,27 @@ function HomePage({ initialSpots }: Props) {
       </section>
 
       <section className="section">
-        <h2 className="sectionTitle">반려동물과 함께 가기 좋은 곳</h2>
-        <ul className="spotCardList">
-          {spots.map((item) => (
-            <li key={item.contentid}>
-              <SpotCard spot={randomSpot(item)} />
-            </li>
-          ))}
-        </ul>
+        <div className="titleWrap">
+          <h2 className="sectionTitle">반려동물과 함께 가기 좋은 곳</h2>
+          <Link href="" className="link-btn">
+            <span className="link-btn-text">더보기</span>
+          </Link>
+        </div>
+        {spots.length === 0 ? (
+          <div className="skeletonWrap">
+            <Skeleton height={200} rounded="lg" />
+            <Skeleton height={200} rounded="lg" />
+            <Skeleton height={200} rounded="lg" />
+          </div>
+        ) : (
+          <ul className="spotCardList">
+            {spots.map((item) => (
+              <li key={item.contentid}>
+                <SpotCard spot={randomSpot(item)} />
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
     </div>
   );
