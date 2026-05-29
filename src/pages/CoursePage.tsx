@@ -66,6 +66,6 @@
 //   );
 // }
 
-export function CoursePage() {
+export default function CoursePage() {
   return <div>작업중</div>;
 }
