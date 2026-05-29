@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { useState, useRef, useEffect } from "react";
 import styles from "./Dropdown.module.scss";
-import { DropdownProps } from "./dropdown.types";
+import { DropdownProps } from "./Dropdown.types";
 
 function Dropdown({
   options,

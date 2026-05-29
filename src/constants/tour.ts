@@ -43,7 +43,6 @@ export const REGIONS = [
 export const CONTENT_TYPE_MAP: Record<string, string> = {
   "12": "관광지",
   "14": "문화시설",
-  "15": "행사/공연",
   "28": "레포츠",
   "32": "숙박",
   "38": "쇼핑",

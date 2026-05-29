@@ -29,7 +29,10 @@ const mapToSpot = (spot: PetSpot) => ({
 export default function SpotsPage() {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const { spots, isPending } = useSpots(selectedRegion, selectedCategory);
+  const { spots, isPending } = useSpots({
+    areaCode: selectedRegion,
+    contentTypeId: selectedCategory,
+  });
 
   const regionOptions = AREA_CODES.map((r) => ({
     label: r.name,
