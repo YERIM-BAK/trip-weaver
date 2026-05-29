@@ -3,29 +3,25 @@
 import clsx from "clsx";
 import styles from "./Header.module.scss";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useBack } from "@/app/hooks/useBack";
-
-// type HeaderProps = {};
-
-const NAV_ITEMS = [
-  { href: "/", label: "홈" },
-  { href: "/plan", label: "코스" },
-  { href: "/bookmark", label: "북마크" },
-  { href: "/my", label: "내 정보" },
-];
+import { usePathname } from "next/navigation";
 
 function Header() {
-  const pathname = usePathname();
   const { goBack } = useBack({ fallback: "/" });
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   return (
     <header className={clsx(styles["headerRoot"])}>
       <div className={styles["headerInner"]}>
-        <button
-          className={styles["back-btn"]}
-          onClick={goBack}
-          aria-label="뒤로가기"
-        ></button>
+        {!isHome && (
+          <button
+            className={styles["back-btn"]}
+            onClick={goBack}
+            aria-label="뒤로가기"
+          />
+        )}
+
         <Link
           href="/"
           className={styles["logo"]}
@@ -33,25 +29,6 @@ function Header() {
         >
           <span className={styles["logoText"]}>TripWeaver</span>
         </Link>
-
-        {/* <nav className={styles["nav"]}>
-          <ul className={styles["navList"]}>
-            {NAV_ITEMS.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={styles["navLink"]}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav> */}
       </div>
     </header>
   );

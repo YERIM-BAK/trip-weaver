@@ -61,12 +61,10 @@
 }
 
 
-.chip-list {
+.chipList {
   display: flex;
   flex-wrap: wrap;
   margin: -4px;
-
-  margin-bottom: 12px;
 
   .chip {
     margin: 4px;

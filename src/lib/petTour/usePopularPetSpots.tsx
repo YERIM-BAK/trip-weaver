@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { PetSpot } from "./petTour.types";
-import { fetchPopularPetSpots } from "./petTourApi";
+import { fetchPetSpotsByArea } from "./petTourApi";
 
 interface UsePopularPetSpotsResult {
   spots: PetSpot[];
@@ -20,7 +20,10 @@ export function usePopularPetSpots(areaCode: string): UsePopularPetSpotsResult {
       setSpots([]);
 
       try {
-        const { spots } = await fetchPopularPetSpots({ areaCode });
+        const spots = await fetchPetSpotsByArea({
+          areaCode: "1",
+          arrange: "P",
+        });
         setSpots(spots);
         if (spots.length === 0) setError("검색 결과가 없습니다.");
       } catch (err) {

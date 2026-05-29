@@ -6,25 +6,21 @@ export default function SearchResults({
   isSearching,
   onSelect,
 }: SearchResultsProps) {
-  if (isSearching) return <div>검색중...</div>;
+  if (results.length === 0) return null;
   return (
     <div className={styles["searchResults"]}>
-      {results.length === 0 ? (
-        <p className={styles["searchEmpty"]}>검색어를 입력하세요</p>
-      ) : (
-        <ul className={styles["searchResultList"]}>
-          {results.map((item) => (
-            <li key={item.id} className={styles["searchResultItem"]}>
-              <button type="button" onClick={() => onSelect(item)}>
-                <span className={styles["placeName"]}>{item.place_name}</span>
-                <span className={styles["placeAddress"]}>
-                  {item.road_address_name || item.address_name}
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className={styles["searchResultList"]}>
+        {results.map((item) => (
+          <li key={item.id} className={styles["searchResultItem"]}>
+            <button type="button" onClick={() => onSelect(item)}>
+              <span className={styles["placeName"]}>{item.place_name}</span>
+              <span className={styles["placeAddress"]}>
+                {item.road_address_name || item.address_name}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

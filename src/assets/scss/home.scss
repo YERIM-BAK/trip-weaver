@@ -10,6 +10,7 @@
 
   .chipList {
     margin-top: 12px;
+    margin-bottom: 12px;
   }
 }
 
@@ -519,12 +520,6 @@
     border-radius: 10px;
     padding: 6px 10px;
   }
-}
-
-.chipList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
 }
 
 .originBadgeBox {
