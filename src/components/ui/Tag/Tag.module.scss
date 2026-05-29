@@ -1,0 +1,72 @@
+@use "../../../assets/scss/abstracts"as *;
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  border-radius: var(--radius-full);
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.sm {
+  height: 26px;
+  padding: 0 10px;
+
+  font-size: 12px;
+}
+
+.md {
+  height: 32px;
+  padding: 0 12px;
+
+  font-size: 13px;
+}
+
+.green {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+
+.sky {
+  background: var(--color-sky-100);
+  color: var(--color-sky-500);
+}
+
+.peach {
+  background: var(--color-peach-100);
+  color: var(--color-peach-500);
+}
+
+.yellow {
+  background: var(--color-yellow-100);
+  color: var(--color-yellow-500);
+}
+
+.pink {
+  background: var(--color-pink-100);
+  color: var(--color-pink-500);
+}
+
+.purple {
+  background: #f1ebff;
+  color: #8b6ad9;
+}
+
+.gray {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
