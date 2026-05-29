@@ -1,0 +1,114 @@
+@use "../../../assets/scss/abstracts"as *;
+
+.categoryMenu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 6px;
+}
+
+.categoryMenu li {
+  width: calc((100% - 18px) / 4);
+}
+
+.categoryItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  transition: transform 0.16s ease;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.iconBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 54px;
+  height: 54px;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+
+  .categoryItem:hover & {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 8px 16px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  svg {
+    width: 19px;
+    height: 19px;
+
+    stroke-width: 2.3;
+  }
+}
+
+.categoryTitle {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #2f3441;
+  text-align: center;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+
+
+.sky .iconBox {
+  background: #edf5ff;
+  color: #5b9dff;
+}
+
+.mint .iconBox {
+  background: #edf9f1;
+  color: #53b67d;
+}
+
+.pink .iconBox {
+  background: #fff0f5;
+  color: #ff7ba5;
+}
+
+.blue .iconBox {
+  background: #eef4ff;
+  color: #6a93f8;
+}
+
+.peach .iconBox {
+  background: #fff3ea;
+  color: #ff9a63;
+}
+
+.lemon .iconBox {
+  background: #fff9e8;
+  color: #d9ad1d;
+}
+
+.green .iconBox {
+  background: #eef8f0;
+  color: #59ae72;
+}
+
+.ivory .iconBox {
+  background: #f8f5f1;
+  color: #8e8e8e;
+}
