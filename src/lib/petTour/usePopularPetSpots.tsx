@@ -21,7 +21,7 @@ export function usePopularPetSpots(areaCode: string): UsePopularPetSpotsResult {
 
       try {
         const spots = await fetchPetSpotsByArea({
-          areaCode: "1",
+          areaCode,
           arrange: "P",
         });
         setSpots(spots);
