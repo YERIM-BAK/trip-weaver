@@ -95,3 +95,20 @@ export async function getSpotCommonDetail(contentId: string) {
     overviewYN: "Y",
   });
 }
+
+export async function fetchRandomPetSpots(
+  count: number = 6,
+): Promise<PetSpot[]> {
+  const response = await fetchPetTour("areaBasedList2", {
+    numOfRows: "30",
+    pageNo: "1",
+    arrange: "R",
+  });
+
+  const spots: PetSpot[] = Array.isArray(response)
+    ? response
+    : (response?.items ?? []);
+
+  // 앞에서 count개만 잘라서 반환
+  return spots.slice(0, count);
+}

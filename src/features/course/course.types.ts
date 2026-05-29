@@ -12,7 +12,7 @@ export type Spot = {
   id: string;
   name: string;
   category: string;
-  description: string;
+  description?: string;
   address: string;
   duration?: string;
   lat?: number;

@@ -438,6 +438,11 @@
       margin-top: 0;
     }
   }
+
+  &.type-row {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 // .spotCardList {
