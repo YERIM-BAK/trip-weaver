@@ -94,7 +94,9 @@ export async function fetchRandomPetSpotsServer(count: number = 6) {
         contentTypeId,
       });
 
-      const res = await fetch(`${PET_API_BASE}/areaBasedList2?${params}`);
+      const res = await fetch(`${PET_API_BASE}/areaBasedList2?${params}`, {
+        next: { revalidate: 3600 },
+      });
       const json = await res.json();
 
       const item = json.response?.body?.items?.item;
