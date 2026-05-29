@@ -50,25 +50,13 @@ export const CONTENT_TYPE_MAP: Record<string, string> = {
   "39": "음식점",
 };
 
-export const CONTENT_TYPE_ICON: Record<string, string> = {
-  "12": "🏞️",
-  "14": "🏛️",
-  "15": "🎉",
-  "25": "🗺️",
-  "28": "🏄",
-  "32": "🏨",
-  "38": "🛍️",
-  "39": "🍽️",
-};
-
-// 코스 구성 시 쓸 타입 목록
 export const COURSE_CONTENT_TYPES = [
-  CONTENT_TYPE_MAP.관광지,
-  CONTENT_TYPE_MAP.문화시설,
-  CONTENT_TYPE_MAP.레포츠,
-  CONTENT_TYPE_MAP.숙박,
-  CONTENT_TYPE_MAP.쇼핑,
-  CONTENT_TYPE_MAP.음식점,
+  "12",
+  "14",
+  "28",
+  "32",
+  "38",
+  "39",
 ] as const;
 
 export type Region = (typeof REGIONS)[number];
