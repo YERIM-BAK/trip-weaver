@@ -13,12 +13,22 @@
 
 .headerInner {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  // justify-content: flex-start;
+  align-items: center;
   position: relative;
   width: 100%;
   margin: 0 auto;
+}
 
+.back-btn {
+  display: flex;
+  flex-shrink: 0;
+  background-image: url("../../../assets/images/icons/icon_comm_back_20.svg");
+  transform: rotate(180deg);
+  background-size: 24px auto;
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
 }
 
 .logo {

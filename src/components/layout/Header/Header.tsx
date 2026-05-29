@@ -4,6 +4,7 @@ import clsx from "clsx";
 import styles from "./Header.module.scss";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useBack } from "@/app/hooks/useBack";
 
 // type HeaderProps = {};
 
@@ -16,9 +17,15 @@ const NAV_ITEMS = [
 
 function Header() {
   const pathname = usePathname();
+  const { goBack } = useBack({ fallback: "/" });
   return (
     <header className={clsx(styles["headerRoot"])}>
       <div className={styles["headerInner"]}>
+        <button
+          className={styles["back-btn"]}
+          onClick={goBack}
+          aria-label="뒤로가기"
+        ></button>
         <Link
           href="/"
           className={styles["logo"]}
