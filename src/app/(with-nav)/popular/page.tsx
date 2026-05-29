@@ -1,4 +1,4 @@
-import PopularPage from "@/pages/PopularPage";
+import PopularPage from "@/views/PopularPage";
 
 export default function page({}) {
   return <PopularPage />;

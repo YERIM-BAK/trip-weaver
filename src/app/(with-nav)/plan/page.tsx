@@ -1,4 +1,4 @@
-import CoursePage from "@/pages/CoursePage";
+import CoursePage from "@/views/CoursePage";
 
 export default function Page() {
   return <CoursePage />;
