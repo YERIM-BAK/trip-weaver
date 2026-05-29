@@ -8,9 +8,8 @@ import SearchResults from "@/features/search/components/SearchResults";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import { KakaoPlace } from "@/features/search/search.types";
 import { PetSpot } from "@/lib/petTour/petTour.types";
-import { fetchRandomPetSpots } from "@/lib/petTour/petTourApi";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const randomSpot = (spot: PetSpot) => ({
   id: spot.contentid,
@@ -20,7 +19,11 @@ const randomSpot = (spot: PetSpot) => ({
   image: spot.firstimage ?? spot.firstimage2 ?? null,
 });
 
-function HomePage() {
+interface Props {
+  initialSpots: PetSpot[];
+}
+
+function HomePage({ initialSpots }: Props) {
   const router = useRouter();
   const {
     searchQuery,
@@ -34,11 +37,7 @@ function HomePage() {
     handleBlur,
   } = useSearch();
 
-  const [spots, setSpots] = useState<PetSpot[]>([]);
-
-  useEffect(() => {
-    fetchRandomPetSpots(6).then(setSpots);
-  }, []);
+  const [spots] = useState<PetSpot[]>(initialSpots);
 
   const handleSelectOrigin = (place: KakaoPlace) => {
     setSearchResults([]);

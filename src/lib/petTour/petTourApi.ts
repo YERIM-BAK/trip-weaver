@@ -4,6 +4,9 @@ import {
   PetSpot,
 } from "./petTour.types";
 
+const PET_API_BASE = "https://apis.data.go.kr/B551011/KorPetTourService2";
+const API_KEY = process.env.TOUR_API_KEY!;
+
 async function fetchPetTour(endpoint: string, params: Record<string, string>) {
   const query = new URLSearchParams({ endpoint, ...params });
   const res = await fetch(`/api/pet-tour?${query}`);
@@ -96,19 +99,20 @@ export async function getSpotCommonDetail(contentId: string) {
   });
 }
 
-export async function fetchRandomPetSpots(
-  count: number = 6,
-): Promise<PetSpot[]> {
-  const response = await fetchPetTour("areaBasedList2", {
+export async function fetchRandomPetSpotsServer(count: number = 6) {
+  const params = new URLSearchParams({
+    serviceKey: API_KEY,
+    MobileOS: "ETC",
+    MobileApp: "PawTrip",
+    _type: "json",
     numOfRows: "30",
     pageNo: "1",
     arrange: "R",
   });
 
-  const spots: PetSpot[] = Array.isArray(response)
-    ? response
-    : (response?.items ?? []);
-
-  // 앞에서 count개만 잘라서 반환
-  return spots.slice(0, count);
+  const res = await fetch(`${PET_API_BASE}/areaBasedList2?${params}`);
+  const json = await res.json();
+  const item = json.response?.body?.items?.item;
+  const items = !item ? [] : Array.isArray(item) ? item : [item];
+  return items.slice(0, count);
 }
