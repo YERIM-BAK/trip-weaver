@@ -2,24 +2,16 @@
 
 import CategoryMenu from "@/components/ui/CategoryMenu/CategoryMenu";
 import Skeleton from "@/components/ui/Skeleton/Skeleton";
-import { CONTENT_TYPE_MAP } from "@/constants/tour";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import SearchBox from "@/features/search/components/SearchBox";
 import SearchResults from "@/features/search/components/SearchResults";
 import { useSearch } from "@/features/search/hooks/useSearch";
 import { KakaoPlace } from "@/features/search/search.types";
 import { PetSpot } from "@/lib/petTour/petTour.types";
+import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-const randomSpot = (spot: PetSpot) => ({
-  id: spot.contentid,
-  name: spot.title,
-  address: spot.addr1,
-  category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
-  image: spot.firstimage ?? spot.firstimage2 ?? null,
-});
 
 interface Props {
   initialSpots: PetSpot[];
@@ -94,7 +86,7 @@ function HomePage({ initialSpots }: Props) {
           <ul className="spotCardList">
             {spots.map((item) => (
               <li key={item.contentid}>
-                <SpotCard spot={randomSpot(item)} />
+                <SpotCard spot={mapPetSpot(item)} />
               </li>
             ))}
           </ul>

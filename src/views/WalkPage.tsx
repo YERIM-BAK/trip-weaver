@@ -8,14 +8,14 @@ import { useSpots } from "@/features/course/hooks/useSpots";
 import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 import { useState } from "react";
 
-export default function CafePage() {
+export default function WalkPage() {
   const [selectedRegion, setSelectedRegion] = useState("");
+
   const { spots, isPending } = useSpots({
     areaCode: selectedRegion,
-    contentTypeId: "39",
-    cat1: "A05",
-    cat2: "A0502",
-    cat3: "A05020900",
+    contentTypeId: "28",
+    cat1: "A03",
+    cat2: "A0302",
   });
 
   const regionOptions = AREA_CODES.map((r) => ({
@@ -25,7 +25,7 @@ export default function CafePage() {
 
   return (
     <section className="section">
-      <h2 className="sectionTitle">반려동물 동반 카페</h2>
+      <h2 className="sectionTitle">반려동물 동반 산책로</h2>
 
       <Dropdown
         options={regionOptions}

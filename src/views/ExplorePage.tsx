@@ -3,24 +3,24 @@
 import { useEffect, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
-import { CONTENT_TYPE_MAP } from "@/constants/tour";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import { PetSpot } from "@/lib/petTour/petTour.types";
 import { getPetFriendlyNearby } from "@/lib/petTour/petTourApi";
 import { useState } from "react";
 import Skeleton from "@/components/ui/Skeleton/Skeleton";
+import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 
-const mapToSpot = (spot: PetSpot) => ({
-  id: spot.contentid,
-  name: spot.title,
-  address: spot.addr1,
-  description: spot.petInfo ?? "",
-  duration: `${Math.round(Number(spot.dist) / 70)}분`,
-  category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
-  image: spot.firstimage ?? spot.firstimage2 ?? null,
-  lat: Number(spot.mapy),
-  lng: Number(spot.mapx),
-});
+// const mapToSpot = (spot: PetSpot) => ({
+//   id: spot.contentid,
+//   name: spot.title,
+//   address: spot.addr1,
+//   description: spot.petInfo ?? "",
+//   duration: `${Math.round(Number(spot.dist) / 70)}분`,
+//   category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
+//   image: spot.firstimage ?? spot.firstimage2 ?? null,
+//   lat: Number(spot.mapy),
+//   lng: Number(spot.mapx),
+// });
 
 export default function ExplorePage() {
   const searchParams = useSearchParams();
@@ -68,7 +68,7 @@ export default function ExplorePage() {
           <ul className="spotCardList">
             {nearbySpots.map((spot, idx) => (
               <li key={spot.contentid}>
-                <SpotCard spot={mapToSpot(spot)} order={idx + 1} />
+                <SpotCard spot={mapPetSpot(spot)} order={idx + 1} />
               </li>
             ))}
           </ul>

@@ -1,26 +1,17 @@
 "use client";
-import { AREA_CODES, CONTENT_TYPE_MAP } from "@/constants/tour";
+import { AREA_CODES } from "@/constants/tour";
 import Chip from "@/components/ui/Chip/Chip";
 import { useState } from "react";
 import { usePopularPetSpots } from "@/lib/petTour/usePopularPetSpots";
 import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
-import { PetSpot } from "@/lib/petTour/petTour.types";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 
 export default function PopularPage({}) {
   const [selectedArea, setSelectedArea] = useState("");
   const { spots: popularSpots, loading: isLoadingPopular } =
     usePopularPetSpots(selectedArea);
-
-  const mapPopularSpotToSpot = (spot: PetSpot) => ({
-    id: spot.contentid,
-    name: spot.title,
-    address: spot.addr1,
-    description: spot.petInfo ?? "",
-    category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
-    image: spot.firstimage ?? spot.firstimage2 ?? null,
-  });
 
   return (
     <section className="section">
@@ -52,7 +43,7 @@ export default function PopularPage({}) {
         <ul className="spotCardList">
           {popularSpots.map((spot, idx) => (
             <li key={spot.contentid}>
-              <SpotCard spot={mapPopularSpotToSpot(spot)} />
+              <SpotCard spot={mapPetSpot(spot)} />
             </li>
           ))}
         </ul>

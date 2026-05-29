@@ -6,7 +6,7 @@ import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import { AREA_CODES, CONTENT_TYPE_MAP } from "@/constants/tour";
 import SpotCard from "@/features/course/components/SpotCard/SpotCard";
 import { useSpots } from "@/features/course/hooks/useSpots";
-import { PetSpot } from "@/lib/petTour/petTour.types";
+import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 import { useState } from "react";
 
 const categoryOptions = [
@@ -17,14 +17,6 @@ const categoryOptions = [
     value: code,
   })),
 ];
-
-const mapToSpot = (spot: PetSpot) => ({
-  id: spot.contentid,
-  name: spot.title,
-  address: spot.addr1,
-  category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
-  image: spot.firstimage ?? spot.firstimage2 ?? null,
-});
 
 export default function SpotsPage() {
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -69,7 +61,7 @@ export default function SpotsPage() {
         <ul className="spotCardList">
           {spots.map((item) => (
             <li key={item.contentid}>
-              <SpotCard spot={mapToSpot(item)} />
+              <SpotCard spot={mapPetSpot(item)} />
             </li>
           ))}
         </ul>
