@@ -1,7 +1,10 @@
-"use client";
-
 import ExplorePage from "@/pages/ExplorePage";
+import { Suspense } from "react";
 
 export default function page() {
-  return <ExplorePage />;
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <ExplorePage />
+    </Suspense>
+  );
 }
