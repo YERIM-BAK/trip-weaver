@@ -1,0 +1,19 @@
+@use "../../../assets/scss/abstracts"as *;
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: block;
+  margin-left: auto;
+}
+
+.avatarImg {
+  background-color: #111;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-full);
+}
