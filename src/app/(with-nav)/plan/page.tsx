@@ -1,5 +1,5 @@
-import CoursePage from "@/views/CoursePage";
+import PlanPage from "@/views/PlanPage";
 
 export default function Page() {
-  return <CoursePage />;
+  return <PlanPage />;
 }
