@@ -24,6 +24,35 @@
   &:active {
     transform: scale(0.95);
   }
+
+  &.disabled {
+
+    pointer-events: none;
+    opacity: 0.8;
+
+    .iconBox {
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "준비중";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #fff;
+        background: rgba(17, 17, 17, 0.75);
+        backdrop-filter: blur(2px);
+        border-radius: inherit;
+        z-index: 1;
+      }
+    }
+
+  }
 }
 
 .iconBox {

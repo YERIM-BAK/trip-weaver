@@ -21,6 +21,7 @@ export const categoryMenu = [
     icon: Route,
     color: "mint",
     href: "/course",
+    disabled: true,
   },
   {
     label: "여행 일정",

@@ -5,4 +5,5 @@ export interface categoryItem {
   icon: LucideIcon;
   color: string;
   href: string;
+  disabled?: boolean;
 }

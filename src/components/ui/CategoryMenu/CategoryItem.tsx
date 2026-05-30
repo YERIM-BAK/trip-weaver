@@ -8,10 +8,18 @@ export default function CategoryItem({
   icon: Icon,
   color,
   href,
+  disabled,
 }: categoryItem) {
   return (
-    <Link href={href} className={clsx(styles.categoryItem, styles[color])}>
-      <span className={styles.iconBox}>
+    <Link
+      href={href}
+      className={clsx(
+        styles["categoryItem"],
+        disabled && styles.disabled,
+        styles[color],
+      )}
+    >
+      <span className={styles["iconBox"]}>
         <Icon size={22} strokeWidth={2.2} />
       </span>
 
