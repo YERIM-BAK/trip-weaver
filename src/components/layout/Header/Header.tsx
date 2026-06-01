@@ -7,6 +7,7 @@ import { useBack } from "@/app/hooks/useBack";
 import { usePathname } from "next/navigation";
 import Profile from "@/components/ui/Profile/Profile";
 import { useState } from "react";
+import { useAuthStore } from "@/store/auth.store";
 
 interface HeaderProps {
   showActions?: boolean;
@@ -14,8 +15,8 @@ interface HeaderProps {
 
 function Header({ showActions = true }: HeaderProps) {
   const { goBack } = useBack({ fallback: "/" });
-  // 추후 zustand로 수정필요
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user } = useAuthStore();
+  const isLoggedIn = !!user;
   const pathname = usePathname();
   const isHome = pathname === "/";
 
@@ -41,7 +42,10 @@ function Header({ showActions = true }: HeaderProps) {
         {showActions && (
           <div className={styles["headerActions"]}>
             {isLoggedIn ? (
-              <Profile isLoggedIn={isLoggedIn} />
+              <Profile
+                profileUrl={user?.profileImage}
+                isLoggedIn={isLoggedIn}
+              />
             ) : (
               <Link href="/login" className={styles["loginBtn"]}>
                 <span>로그인</span>
