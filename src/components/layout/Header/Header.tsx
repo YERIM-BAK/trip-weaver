@@ -15,7 +15,7 @@ interface HeaderProps {
 
 function Header({ showActions = true }: HeaderProps) {
   const { goBack } = useBack({ fallback: "/" });
-  const { user } = useAuthStore();
+  const { user, _hasHydrated } = useAuthStore();
   const isLoggedIn = !!user;
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -41,7 +41,14 @@ function Header({ showActions = true }: HeaderProps) {
 
         {showActions && (
           <div className={styles["headerActions"]}>
-            {isLoggedIn ? (
+            {!_hasHydrated ? (
+              <div
+                className={styles["loginBtn"]}
+                style={{ visibility: "hidden" }}
+              >
+                <span>로그인</span>
+              </div>
+            ) : isLoggedIn ? (
               <Profile
                 profileUrl={user?.profileImage}
                 isLoggedIn={isLoggedIn}

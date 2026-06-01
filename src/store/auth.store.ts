@@ -17,6 +17,8 @@ interface AuthState {
   logout: () => Promise<void>;
   googleLogin: () => Promise<void>;
   kakaoLogin: () => Promise<void>;
+  _hasHydrated: boolean;
+  setHasHydrated: (state: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -25,6 +27,8 @@ export const useAuthStore = create<AuthState>()(
       user: null,
       isLoading: false,
       error: null,
+      _hasHydrated: false,
+      setHasHydrated: (state) => set({ _hasHydrated: state }),
       setUser: (user) => set({ user }),
 
       login: async ({ email, password }) => {
@@ -73,6 +77,9 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "auth-storage",
       partialize: (state) => ({ user: state.user }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHasHydrated(true);
+      },
     },
   ),
 );
