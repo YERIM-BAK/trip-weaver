@@ -4,22 +4,26 @@ import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import styles from "./TextInput.module.scss";
 import { InputProps } from "./TextInput.types";
 import clsx from "clsx";
+import Image from "next/image";
 
 const TextInput = forwardRef<HTMLInputElement, InputProps>(
   (
     {
       label,
       id,
-      type = "text",
       helperText,
       onChange,
+      type = "text",
       value,
       className,
+      leftIcon,
+      rightIcon,
       ...props
     },
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [password, setPassword] = useState("");
 
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
@@ -31,12 +35,22 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(
     };
     return (
       <div className={clsx(styles["inputField"], "inputField", className)}>
+        {label && (
+          <label htmlFor={id} className={styles["inputLabel"]}>
+            {label}
+          </label>
+        )}
         <div className={clsx(styles["inputControl"], "inputControl")}>
-          {label && (
-            <label htmlFor={id} className={styles["inputLabel"]}>
-              {label}
-            </label>
+          {leftIcon && (
+            <Image
+              src={leftIcon}
+              alt=""
+              className={styles["leftIcon"]}
+              width={16}
+              height={16}
+            />
           )}
+
           <input
             id={id}
             ref={inputRef}
@@ -55,6 +69,8 @@ const TextInput = forwardRef<HTMLInputElement, InputProps>(
               onClick={onReset}
             ></button>
           )}
+
+          {rightIcon && <Image src={rightIcon} alt="" width={16} height={16} />}
         </div>
         {helperText && <p className={styles["helperText"]}>{helperText}</p>}
       </div>

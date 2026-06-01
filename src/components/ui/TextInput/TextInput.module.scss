@@ -4,6 +4,8 @@
 
 .inputControl {
   position: relative;
+  display: flex;
+  align-items: center;
   background-color: var(--bg-primary);
   border: 1px solid var(--border-default);
   color: var(--text-primary);
@@ -44,6 +46,10 @@
       background-color: var(--bg-secondary);
       color: var(--text-disabled);
     }
+  }
+
+  .leftIcon {
+    margin-right: 8px;
   }
 }
 
