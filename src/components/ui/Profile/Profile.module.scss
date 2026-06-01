@@ -1,6 +1,6 @@
 @use "../../../assets/scss/abstracts"as *;
 
-.avatar {
+.profile {
   width: 34px;
   height: 34px;
   border-radius: var(--radius-full);
@@ -10,7 +10,7 @@
   margin-left: auto;
 }
 
-.avatarImg {
+.profileImg {
   background-color: #111;
   width: 100%;
   height: 100%;

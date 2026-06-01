@@ -4,19 +4,19 @@ import styles from "./Profile.module.scss";
 import Image from "next/image";
 import { ProfileProps } from "./Profile.types";
 
-export default function Profile({ avatarUrl }: ProfileProps) {
+export default function Profile({ profileUrl }: ProfileProps) {
   return (
     <Link
       href="/my"
-      className={clsx(styles["avatar"], "avatar")}
+      className={clsx(styles["profile"], "profile")}
       aria-label="내 정보"
     >
       <Image
-        src={avatarUrl || "/images/avatar-default5.png"}
+        src={profileUrl || "/images/avatar-default5.png"}
         alt="프로필"
         width={34}
         height={34}
-        className={styles["avatarImg"]}
+        className={styles["profileImg"]}
       />
     </Link>
   );
