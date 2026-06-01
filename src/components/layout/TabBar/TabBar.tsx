@@ -28,7 +28,7 @@ const TAB_ITEMS = [
   },
   {
     href: "/plan",
-    label: "코스",
+    label: "여행",
     icon: (
       <svg
         width="24"

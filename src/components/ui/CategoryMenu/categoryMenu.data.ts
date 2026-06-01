@@ -58,5 +58,6 @@ export const categoryMenu = [
     icon: Ellipsis,
     color: "ivory",
     href: "/more",
+    disabled: true,
   },
 ];
