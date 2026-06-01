@@ -8,8 +8,13 @@ import { usePathname } from "next/navigation";
 import Profile from "@/components/ui/Profile/Profile";
 import { useState } from "react";
 
-function Header() {
+interface HeaderProps {
+  showActions?: boolean;
+}
+
+function Header({ showActions = true }: HeaderProps) {
   const { goBack } = useBack({ fallback: "/" });
+  // 추후 zustand로 수정필요
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -33,15 +38,17 @@ function Header() {
           <span className={styles["logoText"]}>TripWeaver</span>
         </Link>
 
-        <div className={styles["headerActions"]}>
-          {isLoggedIn ? (
-            <Profile isLoggedIn={isLoggedIn} />
-          ) : (
-            <button type="button" className={styles["loginBtn"]}>
-              로그인
-            </button>
-          )}
-        </div>
+        {showActions && (
+          <div className={styles["headerActions"]}>
+            {isLoggedIn ? (
+              <Profile isLoggedIn={isLoggedIn} />
+            ) : (
+              <Link href="/login" className={styles["loginBtn"]}>
+                <span>로그인</span>
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );
