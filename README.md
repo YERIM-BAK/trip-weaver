@@ -1,3 +1,6 @@
+## 배포URL
+https://trip-weaver-psi.vercel.app/
+
 ## 🛠 Tech Stack
 
 ### Package Manager
