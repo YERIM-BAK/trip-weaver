@@ -9,6 +9,14 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, "src/assets/scss")],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
+  },
   reactStrictMode: false,
 };
 
