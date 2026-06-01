@@ -20,6 +20,10 @@
   height: calc(100% - 156px);
   padding: 20px;
   overflow-y: auto;
+
+  &.withoutNav {
+    height: calc(100% - 56px);
+  }
 }
 
 .app {
@@ -43,7 +47,6 @@
     position: relative;
   }
 }
-
 
 .search-wrap {
   position: relative;
@@ -104,5 +107,156 @@
     mask-size: contain;
     -webkit-mask: url('../images/icons/ico_main_arrow_right.svg') no-repeat center;
     -webkit-mask-size: contain;
+  }
+}
+
+// 로그인
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  // padding: 24px 20px 40px;
+  // background-color: #faf8f4;
+  padding: 0 24px;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    text-decoration: none;
+  }
+
+  .logoText {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1a1a1a;
+
+    &::before {
+      content: "";
+      display: block;
+      background-image: url("../images/img/logo.png");
+      background-size: 32px auto;
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .loginTitle {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+
+    span {
+      color: #3a7d44;
+    }
+  }
+
+  .ImageWrap {
+    display: flex;
+    flex-shrink: 0;
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    height: 200px;
+    margin-bottom: 32px;
+  }
+
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+
+  .loginBtn {
+    width: 100%;
+    height: 52px;
+    background-color: #3a7d44;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 12px;
+    margin-top: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #2e6435;
+    }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin: 8px 0;
+    color: #999;
+    font-size: 13px;
+
+    &::before,
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background-color: #e0e0e0;
+    }
+  }
+
+  .socialBtns {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .kakaoBtn {
+    &::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../images/img/icon-kakao.png");
+      background-size: 38px auto;
+      background-repeat: no-repeat;
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  .googleBtn {
+    &::before {
+      content: "";
+      display: inline-block;
+      background-image: url("../images/img/icon-google.png");
+      background-size: 38px auto;
+      background-repeat: no-repeat;
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  .signupLink {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: #666;
+
+    .linkBtn {
+      color: #3a7d44;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 }

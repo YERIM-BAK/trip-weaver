@@ -1,8 +1,13 @@
+import Header from "@/components/layout/Header/Header";
+
 function WithoutNavLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main id="main-content" className="mainContent" tabIndex={-1}>
-      {children}
-    </main>
+    <>
+      <Header showActions={false} />
+      <main id="main-content" className="mainContent withoutNav" tabIndex={-1}>
+        {children}
+      </main>
+    </>
   );
 }
 
