@@ -2,11 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import TripWeaverLoginImg from "../assets/images/img/tripweaver_login.png";
+import TripWeaverLoginImg from "@/assets/images/img/tripweaver_login.png";
 import TextInput from "@/components/ui/TextInput/TextInput";
 import { useState } from "react";
-import passwordImg from "../assets/images/icons/icon-password.svg";
-import emailImg from "../assets/images/icons/icon-email.svg";
+import passwordImg from "@/assets/images/icons/icon-password.svg";
+import emailImg from "@/assets/images/icons/icon-email.svg";
 import { useAuthStore } from "@/store/auth.store";
 
 export default function LoginPage() {
