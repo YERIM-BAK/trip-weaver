@@ -14,7 +14,7 @@ export const categoryMenu = [
     label: "인기 장소",
     icon: MapPinned,
     color: "sky",
-    href: "/popular",
+    href: "/explore/popular",
   },
   {
     label: "맞춤 코스",
@@ -33,25 +33,25 @@ export const categoryMenu = [
     label: "호텔 · 숙소",
     icon: Hotel,
     color: "blue",
-    href: "/hotel",
+    href: "/explore/hotel",
   },
   {
     label: "카페",
     icon: Coffee,
     color: "peach",
-    href: "/cafe",
+    href: "/explore/cafe",
   },
   {
     label: "맛집",
     icon: Utensils,
     color: "lemon",
-    href: "/food",
+    href: "/explore/food",
   },
   {
     label: "산책로",
     icon: Trees,
     color: "green",
-    href: "/walk",
+    href: "/explore/walk",
   },
   {
     label: "더보기",

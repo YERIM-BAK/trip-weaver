@@ -1,4 +1,4 @@
-import BookmarkPage from "@/views/BookmarkPage";
+import BookmarkPage from "@/views/bookmark/BookmarkPage";
 
 export default function page() {
   return <BookmarkPage />;

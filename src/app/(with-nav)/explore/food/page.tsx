@@ -1,4 +1,4 @@
-import FoodPage from "@/views/FoodPage";
+import FoodPage from "@/views/explore/FoodPage";
 
 export default function page() {
   return <FoodPage />;

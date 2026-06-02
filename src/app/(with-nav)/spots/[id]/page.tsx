@@ -1,4 +1,4 @@
-import SpotDetailPage from "@/views/SpotDetailPage";
+import SpotDetailPage from "@/views/spots/SpotDetailPage";
 
 export default async function Page({
   params,
