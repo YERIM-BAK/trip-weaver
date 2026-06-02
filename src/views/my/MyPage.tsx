@@ -73,8 +73,8 @@ function MyPage() {
 
       <div className="titleWrap">
         <h2 className="sectionTitle">함께하는 반려동물</h2>
-        <Link href="/spots" className="link-btn">
-          <span className="link-btn-text">더보기</span>
+        <Link href="/my/pets" className="link-btn">
+          <span className="link-btn-text">관리</span>
         </Link>
       </div>
     </div>

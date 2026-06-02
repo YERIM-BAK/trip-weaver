@@ -260,3 +260,115 @@
     }
   }
 }
+
+
+.profileCard {
+  padding: 24px;
+  background: var(--bg-white);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+
+  .profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .profileImageWrap {
+    position: relative;
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #555;
+  }
+
+  .profileImage {
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--bg-secondary);
+  }
+
+  .profileImageInput {
+    @include visually-hidden;
+  }
+
+  .profileImageEdit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--color-white);
+    border: 1px solid var(--border-default);
+    color: var(--text-secondary);
+
+    box-shadow: var(--shadow-sm);
+  }
+
+  .profileInfo {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .profileName {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  .profileDescription {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .profileStats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+  }
+
+  .statItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  .statItem:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1px;
+    height: 44px;
+    background: var(--border-light);
+    transform: translateY(-50%);
+  }
+
+  .statCount {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-primary);
+  }
+
+  .statTitle {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+  }
+}

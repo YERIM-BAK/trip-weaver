@@ -1,160 +1,161 @@
 :root {
-  /* =========================================================
+   /* =========================================================
      Primary Brand
   ========================================================= */
 
-  --color-primary-50: #f4fbf6;
-  --color-primary-100: #e7f7eb;
-  --color-primary-200: #d2f0db;
-  --color-primary-300: #b1e4c2;
-  --color-primary-400: #86d3a3;
-  --color-primary-500: #5fc486;
-  --color-primary-600: #43ad6c;
-  --color-primary-700: #328756;
-  --color-primary-800: #286b46;
-  --color-primary-900: #21573a;
+   --color-primary-50: #f4fbf6;
+   --color-primary-100: #e7f7eb;
+   --color-primary-200: #d2f0db;
+   --color-primary-300: #b1e4c2;
+   --color-primary-400: #86d3a3;
+   --color-primary-500: #5fc486;
+   --color-primary-600: #43ad6c;
+   --color-primary-700: #328756;
+   --color-primary-800: #286b46;
+   --color-primary-900: #21573a;
 
-  /* 메인 브랜드 컬러 */
-  --color-brand: var(--color-primary-500);
-  --color-brand-hover: var(--color-primary-600);
-  --color-brand-soft: var(--color-primary-100);
+   /* 메인 브랜드 컬러 */
+   --color-brand: var(--color-primary-500);
+   --color-brand-hover: var(--color-primary-600);
+   --color-brand-soft: var(--color-primary-100);
 
-  /* =========================================================
+   /* =========================================================
      Secondary - Warm Pastel
   ========================================================= */
 
-  /* Peach */
-  --color-peach-50: #fff6f1;
-  --color-peach-100: #ffe9db;
-  --color-peach-200: #ffd3b9;
-  --color-peach-300: #ffbc96;
-  --color-peach-400: #ffa677;
-  --color-peach-500: #ff8f59;
+   /* Peach */
+   --color-peach-50: #fff6f1;
+   --color-peach-100: #ffe9db;
+   --color-peach-200: #ffd3b9;
+   --color-peach-300: #ffbc96;
+   --color-peach-400: #ffa677;
+   --color-peach-500: #ff8f59;
 
-  /* Yellow */
-  --color-yellow-50: #fffbea;
-  --color-yellow-100: #fff3c9;
-  --color-yellow-200: #ffe89c;
-  --color-yellow-300: #ffdb6d;
-  --color-yellow-400: #ffce45;
-  --color-yellow-500: #f8bd1f;
+   /* Yellow */
+   --color-yellow-50: #fffbea;
+   --color-yellow-100: #fff3c9;
+   --color-yellow-200: #ffe89c;
+   --color-yellow-300: #ffdb6d;
+   --color-yellow-400: #ffce45;
+   --color-yellow-500: #f8bd1f;
 
-  /* Sky */
-  --color-sky-50: #f2f9ff;
-  --color-sky-100: #dff0ff;
-  --color-sky-200: #c0e1ff;
-  --color-sky-300: #97cdff;
-  --color-sky-400: #6bb5ff;
-  --color-sky-500: #4799ff;
+   /* Sky */
+   --color-sky-50: #f2f9ff;
+   --color-sky-100: #dff0ff;
+   --color-sky-200: #c0e1ff;
+   --color-sky-300: #97cdff;
+   --color-sky-400: #6bb5ff;
+   --color-sky-500: #4799ff;
 
-  /* Pink */
-  --color-pink-50: #fff4f7;
-  --color-pink-100: #ffe4ec;
-  --color-pink-200: #ffc9d9;
-  --color-pink-300: #ffabc1;
-  --color-pink-400: #ff8eaa;
-  --color-pink-500: #ff7094;
+   /* Pink */
+   --color-pink-50: #fff4f7;
+   --color-pink-100: #ffe4ec;
+   --color-pink-200: #ffc9d9;
+   --color-pink-300: #ffabc1;
+   --color-pink-400: #ff8eaa;
+   --color-pink-500: #ff7094;
 
-  /* =========================================================
+   /* =========================================================
      Neutral
   ========================================================= */
 
-  --color-white: #ffffff;
+   --color-white: #ffffff;
 
-  --color-gray-50: #fcfcfb;
-  --color-gray-100: #f7f6f3;
-  --color-gray-200: #ece9e4;
-  --color-gray-300: #ddd8d1;
-  --color-gray-400: #c2bbb2;
-  --color-gray-500: #9f978d;
-  --color-gray-600: #7c746c;
-  --color-gray-700: #5d564f;
-  --color-gray-800: #403a35;
-  --color-gray-900: #25211d;
+   --color-gray-50: #fcfcfb;
+   --color-gray-100: #f7f6f3;
+   --color-gray-200: #ece9e4;
+   --color-gray-300: #ddd8d1;
+   --color-gray-400: #c2bbb2;
+   --color-gray-500: #9f978d;
+   --color-gray-600: #7c746c;
+   --color-gray-700: #5d564f;
+   --color-gray-800: #403a35;
+   --color-gray-900: #25211d;
 
-  /* =========================================================
+   /* =========================================================
      Semantic
   ========================================================= */
 
-  --color-success: #53c27f;
-  --color-success-bg: #edf9f1;
+   --color-success: #53c27f;
+   --color-success-bg: #edf9f1;
 
-  --color-warning: #ffb84d;
-  --color-warning-bg: #fff6e8;
+   --color-warning: #ffb84d;
+   --color-warning-bg: #fff6e8;
 
-  --color-error: #ff7f7f;
-  --color-error-bg: #fff0f0;
+   --color-error: #ff7f7f;
+   --color-error-bg: #fff0f0;
 
-  --color-info: #6dafff;
-  --color-info-bg: #eef6ff;
+   --color-info: #6dafff;
+   --color-info-bg: #eef6ff;
 
-  /* =========================================================
+   /* =========================================================
      Background
   ========================================================= */
 
-  --bg-primary: #fffdfa;
-  --bg-secondary: #f9f7f2;
-  --bg-soft-green: #f4fbf6;
-  --bg-soft-peach: #fff7f2;
-  --bg-soft-yellow: #fffbea;
-  --bg-soft-pink: #fff5f7;
+   --bg-primary: #fffdfa;
+   --bg-secondary: #f9f7f2;
+   --bg-soft-green: #f4fbf6;
+   --bg-soft-peach: #fff7f2;
+   --bg-soft-yellow: #fffbea;
+   --bg-soft-pink: #fff5f7;
+   --bg-white: #ffffff;
 
-  /* =========================================================
+   /* =========================================================
      Text
   ========================================================= */
 
-  --text-primary: #2f2a25;
-  --text-secondary: #625b52;
-  --text-tertiary: #928a81;
-  --text-disabled: #bbb3aa;
-  --text-white: #ffffff;
+   --text-primary: #2f2a25;
+   --text-secondary: #625b52;
+   --text-tertiary: #928a81;
+   --text-disabled: #bbb3aa;
+   --text-white: #ffffff;
 
-  /* =========================================================
+   /* =========================================================
      Border
   ========================================================= */
 
-  --border-light: #efeae3;
-  --border-default: #e0dad2;
-  --border-strong: #c9c1b8;
+   --border-light: #efeae3;
+   --border-default: #e0dad2;
+   --border-strong: #c9c1b8;
 
-  /* =========================================================
+   /* =========================================================
      Shadow
   ========================================================= */
 
-  --shadow-sm: 0 2px 8px rgba(64, 58, 53, 0.04);
-  --shadow-md: 0 8px 24px rgba(64, 58, 53, 0.08);
-  --shadow-lg: 0 16px 40px rgba(64, 58, 53, 0.12);
+   --shadow-sm: 0 2px 8px rgba(64, 58, 53, 0.04);
+   --shadow-md: 0 8px 24px rgba(64, 58, 53, 0.08);
+   --shadow-lg: 0 16px 40px rgba(64, 58, 53, 0.12);
 
-  /* =========================================================
+   /* =========================================================
      Radius
   ========================================================= */
 
-  --radius-xs: 8px;
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-  --radius-full: 999px;
+   --radius-xs: 8px;
+   --radius-sm: 12px;
+   --radius-md: 18px;
+   --radius-lg: 24px;
+   --radius-xl: 32px;
+   --radius-full: 999px;
 
-  /* =========================================================
+   /* =========================================================
      Gradient
   ========================================================= */
 
-  --gradient-primary: linear-gradient(135deg,
-      #86d3a3 0%,
-      #5fc486 100%);
+   --gradient-primary: linear-gradient(135deg,
+         #86d3a3 0%,
+         #5fc486 100%);
 
-  --gradient-sunset: linear-gradient(135deg,
-      #ffd9b8 0%,
-      #ffbfa0 100%);
+   --gradient-sunset: linear-gradient(135deg,
+         #ffd9b8 0%,
+         #ffbfa0 100%);
 
-  --gradient-sky: linear-gradient(135deg,
-      #dff0ff 0%,
-      #b7dcff 100%);
+   --gradient-sky: linear-gradient(135deg,
+         #dff0ff 0%,
+         #b7dcff 100%);
 
-  --gradient-cherry: linear-gradient(135deg,
-      #ffe2ea 0%,
-      #ffc8d8 100%);
+   --gradient-cherry: linear-gradient(135deg,
+         #ffe2ea 0%,
+         #ffc8d8 100%);
 }
 
 /* =========================================================
