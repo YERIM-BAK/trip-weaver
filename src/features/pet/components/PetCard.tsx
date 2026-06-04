@@ -8,7 +8,7 @@ export default function PetCard() {
     <div className="petCard">
       <div className="petInfo">
         <div className="petImage">
-          <img src="/images/pet.jpg" alt="몽이" />
+          <Image src="/images/pet.jpg" alt="몽이" />
         </div>
 
         <div className="petContent">

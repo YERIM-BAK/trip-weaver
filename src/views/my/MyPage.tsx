@@ -1,6 +1,6 @@
 "use client";
 
-import { Bookmark, Camera } from "lucide-react";
+import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
