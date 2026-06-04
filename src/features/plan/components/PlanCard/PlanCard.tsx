@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import styles from "./PlanCard.module.scss";
 import Link from "next/link";
-import Image from "next/Image";
+import Image from "next/image";
 import Tag from "@/components/ui/Tag/Tag";
 
 export type PlanStatus = "준비중" | "여행중" | "다녀옴";
