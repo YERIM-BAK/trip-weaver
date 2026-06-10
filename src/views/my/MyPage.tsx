@@ -4,13 +4,14 @@ import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
+import ImgPetWalking from "@/assets/images/img/img-pet-walking.png";
 import PetCard from "@/features/pet/components/PetCard";
+import defaultAvatar from "@/assets/images/img/img-profile.png";
+
+const DEFAULT_AVATAR = defaultAvatar;
 
 function MyPage() {
-  const [profileImage, setProfileImage] = useState(
-    "/images/avatar-default5.png",
-  );
-
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const handleProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -23,14 +24,13 @@ function MyPage() {
       <div className="profileCard">
         <div className="profileHeader">
           <div className="profileImageWrap">
-            <Image
-              src={profileImage}
-              alt="프로필"
-              className="profileImage"
-              fill
-              sizes="96px"
-              priority
-            />
+            <div className="profileImage">
+              <Image
+                src={profileImage ?? DEFAULT_AVATAR}
+                alt="프로필"
+                priority
+              />
+            </div>
 
             <label htmlFor="profileImage" className="profileImageEdit">
               <Camera size={16} />
@@ -84,7 +84,25 @@ function MyPage() {
           </Link>
         </div>
 
-        <PetCard />
+        <div className="petCard">
+          <div className="petInfo">
+            <div className="petImage">
+              <Image src="/images/pet.jpg" alt="몽이" fill sizes="100" />
+            </div>
+
+            <div className="petContent">
+              <div className="petNameRow">
+                <strong className="petName">몽이</strong>
+
+                <button type="button" className="petEditBtn">
+                  수정
+                </button>
+              </div>
+
+              <p className="petMeta">말티즈 · 5살 · 남아</p>
+            </div>
+          </div>
+        </div>
 
         <button type="button" className="addPetBtn">
           <span className="addPetIcon">+</span>

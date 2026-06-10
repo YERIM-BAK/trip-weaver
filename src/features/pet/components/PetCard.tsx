@@ -8,29 +8,27 @@ export default function PetCard() {
     <div className="petCard">
       <div className="petInfo">
         <div className="petImage">
-          <Image src="/images/pet.jpg" alt="몽이" />
+          <Image src="/images/pet.jpg" alt="몽이" fill />
         </div>
 
         <div className="petContent">
           <div className="petNameRow">
             <strong className="petName">몽이</strong>
-
-            <button type="button" className="petEditBtn">
-              수정
-            </button>
           </div>
 
           <p className="petMeta">말티즈 · 5살 · 남아</p>
         </div>
       </div>
-
-      <div className="petIllustration">
-        <Image
-          src={ImgPetWalking}
-          alt=""
-          style={{ width: "150px", height: "auto" }}
-          priority
-        />
+      <div className="btn-group">
+        <button type="button" className="">
+          대표 설정
+        </button>
+        <button type="button" className="">
+          수정
+        </button>
+        <button type="button" className="">
+          삭제
+        </button>
       </div>
     </div>
   );
