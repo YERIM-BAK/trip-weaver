@@ -12,6 +12,8 @@ import jejuImg from "@/assets/images/img/jeju.jpg";
 import busanImg from "@/assets/images/img/busan.jpg";
 import { usePetStore } from "@/store/pet.store";
 import EmptyState from "@/components/ui/EmptyState/EmptyState";
+import { useAuthStore } from "@/store/auth.store";
+import { useRouter } from "next/navigation";
 
 const DEFAULT_AVATAR = defaultAvatar;
 
@@ -25,6 +27,13 @@ function MyPage() {
   };
 
   const { pets, representative } = usePetStore();
+  const { user, logout } = useAuthStore();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/");
+  };
 
   return (
     <div className="myPage">
@@ -54,7 +63,7 @@ function MyPage() {
             />
           </div>
           <div className="profileInfo">
-            <strong className="profileName">박예림</strong>
+            <strong className="profileName">{user?.name}</strong>
 
             <p className="profileDescription">
               반려동물과 함께
@@ -160,6 +169,14 @@ function MyPage() {
           />
         </div>
       </div>
+
+      {user && (
+        <div className="btn-group">
+          <button type="button" className="logoutBtn" onClick={handleLogout}>
+            로그아웃
+          </button>
+        </div>
+      )}
     </div>
   );
 }

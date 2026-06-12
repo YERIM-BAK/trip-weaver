@@ -708,3 +708,18 @@
     transition: all 0.15s;
   }
 }
+
+.btn-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoutBtn {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: 20px;
+}
