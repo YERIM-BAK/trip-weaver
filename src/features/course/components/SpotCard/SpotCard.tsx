@@ -3,6 +3,7 @@ import { SpotCardProps } from "../../course.types";
 import styles from "./SpotCard.module.scss";
 import Tag from "@/components/ui/Tag/Tag";
 import { TagColor } from "@/components/ui/Tag/Tag.types";
+import Link from "next/link";
 
 const tagColorMap: Record<string, TagColor> = {
   관광지: "sky",
@@ -20,45 +21,40 @@ function SpotCard({
   className,
 }: SpotCardProps) {
   return (
-    <article className={clsx(styles["spotCard"], "spotCard", className)}>
-      <div className={clsx(styles["spotContent"], "spotContent")}>
-        {spot.image && (
-          <div className={clsx(styles["spotImage"], "spotImage")}>
-            <img src={spot.image} alt={spot.name} />
-          </div>
-        )}
-        <div className={clsx(styles["spotInfo"], "spotInfo")}>
-          <p className={clsx(styles["spotName"], "spotName")}>{spot.name}</p>
-          {spot.description && (
-            <p className={styles["spotDesc"]}>{spot.description}</p>
+    <Link href={`/spots/${spot.id}`}>
+      <article className={clsx(styles["spotCard"], "spotCard", className)}>
+        <div className={clsx(styles["spotContent"], "spotContent")}>
+          {spot.image && (
+            <div className={clsx(styles["spotImage"], "spotImage")}>
+              <img src={spot.image} alt={spot.name} />
+            </div>
           )}
-          <div className={styles["spotMeta"]}>
-            <span className={styles["spotAddress"]}>{spot.address}</span>
-            {spot.duration && (
-              <span className={styles["spotDuration"]}>⏱ {spot.duration}</span>
+          <div className={clsx(styles["spotInfo"], "spotInfo")}>
+            <p className={clsx(styles["spotName"], "spotName")}>{spot.name}</p>
+            {spot.description && (
+              <p className={styles["spotDesc"]}>{spot.description}</p>
+            )}
+            <div className={styles["spotMeta"]}>
+              <span className={styles["spotAddress"]}>{spot.address}</span>
+              {spot.duration && (
+                <span className={styles["spotDuration"]}>
+                  ⏱ {spot.duration}
+                </span>
+              )}
+            </div>
+            {spot.category && (
+              <Tag
+                size="sm"
+                color={tagColorMap[spot.category] ?? "gray"}
+                className={styles["spotTag"]}
+              >
+                {spot.category}
+              </Tag>
             )}
           </div>
-          {spot.category && (
-            <Tag
-              size="sm"
-              color={tagColorMap[spot.category] ?? "gray"}
-              className={styles["spotTag"]}
-            >
-              {spot.category}
-            </Tag>
-          )}
         </div>
-      </div>
-      {/* <div className={styles["spotFooter"]}>
-        <button
-          type="button"
-          className={styles[isAdded ? "addedBtn" : "addBtn"]}
-          onClick={onAddToCourse}
-        >
-          {isAdded ? "✓ 추가됨" : "+ 코스에 추가"}
-        </button>
-      </div> */}
-    </article>
+      </article>
+    </Link>
   );
 }
 

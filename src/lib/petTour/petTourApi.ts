@@ -30,7 +30,8 @@ export async function getPetFriendlyNearby(
 
 // 반려동물 동반 여행 정보 (전용 API!) - 상세에서 사용 예정
 export async function getPetTourInfo(contentId: string) {
-  return fetchPetTour("detailPetTour2", { contentId });
+  const response = await fetchPetTour("detailPetTour2", { contentId });
+  return Array.isArray(response) ? response[0] : response;
 }
 
 export async function fetchPetSpotsByArea({
@@ -70,14 +71,19 @@ export async function fetchPetSpotsByArea({
 
 // 공통 상세 정보 (이미지, 운영시간, 전화번호 등)
 export async function getSpotCommonDetail(contentId: string) {
-  return fetchPetTour("detailCommon2", {
+  const response = await fetchPetTour("detailCommon2", { contentId });
+  return Array.isArray(response) ? response[0] : response;
+}
+
+export async function getSpotIntroDetail(
+  contentId: string,
+  contentTypeId: string,
+) {
+  const response = await fetchPetTour("detailIntro2", {
     contentId,
-    defaultYN: "Y",
-    firstImageYN: "Y",
-    addrinfoYN: "Y",
-    mapinfoYN: "Y",
-    overviewYN: "Y",
+    contentTypeId,
   });
+  return Array.isArray(response) ? response[0] : response;
 }
 
 export async function fetchRandomPetSpotsServer(count: number = 6) {
