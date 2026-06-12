@@ -10,6 +10,8 @@ import PlanCard from "@/features/plan/components/PlanCard/PlanCard";
 
 import jejuImg from "@/assets/images/img/jeju.jpg";
 import busanImg from "@/assets/images/img/busan.jpg";
+import { usePetStore } from "@/store/pet.store";
+import EmptyState from "@/components/ui/EmptyState/EmptyState";
 
 const DEFAULT_AVATAR = defaultAvatar;
 
@@ -21,6 +23,8 @@ function MyPage() {
     const preview = URL.createObjectURL(file);
     setProfileImage(preview);
   };
+
+  const { pets, representative } = usePetStore();
 
   return (
     <div className="myPage">
@@ -89,33 +93,42 @@ function MyPage() {
           </Link>
         </div>
 
-        <Link href={`/my/pets`} className="petCard">
-          <div className="petInfo">
-            <div className="petImage">
-              <Image src={ImgPetDefault} alt="몽이" priority />
-            </div>
+        {pets.length === 0 ? (
+          <EmptyState
+            text="아직 등록된 반려동물이 없어요"
+            description="함께 여행할 반려동물을 등록해보세요"
+            buttonText="반려동물 등록하기"
+            href="/my/pets/add"
+          />
+        ) : (
+          <>
+            <Link href="/my/pets" className="petCard">
+              <div className="petInfo">
+                <div className="petImage">
+                  <Image
+                    src={representative?.image || ImgPetDefault}
+                    alt={representative?.name || "반려동물"}
+                    priority
+                  />
+                </div>
+                <div className="petContent">
+                  {representative?.isRepresentative && (
+                    <span className="petBadge">대표</span>
+                  )}
+                  <strong className="petName">{representative?.name}</strong>
+                  <p className="petMeta">
+                    {representative?.breed}&middot;{representative?.age}
+                    살&middot;{representative?.gender}
+                  </p>
+                </div>
+              </div>
+            </Link>
 
-            <div className="petContent">
-              {/* {pet.isPrimary && (
-                <span className="petBadge">대표</span>
-              )} */}
-              <span className="petBadge">대표</span>
-              <strong className="petName">몽이</strong>
-
-              <button
-                type="button"
-                className="petEditBtn"
-                aria-label="반려동물 프로필 수정"
-              ></button>
-
-              <p className="petMeta">말티즈&middot;5살&middot;남아</p>
-            </div>
-          </div>
-        </Link>
-
-        <button type="button" className="addPetBtn">
-          <span>반려동물 추가하기</span>
-        </button>
+            <button type="button" className="addPetBtn">
+              <span>반려동물 추가하기</span>
+            </button>
+          </>
+        )}
       </div>
 
       <div className="section">
