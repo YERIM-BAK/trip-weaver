@@ -85,32 +85,3 @@ export async function getSpotIntroDetail(
   });
   return Array.isArray(response) ? response[0] : response;
 }
-
-export async function fetchRandomPetSpotsServer(count: number = 6) {
-  const results = await Promise.allSettled(
-    COURSE_CONTENT_TYPES.map(async (contentTypeId) => {
-      const params = new URLSearchParams({
-        serviceKey: API_KEY,
-        MobileOS: "ETC",
-        MobileApp: "PawTrip",
-        _type: "json",
-        numOfRows: "5",
-        pageNo: "1",
-        arrange: "R",
-        contentTypeId,
-      });
-
-      const res = await fetch(`${PET_API_BASE}/areaBasedList2?${params}`, {
-        next: { revalidate: 3600 },
-      });
-      const json = await res.json();
-
-      const item = json.response?.body?.items?.item;
-      return !item ? [] : Array.isArray(item) ? item : [item];
-    }),
-  );
-
-  const all = results.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
-
-  return all.sort(() => Math.random() - 0.5).slice(0, count);
-}
