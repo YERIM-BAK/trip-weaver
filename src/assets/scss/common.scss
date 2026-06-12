@@ -533,3 +533,16 @@
     margin-right: 4px;
   }
 }
+
+
+.planWrap {
+  display: flex;
+
+  .planCard {
+    flex: 1;
+
+    &:not(:first-of-type) {
+      margin-left: 12px;
+    }
+  }
+}

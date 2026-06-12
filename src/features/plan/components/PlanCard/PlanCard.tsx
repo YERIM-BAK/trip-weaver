@@ -45,15 +45,19 @@ function PlanCard({
           fill
           style={{ objectFit: "cover" }}
         />
+        <div className={styles["planCardStatus"]}>
+          <Tag size="sm" color={statusColorMap[status]}>
+            {status}
+          </Tag>
+        </div>
+        <div className={styles["planCardOverlay"]}>
+          <p className={styles["planCardTitle"]}>{title}</p>
+        </div>
       </div>
       <div className={styles["planCardBody"]}>
-        <p className={styles["planCardTitle"]}>{title}</p>
         <p className={styles["planCardDate"]}>
-          {startDate} - {endDate} · {nights}박 {nights + 1}일
+          {startDate} ~ {endDate}
         </p>
-        <Tag size="sm" color={statusColorMap[status]}>
-          {status}
-        </Tag>
       </div>
     </Link>
   );
