@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/assets/scss/globals.scss";
 import { localFonts } from "@/styles/font";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "Trip Weaver",
@@ -18,12 +19,14 @@ export default function RootLayout({
   return (
     <html lang="ko" className={localFonts.className}>
       <body>
-        <div className="app">
-          <a href="#main-content" className="skip-nav">
-            본문 바로가기
-          </a>
-          <div className="app-screen">{children}</div>
-        </div>
+        <Providers>
+          <div className="app">
+            <a href="#main-content" className="skip-nav">
+              본문 바로가기
+            </a>
+            <div className="app-screen">{children}</div>
+          </div>
+        </Providers>
       </body>
     </html>
   );

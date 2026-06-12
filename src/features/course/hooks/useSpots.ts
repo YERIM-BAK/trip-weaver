@@ -1,6 +1,5 @@
-import { useState, useEffect, useTransition } from "react";
-import { PetSpot } from "@/lib/petTour/petTour.types";
 import { fetchPetSpotsByArea } from "@/lib/petTour/petTourApi";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
 interface UseSpotsParams {
   areaCode?: string;
@@ -17,26 +16,25 @@ export function useSpots({
   cat2 = "",
   cat3 = "",
 }: UseSpotsParams = {}) {
-  const [spots, setSpots] = useState<PetSpot[]>([]);
-  const [isPending, startTransition] = useTransition();
+  const {
+    data: spots = [],
+    isPending,
+    isError,
+    isPlaceholderData,
+  } = useQuery({
+    queryKey: ["spots", areaCode, contentTypeId, cat1, cat2, cat3],
+    queryFn: () =>
+      fetchPetSpotsByArea({
+        areaCode,
+        contentTypeId,
+        cat1,
+        cat2,
+        cat3,
+        numOfRows: 20,
+      }),
+    placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 10,
+  });
 
-  useEffect(() => {
-    startTransition(async () => {
-      try {
-        const spots = await fetchPetSpotsByArea({
-          areaCode,
-          contentTypeId,
-          cat1,
-          cat2,
-          cat3,
-          numOfRows: 20,
-        });
-        setSpots(spots);
-      } catch (e) {
-        console.error(e);
-      }
-    });
-  }, [areaCode, contentTypeId, cat1, cat2, cat3]);
-
-  return { spots, isPending };
+  return { spots, isPending, isError, isPlaceholderData };
 }
