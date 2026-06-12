@@ -19,6 +19,10 @@ export default function AuthCallback() {
         setUser({
           id: session.user.id,
           email: session.user.email ?? "",
+          name:
+            session.user.user_metadata?.name ??
+            session.user.user_metadata?.full_name ??
+            "",
           profileImage: session.user.user_metadata?.avatar_url ?? "",
         });
       }
