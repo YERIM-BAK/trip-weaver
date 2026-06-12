@@ -21,7 +21,7 @@ function SpotCard({
   className,
 }: SpotCardProps) {
   return (
-    <Link href={`/spots/${spot.id}`}>
+    <Link href={`/spots/${spot.id}?typeId=${spot.contenttypeid}`}>
       <article className={clsx(styles["spotCard"], "spotCard", className)}>
         <div className={clsx(styles["spotContent"], "spotContent")}>
           {spot.image && (

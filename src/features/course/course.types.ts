@@ -18,6 +18,7 @@ export type Spot = {
   lat?: number;
   lng?: number;
   image: string | null;
+  contenttypeid?: string;
 };
 
 export type DayCourse = {

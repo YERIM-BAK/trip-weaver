@@ -1,18 +1,5 @@
-"use client";
-
-import { useEffect, useState, useTransition } from "react";
-import {
-  getSpotCommonDetail,
-  getPetTourInfo,
-  getSpotIntroDetail,
-} from "@/lib/petTour/petTourApi";
 import Tag from "@/components/ui/Tag/Tag";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
-import Skeleton from "@/components/ui/Skeleton/Skeleton";
-
-interface Props {
-  contentId: string;
-}
 
 interface CommonDetail {
   firstimage?: string;
@@ -20,10 +7,6 @@ interface CommonDetail {
   contenttypeid?: string;
   addr1?: string;
   tel?: string;
-  usetime?: string;
-  restdate?: string;
-  usefee?: string;
-  parking?: string;
   overview?: string;
 }
 
@@ -37,50 +20,13 @@ interface PetDetail {
   relaPetsRoomInfo?: string;
 }
 
-export default function SpotDetailPage({ contentId }: Props) {
-  const [common, setCommon] = useState<CommonDetail | null>(null);
-  const [pet, setPet] = useState<PetDetail | null>(null);
-  const [intro, setIntro] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
+interface Props {
+  common: CommonDetail | null;
+  pet: PetDetail | null;
+  intro: any;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [commonData, petData] = await Promise.all([
-          getSpotCommonDetail(contentId),
-          getPetTourInfo(contentId),
-        ]);
-        setCommon(commonData ?? null);
-        setPet(petData ?? null);
-
-        if (commonData?.contenttypeid) {
-          const introData = await getSpotIntroDetail(
-            contentId,
-            commonData.contenttypeid,
-          );
-          setIntro(introData ?? null);
-        }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [contentId]);
-
-  if (isLoading) {
-    return (
-      <div className="skeletonWrap">
-        <Skeleton height={280} />
-        <Skeleton height={28} />
-        <Skeleton height={20} />
-        <Skeleton height={20} />
-      </div>
-    );
-  }
-
+export default function SpotDetailPage({ common, pet, intro }: Props) {
   if (!common && !pet) return null;
 
   return (
@@ -157,14 +103,15 @@ export default function SpotDetailPage({ contentId }: Props) {
             </ul>
           </section>
         )}
-        {/* <div className="actionRow">
+
+        <div className="actionRow">
           <button type="button" className="btn btn-secondary">
             북마크
           </button>
           <button type="button" className="btn btn-primary">
             + 일정에 추가
           </button>
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -8,4 +8,5 @@ export const mapPetSpot = (spot: PetSpot): Spot => ({
   address: spot.addr1,
   category: CONTENT_TYPE_MAP[spot.contenttypeid] ?? "",
   image: spot.firstimage || spot.firstimage2 || null,
+  contenttypeid: spot.contenttypeid,
 });
