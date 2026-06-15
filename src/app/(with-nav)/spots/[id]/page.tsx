@@ -1,9 +1,11 @@
+import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import {
   getSpotCommonDetailServer,
   getPetTourInfoServer,
   getSpotIntroDetailServer,
 } from "@/lib/petTour/petTourApi.server";
 import SpotDetailPage from "@/views/spots/SpotDetailPage";
+import { Suspense } from "react";
 
 export default async function Page({
   params,
@@ -21,5 +23,20 @@ export default async function Page({
     typeId ? getSpotIntroDetailServer(id, typeId) : Promise.resolve(null),
   ]);
 
-  return <SpotDetailPage common={common} pet={pet} intro={intro} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <SpotDetailPage common={common} pet={pet} intro={intro} />;
+    </Suspense>
+  );
+}
+
+function Loading() {
+  return (
+    <div className="skeletonWrap">
+      <Skeleton height={280} />
+      <Skeleton height={28} />
+      <Skeleton height={20} />
+      <Skeleton height={20} />
+    </div>
+  );
 }
