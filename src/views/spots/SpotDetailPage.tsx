@@ -1,3 +1,4 @@
+import ImageSwiper from "@/components/ui/Swiper/ImageSwiper";
 import Tag from "@/components/ui/Tag/Tag";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
 
@@ -20,21 +21,32 @@ interface PetDetail {
   relaPetsRoomInfo?: string;
 }
 
+interface SpotImage {
+  originimgurl: string;
+  imgname: string;
+  serialnum: string;
+  smallimageurl?: string;
+  cpyrhtDivCd?: string;
+  contentid?: string;
+}
+
 interface Props {
   common: CommonDetail | null;
   pet: PetDetail | null;
   intro: any;
+  images: SpotImage[];
 }
 
-export default function SpotDetailPage({ common, pet, intro }: Props) {
+export default function SpotDetailPage({ common, pet, intro, images }: Props) {
   if (!common && !pet) return null;
 
   return (
     <div className="spotDetailPage">
       {common?.firstimage && (
-        <div className="heroImg">
-          <img src={common.firstimage} alt={common.title} />
-        </div>
+        // <div className="heroImg">
+        //   <img src={common.firstimage} alt={common.title} />
+        // </div>
+        <ImageSwiper images={images} fallback={common?.firstimage} />
       )}
 
       <div className="pageBody">

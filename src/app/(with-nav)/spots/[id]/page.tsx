@@ -3,6 +3,7 @@ import {
   getSpotCommonDetailServer,
   getPetTourInfoServer,
   getSpotIntroDetailServer,
+  getSpotImagesServer,
 } from "@/lib/petTour/petTourApi.server";
 import SpotDetailPage from "@/views/spots/SpotDetailPage";
 import { Suspense } from "react";
@@ -17,15 +18,17 @@ export default async function Page({
   const { id } = await params;
   const { typeId } = await searchParams;
 
-  const [common, pet, intro] = await Promise.all([
+  const [common, pet, intro, images] = await Promise.all([
     getSpotCommonDetailServer(id),
     getPetTourInfoServer(id),
     typeId ? getSpotIntroDetailServer(id, typeId) : Promise.resolve(null),
+    getSpotImagesServer(id),
   ]);
 
   return (
     <Suspense fallback={<Loading />}>
-      <SpotDetailPage common={common} pet={pet} intro={intro} />;
+      <SpotDetailPage common={common} pet={pet} intro={intro} images={images} />
+      ;
     </Suspense>
   );
 }

@@ -71,3 +71,8 @@ export async function fetchRandomPetSpotsServer(count: number = 6) {
   const all = results.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
   return all.sort(() => Math.random() - 0.5).slice(0, count);
 }
+
+export async function getSpotImagesServer(contentId: string) {
+  const response = await fetchPetTourServer("detailImage2", { contentId });
+  return response ?? [];
+}
