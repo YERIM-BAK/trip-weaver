@@ -26,6 +26,19 @@
   }
 }
 
+.subLayout {
+  height: calc(100% - 156px);
+  overflow-y: auto;
+
+  .section {
+    padding: 0 20px;
+
+    +.section {
+      margin-top: 24px;
+    }
+  }
+}
+
 .app {
   width: 100%;
   height: 100dvh;
@@ -836,5 +849,281 @@
       color: var(--color-white);
       background: var(--color-brand);
     }
+  }
+}
+
+.planDetail {
+  padding-bottom: 32px;
+
+  .planStatCard {
+    margin-bottom: 32px;
+  }
+
+  .sectionCount {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-brand-hover);
+    margin-left: 4px;
+  }
+
+  .photoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    .photoGridItem {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+  }
+}
+
+.planHero {
+  position: relative;
+  width: 100%;
+  height: 360px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.35) 0%,
+        rgba(0, 0, 0, 0) 30%,
+        rgba(0, 0, 0, 0) 55%,
+        rgba(0, 0, 0, 0.6) 100%);
+    z-index: 1;
+  }
+
+  .planHeroHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 12px;
+  }
+
+  .iconBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+  }
+
+  .planHeroActions {
+    display: flex;
+    margin-left: auto;
+    gap: 8px;
+  }
+
+  .planHeroBody {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 20px 16px 32px;
+    color: #fff;
+  }
+
+  .planHeroStatus {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--color-brand-hover);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    margin-bottom: 10px;
+  }
+
+  .planHeroTitle {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .planHeroDate {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+
+  .planHeroPet {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .planHeroPetImg {
+    border-radius: var(--radius-full);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    object-fit: cover;
+  }
+}
+
+.planStatCard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  margin: -24px 16px 0;
+  padding: 18px 8px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  z-index: 3;
+
+  .planStatItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+
+  .planStatIcon {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+
+    &.icon-green {
+      background: var(--color-primary-100);
+      color: var(--color-brand-hover);
+    }
+
+    &.icon-purple {
+      background: var(--color-pink-100);
+      color: var(--color-pink-500);
+    }
+
+    &.icon-orange {
+      background: var(--color-peach-100);
+      color: var(--color-peach-500);
+    }
+
+    &.icon-blue {
+      background: var(--color-sky-100);
+      color: var(--color-sky-500);
+    }
+  }
+
+  .planStatLabel {
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+  }
+
+  .planStatValue {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+}
+
+.planMapWrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-secondary);
+
+  .planMapArrow {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    box-shadow: var(--shadow-md);
+    border: none;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+
+.planFriendRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  .sectionTitle {
+    margin-bottom: 0;
+  }
+
+  .planFriendInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    margin-left: auto;
+  }
+
+  .planFriendImg {
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .planFriendName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+}
+
+
+.planRecordText {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+
+  span {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-brand-hover);
+  }
+
+  p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .planRecordMore {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-tertiary);
+    background: none;
+    border: none;
   }
 }
