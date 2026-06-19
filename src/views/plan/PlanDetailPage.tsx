@@ -22,7 +22,7 @@ export default function PlanDetailPage({ plan }: Props) {
     <div className="planDetail">
       <div className="planHero">
         <Image
-          src={plan.coverImage}
+          src={plan.coverImage || "/images/photo.jpg"}
           alt={plan.title}
           fill
           style={{ objectFit: "cover" }}
