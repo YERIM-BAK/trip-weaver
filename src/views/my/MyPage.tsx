@@ -154,7 +154,6 @@ function MyPage() {
             title="제주도 반려견 여행"
             startDate="2024.06.01"
             endDate="2024.06.03"
-            nights={2}
             status="준비중"
             image={jejuImg.src}
           />
@@ -163,7 +162,6 @@ function MyPage() {
             title="부산 바다 여행"
             startDate="2024.07.10"
             endDate="2024.07.12"
-            nights={2}
             status="다녀옴"
             image={busanImg.src}
           />

@@ -11,7 +11,6 @@ export interface PlanCardProps {
   title: string;
   startDate: string;
   endDate: string;
-  nights: number;
   status: PlanStatus;
   image?: string | null;
   className?: string;
@@ -28,7 +27,6 @@ function PlanCard({
   title,
   startDate,
   endDate,
-  nights,
   status,
   image,
   className,
@@ -38,7 +36,7 @@ function PlanCard({
       href={`/plan/${id}`}
       className={clsx(styles["planCard"], "planCard", className)}
     >
-      <div className={styles["planCardImg"]}>
+      <div className={clsx(styles["planCardImg"], "planCardImg")}>
         <Image
           src={image || "/images/default-plan.png"}
           alt={title}

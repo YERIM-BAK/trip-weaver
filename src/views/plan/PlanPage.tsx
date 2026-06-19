@@ -1,6 +1,9 @@
 "use client";
 
+import PlanCard from "@/features/plan/components/PlanCard/PlanCard";
 import Link from "next/link";
+import jejuImg from "@/assets/images/img/jeju.jpg";
+import busanImg from "@/assets/images/img/busan.jpg";
 
 interface Plan {
   id: string;
@@ -8,6 +11,7 @@ interface Plan {
   startDate: string;
   endDate: string;
   spotCount: number;
+  status: "준비중" | "여행중" | "다녀옴";
   image: string | null;
 }
 
@@ -18,7 +22,8 @@ const dummyPlans: Plan[] = [
     startDate: "2026-06-01",
     endDate: "2026-06-03",
     spotCount: 5,
-    image: null,
+    status: "다녀옴",
+    image: jejuImg.src,
   },
   {
     id: "2",
@@ -26,20 +31,21 @@ const dummyPlans: Plan[] = [
     startDate: "2026-07-10",
     endDate: "2026-07-12",
     spotCount: 3,
-    image: null,
+    status: "준비중",
+    image: busanImg.src,
   },
 ];
 
-function formatDate(dateStr: string) {
-  const date = new Date(dateStr);
-  return `${date.getMonth() + 1}월 ${date.getDate()}일`;
-}
+// function formatDate(dateStr: string) {
+//   const date = new Date(dateStr);
+//   return `${date.getMonth() + 1}월 ${date.getDate()}일`;
+// }
 
-function calcNights(start: string, end: string) {
-  const diff = new Date(end).getTime() - new Date(start).getTime();
-  const nights = Math.floor(diff / (1000 * 60 * 60 * 24));
-  return `${nights}박 ${nights + 1}일`;
-}
+// function calcNights(start: string, end: string) {
+//   const diff = new Date(end).getTime() - new Date(start).getTime();
+//   const nights = Math.floor(diff / (1000 * 60 * 60 * 24));
+//   return `${nights}박 ${nights + 1}일`;
+// }
 
 export default function PlanPage() {
   const plans = dummyPlans; // 나중에 API로 교체
@@ -58,34 +64,9 @@ export default function PlanPage() {
         </div>
       ) : (
         <ul className="planList">
-          {plans.map((plan) => (
+          {dummyPlans.map((plan) => (
             <li key={plan.id}>
-              <Link href={`/plan/${plan.id}`} className="planCard">
-                <div className="planCardImg">
-                  {plan.image ? (
-                    <img src={plan.image} alt={plan.title} />
-                  ) : (
-                    <div className="planCardImgFallback" />
-                  )}
-                </div>
-
-                <div className="planCardBody">
-                  <h3 className="planCardTitle">{plan.title}</h3>
-
-                  <div className="planCardDate">
-                    <span>{formatDate(plan.startDate)}</span>
-                    <span>{formatDate(plan.endDate)}</span>
-                  </div>
-
-                  <div className="planCardMeta">
-                    <span className="metaChip">
-                      {calcNights(plan.startDate, plan.endDate)}
-                    </span>
-
-                    <span className="metaChip">{plan.spotCount}개 장소</span>
-                  </div>
-                </div>
-              </Link>
+              <PlanCard key={plan.id} {...plan} />
             </li>
           ))}
         </ul>

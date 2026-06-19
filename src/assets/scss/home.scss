@@ -225,14 +225,9 @@
 
   .planCard {
     display: flex;
-    gap: 14px;
-
-    padding: 14px;
     border-radius: 20px;
-
     background: #fff;
     border: 1px solid #ececec;
-
     transition: all 0.2s ease;
 
     &:active {
@@ -241,13 +236,8 @@
   }
 
   .planCardImg {
-    width: 92px;
-    height: 92px;
-
     flex-shrink: 0;
-
     overflow: hidden;
-    border-radius: 16px;
     background: #f5f5f5;
 
     img {
