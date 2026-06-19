@@ -28,7 +28,6 @@ export default async function Page({
   return (
     <Suspense fallback={<Loading />}>
       <SpotDetailPage common={common} pet={pet} intro={intro} images={images} />
-      ;
     </Suspense>
   );
 }
