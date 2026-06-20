@@ -4,8 +4,8 @@ import Chip from "@/components/ui/Chip/Chip";
 import Dropdown from "@/components/ui/Dropdown/Dropdown";
 import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import { AREA_CODES, CONTENT_TYPE_MAP } from "@/constants/tour";
-import SpotCard from "@/features/course/components/SpotCard/SpotCard";
-import { useSpots } from "@/features/course/hooks/useSpots";
+import SpotCard from "@/features/spot/components/SpotCard/SpotCard";
+import { useSpots } from "@/features/spot/hooks/useSpots";
 import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 import { useState } from "react";
 

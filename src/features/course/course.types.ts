@@ -40,14 +40,6 @@ export type TourSpot = {
   sigungucode?: string;
 };
 
-export type SpotCardProps = {
-  spot: Spot;
-  order?: number;
-  onAddToCourse?: () => void;
-  isAdded?: boolean;
-  className?: string;
-};
-
 export type AICourse = {
   id: string;
   title: string;

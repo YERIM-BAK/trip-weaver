@@ -5,7 +5,7 @@ import { useState } from "react";
 import { usePopularPetSpots } from "@/lib/petTour/usePopularPetSpots";
 import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
-import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import SpotCard from "@/features/spot/components/SpotCard/SpotCard";
 import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 
 export default function PopularPage({}) {

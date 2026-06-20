@@ -1,9 +1,10 @@
 import clsx from "clsx";
-import { SpotCardProps } from "../../course.types";
+
 import styles from "./SpotCard.module.scss";
 import Tag from "@/components/ui/Tag/Tag";
 import { TagColor } from "@/components/ui/Tag/Tag.types";
 import Link from "next/link";
+import { SpotCardProps } from "../../spot.types";
 
 const tagColorMap: Record<string, TagColor> = {
   관광지: "sky",

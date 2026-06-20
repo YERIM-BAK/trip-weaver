@@ -2,7 +2,7 @@
 
 import CategoryMenu from "@/components/ui/CategoryMenu/CategoryMenu";
 import Skeleton from "@/components/ui/Skeleton/Skeleton";
-import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import SpotCard from "@/features/spot/components/SpotCard/SpotCard";
 import SearchBox from "@/features/search/components/SearchBox";
 import SearchResults from "@/features/search/components/SearchResults";
 import { useSearch } from "@/features/search/hooks/useSearch";

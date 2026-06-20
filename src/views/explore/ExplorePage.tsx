@@ -3,7 +3,7 @@
 import { useEffect, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
-import SpotCard from "@/features/course/components/SpotCard/SpotCard";
+import SpotCard from "@/features/spot/components/SpotCard/SpotCard";
 import { PetSpot } from "@/lib/petTour/petTour.types";
 import { getPetFriendlyNearby } from "@/lib/petTour/petTourApi";
 import { useState } from "react";
