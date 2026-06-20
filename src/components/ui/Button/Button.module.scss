@@ -1,1 +1,137 @@
 @use "../../../assets/scss/abstracts"as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transition: background 0.15s ease, border-color 0.15s ease,
+    color 0.15s ease, transform 0.1s ease, filter 0.15s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+  }
+
+  .btnIcon {
+    display: inline-flex;
+    flex: none;
+
+    svg {
+      display: block;
+      width: 1.25em;
+      height: 1.25em;
+    }
+  }
+
+  .btnText {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &--sm {
+    height: 40px;
+    padding: 0 14px;
+    font-size: 14px;
+    border-radius: var(--radius-sm);
+  }
+
+  &--md {
+    height: 48px;
+    padding: 0 18px;
+    font-size: 15px;
+  }
+
+  &--lg {
+    height: 56px;
+    padding: 0 22px;
+    font-size: 17px;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &--primary {
+    background: var(--color-brand);
+    color: var(--text-white);
+
+    &:not(:disabled):hover {
+      background: var(--color-brand-hover);
+    }
+  }
+
+  &--secondary {
+    background: var(--bg-white);
+    border-color: var(--border-default);
+    color: var(--text-primary);
+
+    &:not(:disabled):hover {
+      background: var(--color-gray-100);
+      border-color: var(--border-strong);
+    }
+  }
+
+  &--ghost {
+    background: transparent;
+    color: var(--text-secondary);
+
+    &:not(:disabled):hover {
+      background: var(--color-gray-100);
+    }
+  }
+
+  &--danger {
+    background: var(--color-error);
+    color: var(--text-white);
+
+    &:not(:disabled):hover {
+      filter: brightness(0.95);
+    }
+  }
+
+  &.is-loading {
+    cursor: progress;
+    opacity: 1;
+  }
+
+  .btnSpinner {
+    flex: none;
+    width: 1.1em;
+    height: 1.1em;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btnSpin 0.6s linear infinite;
+  }
+}
+
+@keyframes btnSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+
+  .btn__spinner {
+    animation-duration: 1.2s;
+  }
+}
