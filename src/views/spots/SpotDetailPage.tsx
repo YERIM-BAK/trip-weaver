@@ -1,8 +1,13 @@
 import ImageSwiper from "@/components/ui/Swiper/ImageSwiper";
 import Tag from "@/components/ui/Tag/Tag";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
-import { CommonDetail, PetDetail } from "@/features/course/course.types";
-import { SpotImage, SpotInfoItem } from "@/lib/petTour/petTour.types";
+
+import {
+  CommonDetail,
+  PetDetail,
+  SpotImage,
+  SpotInfoItem,
+} from "@/lib/petTour/petTour.types";
 
 interface Props {
   common: CommonDetail | null;
