@@ -36,3 +36,9 @@ export interface FetchPopularSpotsResult {
   spots: PetSpot[];
   totalCount: number;
 }
+
+export interface SpotInfoItem {
+  infoname: string;
+  infotext: string;
+  serialnum: string;
+}

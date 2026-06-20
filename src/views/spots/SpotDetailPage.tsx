@@ -1,6 +1,7 @@
 import ImageSwiper from "@/components/ui/Swiper/ImageSwiper";
 import Tag from "@/components/ui/Tag/Tag";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
+import { SpotInfoItem } from "@/lib/petTour/petTour.types";
 
 interface CommonDetail {
   firstimage?: string;
@@ -34,18 +35,22 @@ interface Props {
   common: CommonDetail | null;
   pet: PetDetail | null;
   intro: any;
+  infoList: SpotInfoItem[];
   images: SpotImage[];
 }
 
-export default function SpotDetailPage({ common, pet, intro, images }: Props) {
+export default function SpotDetailPage({
+  common,
+  pet,
+  intro,
+  infoList,
+  images,
+}: Props) {
   if (!common && !pet) return null;
 
   return (
     <div className="spotDetailPage">
       {common?.firstimage && (
-        // <div className="heroImg">
-        //   <img src={common.firstimage} alt={common.title} />
-        // </div>
         <ImageSwiper images={images} fallback={common?.firstimage} />
       )}
 
@@ -63,10 +68,7 @@ export default function SpotDetailPage({ common, pet, intro, images }: Props) {
           <h2 className="sectionTitle">기본 정보</h2>
           <ul className="infoList">
             <InfoRow label="주소" value={common?.addr1} />
-            <InfoRow
-              label="전화"
-              value={common?.tel ?? intro?.infocenterfood ?? intro?.infocenter}
-            />
+            <InfoRow label="전화" value={common?.tel ?? intro?.infocenter} />
             <InfoRow
               label="운영시간"
               value={
@@ -112,6 +114,21 @@ export default function SpotDetailPage({ common, pet, intro, images }: Props) {
               {pet.relaPetsRoomInfo && (
                 <InfoRow label="반려동물 객실" value={pet.relaPetsRoomInfo} />
               )}
+            </ul>
+          </section>
+        )}
+
+        {infoList.length > 0 && (
+          <section className="section">
+            <h2 className="sectionTitle">추가 정보</h2>
+            <ul className="infoList">
+              {infoList.map((info, idx) => (
+                <InfoRow
+                  key={`${info.serialnum}-${idx}`}
+                  label={info.infoname}
+                  value={info.infotext}
+                />
+              ))}
             </ul>
           </section>
         )}

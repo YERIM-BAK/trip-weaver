@@ -26,6 +26,7 @@ export default function PlanDetailPage({ plan }: Props) {
           alt={plan.title}
           fill
           style={{ objectFit: "cover" }}
+          priority
         />
 
         <div className="planHeroHeader">
@@ -101,8 +102,9 @@ export default function PlanDetailPage({ plan }: Props) {
               <Image
                 src={photo.url}
                 alt={photo.alt ?? ""}
-                fill
                 style={{ objectFit: "cover" }}
+                fill
+                priority
               />
             </div>
           ))}
