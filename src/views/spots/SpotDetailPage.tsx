@@ -1,35 +1,8 @@
 import ImageSwiper from "@/components/ui/Swiper/ImageSwiper";
 import Tag from "@/components/ui/Tag/Tag";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
-import { SpotInfoItem } from "@/lib/petTour/petTour.types";
-
-interface CommonDetail {
-  firstimage?: string;
-  title?: string;
-  contenttypeid?: string;
-  addr1?: string;
-  tel?: string;
-  overview?: string;
-}
-
-interface PetDetail {
-  acmpyTypeCd?: string;
-  acmpyPsblCpam?: string;
-  relaAcomdInfo?: string;
-  acmpyNeedMtr?: string;
-  etcAcmpyInfo?: string;
-  acmpyInfoCd?: string;
-  relaPetsRoomInfo?: string;
-}
-
-interface SpotImage {
-  originimgurl: string;
-  imgname: string;
-  serialnum: string;
-  smallimageurl?: string;
-  cpyrhtDivCd?: string;
-  contentid?: string;
-}
+import { CommonDetail, PetDetail } from "@/features/course/course.types";
+import { SpotImage, SpotInfoItem } from "@/lib/petTour/petTour.types";
 
 interface Props {
   common: CommonDetail | null;
@@ -37,6 +10,9 @@ interface Props {
   intro: any;
   infoList: SpotInfoItem[];
   images: SpotImage[];
+  rating?: number;
+  reviewCount?: number;
+  petReview?: { text: string; thumbnail?: string };
 }
 
 export default function SpotDetailPage({
@@ -45,12 +21,18 @@ export default function SpotDetailPage({
   intro,
   infoList,
   images,
+  rating,
+  reviewCount,
+  petReview,
 }: Props) {
   if (!common && !pet) return null;
 
   return (
     <div className="spotDetailPage">
       {common?.firstimage && (
+        // <div className="heroImg">
+        //   <img src={common.firstimage} alt={common.title} />
+        // </div>
         <ImageSwiper images={images} fallback={common?.firstimage} />
       )}
 

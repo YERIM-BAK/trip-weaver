@@ -37,6 +37,34 @@ export interface FetchPopularSpotsResult {
   totalCount: number;
 }
 
+export interface CommonDetail {
+  firstimage?: string;
+  title?: string;
+  contenttypeid?: string;
+  addr1?: string;
+  tel?: string;
+  overview?: string;
+}
+
+export interface PetDetail {
+  acmpyTypeCd?: string;
+  acmpyPsblCpam?: string;
+  relaAcomdInfo?: string;
+  acmpyNeedMtr?: string;
+  etcAcmpyInfo?: string;
+  acmpyInfoCd?: string;
+  relaPetsRoomInfo?: string;
+}
+
+export interface SpotImage {
+  originimgurl: string;
+  imgname: string;
+  serialnum: string;
+  smallimageurl?: string;
+  cpyrhtDivCd?: string;
+  contentid?: string;
+}
+
 export interface SpotInfoItem {
   infoname: string;
   infotext: string;
