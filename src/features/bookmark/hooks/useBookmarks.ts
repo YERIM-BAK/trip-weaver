@@ -33,6 +33,13 @@ export function useToggleBookmark() {
 
   return useMutation({
     mutationFn: async ({ id, next }: { id: string; next: boolean }) => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) {
+        throw new Error("세션이 만료됐어요. 다시 로그인해 주세요.");
+      }
+
       if (next) {
         const { error } = await supabase
           .from("bookmarks")

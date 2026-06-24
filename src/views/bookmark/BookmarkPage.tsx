@@ -1,5 +1,6 @@
 "use client";
 
+import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
 import { useBookmarkedSpots } from "@/features/bookmark/hooks/useBookmarks";
 import SpotCard from "@/features/spot/components/SpotCard/SpotCard";
 import { mapPetSpot } from "@/lib/petTour/petTour.utils";
@@ -21,7 +22,9 @@ function BookmarkPage() {
   const spots = data?.pages.flatMap((page) => page.spots) ?? [];
 
   if (spots.length === 0) {
-    return <p style={{ padding: 24 }}>아직 북마크한 장소가 없어요.</p>;
+    return (
+      <FeedbackMessage status="error" title="아직 북마크한 장소가 없어요." />
+    );
   }
 
   return (
