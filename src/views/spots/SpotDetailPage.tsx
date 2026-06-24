@@ -1,7 +1,6 @@
 "use client";
 import ImageSwiper from "@/components/ui/Swiper/ImageSwiper";
 import {
-  ChevronLeft,
   ChevronRight,
   ChevronDown,
   Share2,
@@ -16,13 +15,9 @@ import {
   Car,
   Star,
   PawPrint,
-  Droplets,
-  ShoppingBag,
-  Trees,
-  Dot,
   Plus,
 } from "lucide-react";
-import Tag from "@/components/ui/Tag/Tag";
+// import Tag from "@/components/ui/Tag/Tag";
 import { CONTENT_TYPE_MAP } from "@/constants/tour";
 
 import {
@@ -34,8 +29,14 @@ import {
 import { ReactNode, useState } from "react";
 import { clean } from "@/lib/utils";
 import Button from "@/components/ui/Button/Button";
+import { useAuthStore } from "@/store/auth.store";
+import {
+  useIsBookmarked,
+  useToggleBookmark,
+} from "@/features/bookmark/hooks/useBookmarks";
 
 interface Props {
+  contentId: string;
   common: CommonDetail | null;
   pet: PetDetail | null;
   intro: any;
@@ -55,9 +56,20 @@ export default function SpotDetailPage({
   rating,
   reviewCount,
   petReview,
+  contentId,
 }: Props) {
   const [expanded, setExpanded] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const { data: liked = false } = useIsBookmarked(contentId);
+  const { mutate: toggleBookmark, isPending: pending } = useToggleBookmark();
+
+  const user = useAuthStore((s) => s.user);
+  const handleBookmark = () => {
+    if (!user) {
+      alert("로그인이 필요한 기능이에요.");
+      return;
+    }
+    toggleBookmark({ id: contentId, next: !liked });
+  };
 
   if (!common && !pet) return null;
 
@@ -120,7 +132,8 @@ export default function SpotDetailPage({
               className={`iconCircle ${liked ? "is-liked" : ""}`}
               aria-label="북마크"
               aria-pressed={liked}
-              onClick={() => setLiked((v) => !v)}
+              disabled={pending}
+              onClick={handleBookmark}
             >
               <Heart fill={liked ? "currentColor" : "none"} />
             </button>

@@ -30,6 +30,7 @@ export default async function Page({
   return (
     <Suspense fallback={<Loading />}>
       <SpotDetailPage
+        contentId={id}
         common={common}
         pet={pet}
         intro={intro}
