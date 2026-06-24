@@ -56,22 +56,16 @@ export function useToggleBookmark() {
 
     onMutate: async ({ id, next }) => {
       await qc.cancelQueries({ queryKey: ["bookmark", id] });
-      await qc.cancelQueries({ queryKey: ["bookmarks"] });
 
       const prevSingle = qc.getQueryData<boolean>(["bookmark", id]);
-      const prevList = qc.getQueryData<InfiniteData<BookmarkPage>>([
-        "bookmarks",
-      ]);
-
       qc.setQueryData(["bookmark", id], next);
-      if (!next) removeSpotFromList(qc, id);
 
-      return { prevSingle, prevList, id };
+      return { prevSingle, id };
     },
+
     onError: (_err, _vars, ctx) => {
       if (!ctx) return;
       qc.setQueryData(["bookmark", ctx.id], ctx.prevSingle);
-      qc.setQueryData(["bookmarks"], ctx.prevList);
     },
 
     onSettled: (_data, _err, { id }) => {
@@ -95,9 +89,9 @@ export function useBookmarkedSpots() {
       const from = pageParam as number;
       const to = from + PAGE_SIZE - 1;
 
-      const { data, error } = await supabase
+      const { data, error, count } = await supabase
         .from("bookmarks")
-        .select("post_id")
+        .select("post_id", { count: "exact" })
         .order("created_at", { ascending: false })
         .range(from, to);
       if (error) throw error;
@@ -113,27 +107,14 @@ export function useBookmarkedSpots() {
         body: JSON.stringify({ ids }),
       });
       const json = await res.json();
+      const nextFrom = from + ids.length;
 
       return {
         spots: (json.spots ?? []) as PetSpot[],
-        // 이번 페이지가 가득 찼으면 다음 페이지가 있을 수 있음
-        nextOffset: ids.length === PAGE_SIZE ? from + PAGE_SIZE : null,
+        nextOffset: count != null && nextFrom < count ? nextFrom : null,
       };
     },
     getNextPageParam: (lastPage) => lastPage.nextOffset,
-  });
-}
-
-function removeSpotFromList(qc: QueryClient, id: string) {
-  qc.setQueryData<InfiniteData<BookmarkPage>>(["bookmarks"], (old) => {
-    if (!old) return old;
-    return {
-      ...old,
-      pages: old.pages.map((page) => ({
-        ...page,
-        spots: page.spots.filter((s) => s.contentid !== id),
-      })),
-    };
   });
 }
 

@@ -20,6 +20,10 @@ function BookmarkPage() {
   } = useBookmarkedSpots();
   const { data: totalCount = 0 } = useBookmarkCount();
 
+  console.log("hasNextPage:", hasNextPage);
+  console.log("pages 개수:", data?.pages.length);
+  console.log("pages:", data?.pages);
+
   if (isLoading) return <p style={{ padding: 24 }}>불러오는 중…</p>;
   if (isError)
     return <p style={{ padding: 24 }}>북마크를 불러오지 못했어요.</p>;
