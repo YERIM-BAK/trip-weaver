@@ -1,7 +1,11 @@
 "use client";
 
+import Button from "@/components/ui/Button/Button";
 import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
-import { useBookmarkedSpots } from "@/features/bookmark/hooks/useBookmarks";
+import {
+  useBookmarkCount,
+  useBookmarkedSpots,
+} from "@/features/bookmark/hooks/useBookmarks";
 import SpotCard from "@/features/spot/components/SpotCard/SpotCard";
 import { mapPetSpot } from "@/lib/petTour/petTour.utils";
 
@@ -14,6 +18,7 @@ function BookmarkPage() {
     hasNextPage,
     isFetchingNextPage,
   } = useBookmarkedSpots();
+  const { data: totalCount = 0 } = useBookmarkCount();
 
   if (isLoading) return <p style={{ padding: 24 }}>불러오는 중…</p>;
   if (isError)
@@ -31,7 +36,7 @@ function BookmarkPage() {
     <div>
       <div className="section-header">
         <p className="result-count">
-          <span className="count">{spots.length}</span>개의 장소
+          <span className="count">{totalCount}</span>개의 장소
         </p>
       </div>
       <ul className="spotCardList">
@@ -43,14 +48,18 @@ function BookmarkPage() {
       </ul>
 
       {hasNextPage && (
-        <button
-          type="button"
-          onClick={() => void fetchNextPage()}
-          disabled={isFetchingNextPage}
-          style={{ marginTop: 16, padding: "8px 16px", borderRadius: 8 }}
-        >
-          {isFetchingNextPage ? "불러오는 중…" : "더 보기"}
-        </button>
+        <div className="btn-group">
+          <Button
+            type="button"
+            size="sm"
+            variant="secondary"
+            onClick={() => void fetchNextPage()}
+            disabled={isFetchingNextPage}
+            style={{ marginTop: 16, padding: "8px 16px", borderRadius: 8 }}
+          >
+            {isFetchingNextPage ? "불러오는 중…" : "더보기"}
+          </Button>
+        </div>
       )}
     </div>
   );

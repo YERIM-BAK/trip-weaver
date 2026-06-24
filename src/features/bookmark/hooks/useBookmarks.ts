@@ -9,7 +9,7 @@ import {
 import { supabase } from "@/lib/supabase";
 import { PetSpot } from "@/lib/petTour/petTour.types";
 
-const PAGE_SIZE = 20;
+const PAGE_SIZE = 10;
 
 // 상세 페이지용(단건 조회)
 export function useIsBookmarked(contentId: string) {
@@ -77,6 +77,7 @@ export function useToggleBookmark() {
     onSettled: (_data, _err, { id }) => {
       qc.invalidateQueries({ queryKey: ["bookmark", id] });
       qc.invalidateQueries({ queryKey: ["bookmarks"] });
+      qc.invalidateQueries({ queryKey: ["bookmarks", "count"] });
     },
   });
 }
@@ -133,5 +134,18 @@ function removeSpotFromList(qc: QueryClient, id: string) {
         spots: page.spots.filter((s) => s.contentid !== id),
       })),
     };
+  });
+}
+
+export function useBookmarkCount() {
+  return useQuery({
+    queryKey: ["bookmarks", "count"],
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("bookmarks")
+        .select("*", { count: "exact", head: true });
+      if (error) throw error;
+      return count ?? 0;
+    },
   });
 }
