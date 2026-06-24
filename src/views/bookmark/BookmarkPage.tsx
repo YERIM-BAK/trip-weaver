@@ -29,6 +29,11 @@ function BookmarkPage() {
 
   return (
     <div>
+      <div className="section-header">
+        <p className="result-count">
+          <span className="count">{spots.length}</span>개의 장소
+        </p>
+      </div>
       <ul className="spotCardList">
         {spots.map((item) => (
           <li key={item.contentid}>

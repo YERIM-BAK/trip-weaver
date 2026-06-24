@@ -1521,3 +1521,17 @@
     border: none;
   }
 }
+
+
+.result-count {
+  margin-bottom: 12px;
+
+  font-size: 13px;
+  color: #666;
+  font-weight: 500;
+
+  .count {
+    color: var(--primary-color);
+    font-weight: 600;
+  }
+}
