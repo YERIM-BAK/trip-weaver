@@ -2,6 +2,7 @@
 
 import Button from "@/components/ui/Button/Button";
 import FeedbackMessage from "@/components/ui/FeedbackMessage/FeedbackMessage";
+import Skeleton from "@/components/ui/Skeleton/Skeleton";
 import {
   useBookmarkCount,
   useBookmarkedSpots,
@@ -24,9 +25,18 @@ function BookmarkPage() {
   console.log("pages 개수:", data?.pages.length);
   console.log("pages:", data?.pages);
 
-  if (isLoading) return <p style={{ padding: 24 }}>불러오는 중…</p>;
+  if (isLoading)
+    return (
+      <div className="skeletonWrap">
+        <Skeleton height={200} rounded="lg" />
+        <Skeleton height={200} rounded="lg" />
+        <Skeleton height={200} rounded="lg" />
+      </div>
+    );
   if (isError)
-    return <p style={{ padding: 24 }}>북마크를 불러오지 못했어요.</p>;
+    return (
+      <FeedbackMessage status="error" title="북마크를 불러오지 못했어요." />
+    );
 
   const spots = data?.pages.flatMap((page) => page.spots) ?? [];
 
